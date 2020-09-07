@@ -45,6 +45,20 @@
   </url>
 
   
+  <url>
+    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
+    <lastmod>2020-09-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
+  
+  <url>
+    <loc>http://example.com/categories/markdown/</loc>
+    <lastmod>2020-09-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
   
 </urlset>
