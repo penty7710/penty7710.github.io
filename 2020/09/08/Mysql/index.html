@@ -30,7 +30,7 @@
 <meta property="og:description" content="数据库开发语言SQLSQL是一种数据库查询和设计语言，主要用于存取数据，查询数据，更新数据和管理关系数据库系统。 SQL语言分为3个部分，即数据定义语言（DDL），数据操作语言(DML)，和数据控制语言(DCL)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-08T13:54:51.209Z">
-<meta property="article:modified_time" content="2020-09-09T15:07:50.117Z">
+<meta property="article:modified_time" content="2020-09-09T15:19:44.145Z">
 <meta property="article:author" content="pty">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-09 23:07:50" itemprop="dateModified" datetime="2020-09-09T23:07:50+08:00">2020-09-09</time>
+                <time title="修改时间：2020-09-09 23:19:44" itemprop="dateModified" datetime="2020-09-09T23:19:44+08:00">2020-09-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -379,13 +379,15 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
 直接在所要设置的字段名后面加上<span class="token keyword">UNIQUE</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="4-设置表的主键约束（PK）"><a href="#4-设置表的主键约束（PK）" class="headerlink" title="4.设置表的主键约束（PK）"></a>4.设置表的主键约束（PK）</h4><ul>
-<li><p>主键是表的一个特殊字段，该字段能唯一的标识该表中的每一条信息。主键和记录的关系如同身份证和人的关系。主键必须是唯一的，表中任意两条记录的主键字段的值不能相同，主键必须是非空的。</p>
-</li>
+<li>主键是表的一个特殊字段，该字段能唯一的标识该表中的每一条信息。主键和记录的关系如同身份证和人的关系。主键必须是唯一的，表中任意两条记录的主键字段的值不能相同，主键必须是非空的。</li>
+</ul>
+<ul>
 <li><pre><code class="sql">create table tablename(
 属性名  数据类型  PRIMARY KEY,
     ......
 );
 <pre class="line-numbers language-none"><code class="language-none">
+
 
 ### 5.设置表字段值自动增加
 
@@ -398,7 +400,7 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
   );
   
   
-  在要这只的字段名后面加上PRIMARY KEY AUTO_INCREMENT 将该字段名同时设置成主键和自增长<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  在要这只的字段名后面加上PRIMARY KEY AUTO_INCREMENT 将该字段名同时设置成主键和自增长<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </code></pre>
 </li>
 </ul>
@@ -409,6 +411,8 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
 </li>
 <li><p>外键依赖于数据库中已经存在的父表的主键，外键可以为空。</p>
 </li>
+</ul>
+<ul>
 <li><pre><code class="sql">create table tablename(
 属性名a  数据类型，
     .....
@@ -418,23 +422,28 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
     //这句话的意思就是  将这个表中的class_id作为外键，并且关联class表的字段名为id的字段
 )
 <pre class="line-numbers language-none"><code class="language-none">
+  
+  
 - 实际开发中，一般不使用物理外键（即不设置出一个具体的外键），而使用逻辑外键，我们知道他有外键的功能即可可以参考这篇博客  [主键和外键](https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;114834741)
-
 
 ### 7.修改表
 
-- &#96;&#96;&#96;&#96;sql
-  alter table t_class rename tab_class;     &#x2F;&#x2F;修改表的名字，使用alter和rename
-  alter table tablename add propName proptype; 
-  		&#x2F;&#x2F;在表的最后一个位置增加字段，tablename为表的名字，propName为属性名，proptype是数据类型
-  alter table tablename add propName proptype first;
-         &#x2F;&#x2F;在表的第一个位置增加字段，tablename为表的名字，propName为属性名，proptype是数据类型
-  alter table tablename add propName proptype after pNameOld；
-         &#x2F;&#x2F;在pnameOld后面加一个字段名，pNameOld是已经存在的字段名
-  alter table tablename drop propname;
-         &#x2F;&#x2F;删除表中的某个字段，tablename为表的名字，propName为属性名
-  alter table tablename modify propName propType;
-  		&#x2F;&#x2F;修改某个字段的数据类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+&#96;&#96;&#96;&#96;sql
+alter table t_class rename tab_class;     &#x2F;&#x2F;修改表的名字，使用alter和rename
+alter table tablename add propName proptype; 
+		&#x2F;&#x2F;在表的最后一个位置增加字段，tablename为表的名字，propName为属性名，proptype是数据类型
+alter table tablename add propName proptype first;
+       &#x2F;&#x2F;在表的第一个位置增加字段，tablename为表的名字，propName为属性名，proptype是数据类型
+alter table tablename add propName proptype after pNameOld；
+       &#x2F;&#x2F;在pnameOld后面加一个字段名，pNameOld是已经存在的字段名
+alter table tablename drop propname;
+       &#x2F;&#x2F;删除表中的某个字段，tablename为表的名字，propName为属性名
+alter table tablename modify propName propType;
+		&#x2F;&#x2F;修改某个字段的数据类型<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 
 
 </code></pre>
@@ -444,6 +453,8 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
 <li><pre><code class="sql">insert into tablename(field1,field2,field3......)
         values(value1,value2,value3.....)；
 <pre class="line-numbers language-none"><code class="language-none">
+  
+  
 - tablename是要插入的表的名字，field为要插入的字段名，value表示要插入的数值，并且field要和value一一对应。
 
 - field可以省略，这样就必须在values中写出所有字段的值，并且value对应的字段名必须与数据表中字段名的顺序相同。
@@ -458,7 +469,9 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
   		values(value21,value22,value23.....),
   		values(value31,value32,value33.....),
   		........
-  		values(valuen1,valuen2,valuen3......);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  		values(valuen1,valuen2,valuen3......);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 </code></pre>
 </li>
 </ul>
@@ -474,7 +487,10 @@ age  <span class="token keyword">int</span>  <span class="token keyword">DEFAULT
 </li>
 </ul>
 <h3 id="2-更新数据记录"><a href="#2-更新数据记录" class="headerlink" title="2.更新数据记录"></a>2.更新数据记录</h3><ul>
-<li><pre><code></code></pre>
+<li><pre><code>update tablename 
+        set field1=value1,field2=value2,field3=value3.....
+    where ....
+//tablename是表的名字，field是字段名，value是值，where后面填特定的条件</code></pre>
 </li>
 <li></li>
 </ul>
