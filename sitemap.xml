@@ -53,20 +53,6 @@
 
   
   <url>
-    <loc>http://example.com/tags/mysql/</loc>
-    <lastmod>2020-09-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
-    <lastmod>2020-09-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/springboot/</loc>
     <lastmod>2020-09-09</lastmod>
     <changefreq>daily</changefreq>
@@ -80,10 +66,24 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/tags/mysql/</loc>
+    <lastmod>2020-09-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
+    <lastmod>2020-09-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
-    <loc>http://example.com/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://example.com/categories/%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2020-09-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -97,7 +97,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%BC%80%E5%8F%91/</loc>
+    <loc>http://example.com/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-09-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
