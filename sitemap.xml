@@ -4,7 +4,7 @@
   <url>
     <loc>http://example.com/2020/09/08/Mysql/</loc>
     
-    <lastmod>2020-09-10</lastmod>
+    <lastmod>2020-09-11</lastmod>
     
   </url>
   
@@ -46,36 +46,36 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
-    <lastmod>2020-09-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/springboot/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/mybatis/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/mysql/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <lastmod>2020-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -83,22 +83,22 @@
 
   
   <url>
-    <loc>http://example.com/categories/markdown/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <loc>http://example.com/categories/%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E5%BC%80%E5%8F%91/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <loc>http://example.com/categories/markdown/</loc>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2020-09-10</lastmod>
+    <lastmod>2020-09-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
