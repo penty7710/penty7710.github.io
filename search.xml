@@ -373,7 +373,7 @@ title 可加可不加
 <p>但在实际开发中，我们不需要导入这个依赖，因为<strong>spring-boot-starter</strong>依赖中已经包含了<strong>spring-boot-starter-logging</strong>。因此可以不用引依赖，直接用就行了。</p>
 <p>官方推荐使用的xml名字格式是：<code>logback-spring.xml</code>。</p>
 <p>为什么是<code>logback-spring.xml</code> 而不是<code>logback.xml</code>呢？因为带spring后缀的可以使用<code>&lt;springProfile&gt;</code>标签</p>
-<p>++++++</p>
+<hr>
 <p>在resource目录下新建一个：<code>logback-spring.xml</code>文件</p>
 <p>配置如下：</p>
 <pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
