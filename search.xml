@@ -1357,4 +1357,60 @@ mysql<span class="token operator">></span> <span class="token keyword">select</s
         <tag>mysql</tag>
       </tags>
   </entry>
+  <entry>
+    <title>springboot发送邮箱验证</title>
+    <url>/2020/09/15/%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
+    <content><![CDATA[<p>在实际开发中，我们通常需要登录和注册用户。在登录的时候我们可以使用验证码来进行验证，但在注册的时候我们看到更多的是使用邮箱验证，即给你发送的邮箱发送一个验证码，然后你将这个验证码数据页面。</p>
+<a id="more"></a>
+
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ol>
+<li><p>我们使用qq邮箱进行邮件发送，需要开启QQ邮箱的POP3/SMTP服务和IMAP/SMTP服务</p>
+<ul>
+<li>进入QQ邮箱首页，找到设置<img src="/images/blog/qqemail.png" alt="qq邮箱"></li>
+<li>进入设置后点击账户，往下拉找到<strong>POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</strong></li>
+</ul>
+<p><img src="/images/blog/pop3.png" alt="pop3"></p>
+<ul>
+<li>开启POP3和IMAP服务（只开启一个好像也行）</li>
+<li>开始这两项服务后各自会生成一串密文密码，把这个保存起来，以后会用到。</li>
+<li>我的两个密码分别是  POP3:cplcsiqntwidfgib    IMAP:zxisvqcbpucmiifb</li>
+</ul>
+</li>
+<li><p>springboot配置邮箱服务</p>
+<ul>
+<li>导入支持邮箱的依赖</li>
+</ul>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一个小插曲：</p>
+<blockquote>
+<p>在后面写代码的时候需要用到<code>JavaMailSenderImpl</code>这个类。</p>
+</blockquote>
+<blockquote>
+<p>但是我导入这个包以后找不到这个类，我以为是还需要添加其他的依赖，百度了一下，导入了<code>spring-context-support</code>这个依赖。然后我点进<code>spring-boot-starter-mail</code>后发现里面已经引入了<code>spring-context-support</code>，所以应该是我最开始没有导入好。</p>
+</blockquote>
+<ul>
+<li>在application.yml中配置邮箱信息</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span> 
+	<span class="token key atrule">mail</span><span class="token punctuation">:</span>
+		<span class="token key atrule">username</span><span class="token punctuation">:</span> 1219002685@qq.com  <span class="token comment">#发件人账号</span>
+		<span class="token key atrule">password</span><span class="token punctuation">:</span> zxisvqcbpucmiifb  <span class="token comment">#这里的password不是填你的qq密码，而是你开去那两个服务后生成的密码</span>
+		<span class="token key atrule">host</span><span class="token punctuation">:</span> smtp.qq.com        	<span class="token comment">#邮箱服务器</span>
+		<span class="token key atrule">default-encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8</span>		<span class="token comment">#默认编码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+</li>
+</ol>
+<p>至此，发送邮箱验证的前期准备工作都已经做完了，接下来就是写代码了！！！！</p>
+<h3 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h3>]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
 </search>

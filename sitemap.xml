@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2020/09/15/%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</loc>
+    
+    <lastmod>2020-09-15</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2020/09/15/springboot%E6%95%B4%E5%90%88%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</loc>
     
     <lastmod>2020-09-15</lastmod>
