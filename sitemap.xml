@@ -88,7 +88,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/springboot/</loc>
+    <loc>http://example.com/tags/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2020-09-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -102,7 +102,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</loc>
+    <loc>http://example.com/tags/springboot/</loc>
     <lastmod>2020-09-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
