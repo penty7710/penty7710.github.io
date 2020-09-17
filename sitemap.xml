@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2020/09/17/spring/</loc>
-    
-    <lastmod>2020-09-17</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://example.com/2020/09/08/Mysql/</loc>
     
     <lastmod>2020-09-16</lastmod>
@@ -81,13 +74,6 @@
 
   
   <url>
-    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
-    <lastmod>2020-09-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/spring/</loc>
     <lastmod>2020-09-17</lastmod>
     <changefreq>daily</changefreq>
@@ -102,14 +88,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/springboot/</loc>
+    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
     <lastmod>2020-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/mysql/</loc>
+    <loc>http://example.com/tags/springboot/</loc>
     <lastmod>2020-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -122,17 +108,24 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>http://example.com/tags/mysql/</loc>
+    <lastmod>2020-09-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
-    <loc>http://example.com/categories/markdown/</loc>
+    <loc>http://example.com/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://example.com/categories/markdown/</loc>
     <lastmod>2020-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
