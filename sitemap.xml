@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2020/09/17/spring/</loc>
+    <loc>http://example.com/2020/09/25/SprigMVC%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</loc>
     
     <lastmod>2020-09-25</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/25/SprigMVC%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</loc>
+    <loc>http://example.com/2020/09/17/spring/</loc>
     
     <lastmod>2020-09-25</lastmod>
     
@@ -102,6 +102,13 @@
   </url>
   
   <url>
+    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
+    <lastmod>2020-09-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/tags/spring/</loc>
     <lastmod>2020-09-25</lastmod>
     <changefreq>daily</changefreq>
@@ -116,7 +123,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E8%AF%AD%E6%B3%95/</loc>
+    <loc>http://example.com/tags/springboot/</loc>
     <lastmod>2020-09-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -124,13 +131,6 @@
   
   <url>
     <loc>http://example.com/tags/mybatis/</loc>
-    <lastmod>2020-09-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/springboot/</loc>
     <lastmod>2020-09-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
