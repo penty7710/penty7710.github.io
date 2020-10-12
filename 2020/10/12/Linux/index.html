@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"auto","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+  <meta name="description" content="连接服务器使用xshell工具在windows系统上连接Linux云服务器  新建连接    建立连接    然后点击会话，输入用户名密码即可连接成功。  上传文件使用xftp工具将本地的文件上传到云服务器  走进Linux开机登录开机会启动许多程序，它们在Windows叫做服务，在Linux中叫做守护进程 开机成功后，会显示一个文本登录界面，这就是我们经常看到的登录界面。 在Linux中最高权限">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux">
+<meta property="og:url" content="http://example.com/2020/10/12/Linux/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="连接服务器使用xshell工具在windows系统上连接Linux云服务器  新建连接    建立连接    然后点击会话，输入用户名密码即可连接成功。  上传文件使用xftp工具将本地的文件上传到云服务器  走进Linux开机登录开机会启动许多程序，它们在Windows叫做服务，在Linux中叫做守护进程 开机成功后，会显示一个文本登录界面，这就是我们经常看到的登录界面。 在Linux中最高权限">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008124927869.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008125328043.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008130105924.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008132435573.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20201008132509.jpg">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008202333515.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008203048944.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008210213118.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008214542041.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/64116-20191222111829090-17043451.gif">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008220932366.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20201008221127.jpg">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009142632806.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009143240133.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009143755163.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009145025270.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009145220437.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009172752807.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009195244369.png">
+<meta property="og:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201009195752656.png">
+<meta property="article:published_time" content="2020-10-12T11:46:21.879Z">
+<meta property="article:modified_time" content="2020-10-10T07:58:47.137Z">
+<meta property="article:author" content="pty">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/10/12/Linux/images/blog/image-20201008124927869.png">
+
+<link rel="canonical" href="http://example.com/2020/10/12/Linux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux | Myblog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Myblog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年，你渴望力量吗</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/12/Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="pty">
+      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-12 19:46:21" itemprop="dateCreated datePublished" datetime="2020-10-12T19:46:21+08:00">2020-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-10 15:58:47" itemprop="dateModified" datetime="2020-10-10T15:58:47+08:00">2020-10-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h2><p>使用xshell工具在windows系统上连接Linux云服务器</p>
+<ol>
+<li>新建连接</li>
+</ol>
+<p><img src="images/blog/image-20201008124927869.png" alt="image-20201008124927869"></p>
+<ol start="2">
+<li>建立连接</li>
+</ol>
+<p><img src="images/blog/image-20201008125328043.png" alt="image-20201008125328043"></p>
+<ol start="3">
+<li>然后点击会话，输入用户名密码即可连接成功。</li>
+</ol>
+<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><p>使用xftp工具将本地的文件上传到云服务器</p>
+<p><img src="images/blog/image-20201008130105924.png" alt="image-20201008130105924"></p>
+<h2 id="走进Linux"><a href="#走进Linux" class="headerlink" title="走进Linux"></a>走进Linux</h2><h3 id="开机登录"><a href="#开机登录" class="headerlink" title="开机登录"></a>开机登录</h3><p>开机会启动许多程序，它们在Windows叫做服务，在Linux中叫做守护进程</p>
+<p>开机成功后，会显示一个文本登录界面，这就是我们经常看到的登录界面。</p>
+<p>在Linux中最高权限账户为root，可以操作一切！</p>
+<h3 id="关机"><a href="#关机" class="headerlink" title="关机"></a>关机</h3><p><strong>Linux中没有错误就代表操作成功</strong></p>
+<p>关机指令为：shutdown</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sync</span> <span class="token comment"># 将数据由内存同步到硬盘中。</span>
+
+<span class="token function">shutdown</span> <span class="token comment"># 关机指令，你可以man shutdown 来看一下帮助文档。例如你可以运行如下命令关机：</span>
+
+<span class="token function">shutdown</span> –h <span class="token number">10</span> <span class="token comment"># 这个命令告诉大家，计算机将在10分钟后关机</span>
+
+<span class="token function">shutdown</span> –h now <span class="token comment"># 立马关机</span>
+
+<span class="token function">shutdown</span> –h <span class="token number">20</span>:25 <span class="token comment"># 系统会在今天20:25关机</span>
+
+<span class="token function">shutdown</span> –h +10 <span class="token comment"># 十分钟后关机</span>
+
+<span class="token function">shutdown</span> –r now <span class="token comment"># 系统立马重启</span>
+
+<span class="token function">shutdown</span> –r +10 <span class="token comment"># 系统十分钟后重启</span>
+
+<span class="token function">reboot</span> <span class="token comment"># 就是重启，等同于 shutdown –r now</span>
+
+<span class="token function">halt</span> <span class="token comment"># 关闭系统，等同于shutdown –h now 和 poweroff</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：<strong>不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写到磁盘中</strong></p>
+<h3 id="系统目录结构"><a href="#系统目录结构" class="headerlink" title="系统目录结构"></a>系统目录结构</h3><ol>
+<li>一切皆文件</li>
+<li>根目录 /， 所有的文件都挂载在这个节点下</li>
+</ol>
+<p>登录系统后，在当前命令窗口下输入命令：</p>
+<p><code>ls /</code></p>
+<p>就会看到如下图所示：可以查看所有的文件目录</p>
+<p><img src="images/blog/image-20201008132435573.png" alt="image-20201008132435573"></p>
+<p>树状目录结构：（Linux的一切资源都挂载在这个 / 根节点下）</p>
+<p><img src="images/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20201008132509.jpg" alt="系统结构目录"></p>
+<p><strong>以下是对这些目录的解释：</strong></p>
+<ul>
+<li><strong>/bin</strong>：bin是Binary的缩写, 这个目录存放着最经常使用的命令。</li>
+<li><strong>/boot：</strong> 这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。<em>不要动</em></li>
+<li><strong>/dev ：</strong> dev是Device(设备)的缩写, 存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</li>
+<li>==<strong>/etc：</strong> 这个目录用来存放所有的系统管理所需要的配置文件和子目录==。</li>
+<li>==<strong>/home</strong>：用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。==</li>
+<li><strong>/lib</strong>：这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。<em>不要动</em></li>
+<li><strong>/lost+found</strong>：这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。<em>存放突然关机的一些文件</em></li>
+<li><strong>/media</strong>：linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。</li>
+<li><strong>/mnt</strong>：系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了。<em>会把一些本地文件挂载在这个目录下</em></li>
+<li>==<strong>/opt</strong>：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。==</li>
+<li><strong>/proc</strong>：这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。<em>不用管</em></li>
+<li>==<strong>/root</strong>：该目录为系统管理员，也称作超级权限者的用户主目录。==</li>
+<li><strong>/sbin</strong>：s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</li>
+<li><strong>/srv</strong>：该目录存放一些服务启动之后需要提取的数据。</li>
+<li><strong>/sys</strong>：这是linux2.6内核的一个很大的变化。该目录下安装了2.6内核中新出现的一个文件系统 sysfs 。</li>
+<li>==<strong>/tmp</strong>：这个目录是用来存放一些临时文件的。<em>用来存放一些临时文件的。用完即丢的文件，可以放在这个目录下，比如说安装包</em>==</li>
+<li>==<strong>/usr</strong>：这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。==</li>
+<li><strong>/usr/bin：</strong> 系统用户使用的应用程序。</li>
+<li><strong>/usr/sbin：</strong> 超级用户使用的比较高级的管理程序和系统守护程序。</li>
+<li><strong>/usr/src：</strong> 内核源代码默认的放置目录。</li>
+<li>==<strong>/var</strong>：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。==</li>
+<li><strong>/run</strong>：是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。</li>
+<li>==<strong>www：</strong>存放服务器网站相关的资源，环境，网站的项目==</li>
+</ul>
+<h2 id="常用的基本命令"><a href="#常用的基本命令" class="headerlink" title="常用的基本命令"></a>常用的基本命令</h2><h3 id="目录管理"><a href="#目录管理" class="headerlink" title="目录管理"></a>目录管理</h3><blockquote>
+<p>绝对路径和相对路径</p>
+</blockquote>
+<p>我们知道Linux的目录结构为树状结构，最顶级的目录为根目录 /。</p>
+<p>其他目录通过挂载可以将它们添加到树中，通过解除挂载可以移除它们。</p>
+<p>在开始本教程前我们需要先知道什么是绝对路径与相对路径。</p>
+<p><strong>绝对路径：</strong></p>
+<p>路径的写法，由根目录 / 写起，例如：/usr/share/doc 这个目录。</p>
+<p><strong>相对路径：</strong></p>
+<p>路径的写法，不是由 / 写起，例如由 /usr/share/doc 要到 /usr/share/man 底下时，可以写成：cd ../man 这就是相对路径的写法啦！</p>
+<blockquote>
+<p>处理目录的常用命令</p>
+</blockquote>
+<p>接下来我们就来看几个常见的处理目录的命令吧：</p>
+<ul>
+<li>ls: 列出目录</li>
+<li>cd：切换目录</li>
+<li>pwd：显示目前的目录</li>
+<li>mkdir：创建一个新的目录</li>
+<li>rmdir：删除一个空的目录</li>
+<li>cp: 复制文件或目录</li>
+<li>rm: 移除文件或目录</li>
+<li>mv: 移动文件与目录，或修改文件与目录的名称</li>
+</ul>
+<p>你可以使用 <em>man [命令]</em> 来查看各个命令的使用文档，如 ：man cp。</p>
+<blockquote>
+<p>ls （列出目录）</p>
+</blockquote>
+<p>在Linux系统当中， ls 命令可能是最常被运行的。</p>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">[root@www ~]# ls [-aAdfFhilnrRSt] 目录名称<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-a参数 ：all，查看全部的文件，连同隐藏文件( 开头为 . 的文件) 一起列出来(常用)</li>
+<li>-l ：列出所有的文件，包含文件的属性与权限等等数据，没有隐藏文件；(常用)</li>
+</ul>
+<p><strong>所有的Linux命令都可以组合使用</strong></p>
+<p>将目录下的所有文件列出来(含属性与隐藏档)</p>
+<pre class="line-numbers language-none"><code class="language-none">[root@www ~]# ls -al ~<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>cd （切换目录）</p>
+</blockquote>
+<p>cd是Change Directory的缩写，这是用来变换工作目录的命令。</p>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">cd 目录名[相对路径或绝对路径]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 切换到用户目录下</span>
+<span class="token punctuation">[</span>root@kuangshen /<span class="token punctuation">]</span><span class="token comment"># cd home  </span>
+
+<span class="token comment"># 使用 mkdir 命令创建 kuangstudy 目录</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mkdir kuangstudy</span>
+
+<span class="token comment"># 进入 kuangstudy 目录</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cd kuangstudy</span>
+
+<span class="token comment"># 回到上一级</span>
+<span class="token punctuation">[</span>root@kuangshen kuangstudy<span class="token punctuation">]</span><span class="token comment"># cd ..</span>
+
+<span class="token comment"># 回到根目录</span>
+<span class="token punctuation">[</span>root@kuangshen kuangstudy<span class="token punctuation">]</span><span class="token comment"># cd /</span>
+
+<span class="token comment"># 表示回到自己的家目录，即回到 /root 这个目录  </span>
+<span class="token punctuation">[</span>root@kuangshen kuangstudy<span class="token punctuation">]</span><span class="token comment"># cd ~</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>pwd ( 显示目前所在的目录 )</p>
+</blockquote>
+<p>pwd 是 <strong>Print Working Directory</strong> 的缩写，也就是显示目前所在目录的命令。</p>
+<pre class="line-numbers language-none"><code class="language-none">[root@kuangshen kuangstudy]#pwd [-P]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：**-P** ：显示出确实的路径，而非使用连接(link) 路径。</p>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 单纯显示出目前的工作目录</span>
+<span class="token punctuation">[</span>root@kuangshen ~<span class="token punctuation">]</span><span class="token comment"># pwd</span>
+/root
+
+<span class="token comment"># 如果是链接，要显示真实地址，可以使用 -P参数</span>
+<span class="token punctuation">[</span>root@kuangshen /<span class="token punctuation">]</span><span class="token comment"># cd bin</span>
+<span class="token punctuation">[</span>root@kuangshen bin<span class="token punctuation">]</span><span class="token comment"># pwd -P</span>
+/usr/bin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>mkdir （创建新目录）</p>
+</blockquote>
+<p>如果想要创建新的目录的话，那么就使用mkdir (make directory)吧。</p>
+<pre class="line-numbers language-none"><code class="language-none">mkdir [-mp] 目录名称<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～</li>
+<li>-p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！即直接创建<code>test1/test2/test3</code>三层文件夹</li>
+</ul>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 进入我们用户目录下</span>
+<span class="token punctuation">[</span>root@kuangshen /<span class="token punctuation">]</span><span class="token comment"># cd /home</span>
+
+<span class="token comment"># 创建一个 test 文件夹</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mkdir test</span>
+
+<span class="token comment"># 创建多层级目录</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mkdir test1/test2/test3/test4</span>
+mkdir: cannot create directory ‘test1/test2/test3/test4’:
+No such <span class="token function">file</span> or directory  <span class="token comment"># &lt;== 没办法直接创建此目录啊！</span>
+
+<span class="token comment"># 加了这个 -p 的选项，可以自行帮你创建多层目录！</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mkdir -p test1/test2/test3/test4</span>
+
+<span class="token comment"># 创建权限为 rwx--x--x 的目录。</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mkdir -m 711 test2</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ls -l</span>
+drwxr-xr-x <span class="token number">2</span> root root  <span class="token number">4096</span> Mar <span class="token number">12</span> <span class="token number">21</span>:55 <span class="token builtin class-name">test</span>
+drwxr-xr-x <span class="token number">3</span> root root  <span class="token number">4096</span> Mar <span class="token number">12</span> <span class="token number">21</span>:56 test1
+drwx--x--x <span class="token number">2</span> root root  <span class="token number">4096</span> Mar <span class="token number">12</span> <span class="token number">21</span>:58 test2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>rmdir ( 删除空的目录 )</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">rmdir [-p] 目录名称<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：**-p ：**连同上一级『空的』目录也一起删除</p>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 看看有多少目录存在？</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ls -l</span>
+drwxr-xr-x <span class="token number">2</span> root root  <span class="token number">4096</span> Mar <span class="token number">12</span> <span class="token number">21</span>:55 <span class="token builtin class-name">test</span>
+drwxr-xr-x <span class="token number">3</span> root root  <span class="token number">4096</span> Mar <span class="token number">12</span> <span class="token number">21</span>:56 test1
+drwx--x--x <span class="token number">2</span> root root  <span class="token number">4096</span> Mar <span class="token number">12</span> <span class="token number">21</span>:58 test2
+
+<span class="token comment"># 可直接删除掉，没问题</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># rmdir test</span>
+
+<span class="token comment"># 因为尚有内容，所以无法删除！</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># rmdir test1</span>
+rmdir: failed to remove ‘test1’: Directory not empty
+
+<span class="token comment"># 利用 -p 这个选项，立刻就可以将 test1/test2/test3/test4 依次删除。</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># rmdir -p test1/test2/test3/test4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意：这个 rmdir 仅能删除空的目录，如果下面存在文件，需要先删除文件，递归删除多个目录加上 -p 参数。</strong></p>
+<p><strong>可以使用 rm 命令来删除非空目录。</strong></p>
+<blockquote>
+<p>cp ( 复制文件或目录 )</p>
+</blockquote>
+<p>语法：     </p>
+<p>cp 原来的地方 新的地方！ </p>
+<pre class="line-numbers language-none"><code class="language-none">[root@www ~]# cp [-adfilprsu] 来源档(source) 目标档(destination)
+[root@www ~]# cp [options] source1 source2 source3 .... directory<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li><strong>-a：</strong>相当於 -pdr 的意思，至於 pdr 请参考下列说明；(常用)</li>
+<li><strong>-p：</strong>连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</li>
+<li><strong>-d：</strong>若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身；</li>
+<li><strong>-r：</strong>递归持续复制，用於目录的复制行为；(常用)</li>
+<li><strong>-f：</strong>为强制(force)的意思，若目标文件已经存在且无法开启，则移除后再尝试一次；</li>
+<li><strong>-i：</strong>若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</li>
+<li><strong>-l：</strong>进行硬式连结(hard link)的连结档创建，而非复制文件本身。</li>
+<li><strong>-s：</strong>复制成为符号连结档 (symbolic link)，亦即『捷径』文件；</li>
+<li><strong>-u：</strong>若 destination 比 source 旧才升级 destination ！</li>
+</ul>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cp install.sh  kuangstudy  #拷贝文件至目录  这里是将install.sh 由home拷贝到kuangstudy</span>
+
+<span class="token comment">#如果文件重复，会询问是否覆盖</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cp install.sh  kuangstudy</span>
+cp: overwrite ‘kuangstudy/install.sh’? y <span class="token comment"># n不覆盖，y为覆盖</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>rm ( 移除文件或目录 )</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">rm [-fir] 文件或目录<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-f ：就是 force 的意思，忽略不存在的文件，不会出现警告信息，强制删除；</li>
+<li>-i ：互动模式，在删除前会询问使用者是否动作</li>
+<li>-r ：递归删除啊！最常用在目录的删除了！这是非常危险的选项！！！</li>
+</ul>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将刚刚在 cp 的实例中创建的 install.sh删除掉！</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># rm -i install.sh</span>
+rm: remove regular <span class="token function">file</span> ‘install.sh’? y
+<span class="token comment"># 如果加上 -i 的选项就会主动询问喔，避免你删除到错误的档名！</span>
+
+<span class="token comment"># 尽量不要在服务器上使用 rm -rf /  这个命令会删除系统中的所有文件（该文件夹下的所有东西都被删除），删库跑路就是这么操作的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>mv  ( 移动文件与目录，或修改名称 )</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@www ~<span class="token punctuation">]</span><span class="token comment"># mv [-fiu] source destination</span>
+<span class="token punctuation">[</span>root@www ~<span class="token punctuation">]</span><span class="token comment"># mv [options] source1 source2 source3 .... directory</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</li>
+<li>-i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！</li>
+<li>-u ：只更换比较新的文件</li>
+</ul>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 复制一个文件到当前目录</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cp /root/install.sh /home</span>
+
+<span class="token comment"># 创建一个文件夹 test</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mkdir test</span>
+
+<span class="token comment"># 将复制过来的文件移动到我们创建的目录，并查看</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mv install.sh test</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ls</span>
+<span class="token builtin class-name">test</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cd test</span>
+<span class="token punctuation">[</span>root@kuangshen test<span class="token punctuation">]</span><span class="token comment"># ls</span>
+install.sh
+
+<span class="token comment"># 将文件夹重命名，然后再次查看！</span>
+<span class="token punctuation">[</span>root@kuangshen test<span class="token punctuation">]</span><span class="token comment"># cd ..</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># mv test mvtest</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ls</span>
+mvtest<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h3><blockquote>
+<p>看懂文件属性</p>
+</blockquote>
+<p>Linux系统是一种典型的多用户系统，不同的用户处于不同的地位，拥有不同的权限。为了保护系统的安全性，Linux系统对不同的用户访问同一文件（包括目录文件）的权限做了不同的规定。</p>
+<p>在Linux中我们可以使用<code>ll</code>或者<code>ls –l</code>命令来显示一个文件的属性以及文件所属的用户和组。</p>
+<p><img src="images/blog/image-20201008202333515.png" alt="image-20201008202333515"></p>
+<p>实例中，boot文件的第一个属性用”d”表示。”d”在Linux中代表该文件是一个目录文件。</p>
+<p>在Linux中第一个字符代表这个文件是目录、文件或链接文件等等：</p>
+<ul>
+<li>==当为[ <strong>d</strong> ]则是目录==</li>
+<li>==当为[ <strong>-</strong> ]则是文件；==</li>
+<li>==若是[ <strong>l</strong> ]则表示为链接文档 ( link file )；==</li>
+<li>若是[ <strong>b</strong> ]则表示为装置文件里面的可供储存的接口设备 ( 可随机存取装置 )；</li>
+<li>若是[ <strong>c</strong> ]则表示为装置文件里面的串行端口设备，例如键盘、鼠标 ( 一次性读取装置 )。</li>
+</ul>
+<p>接下来的字符中，以三个为一组，且均为『rwx』 的三个参数的组合。</p>
+<p>其中，[ r ]代表可读(read)、[ w ]代表可写(write)、[ x ]代表可执行(execute)。</p>
+<p>要注意的是，这三个权限的位置不会改变，如果没有权限，就会出现减号[ - ]而已。</p>
+<p>每个文件的属性由左边第一部分的10个字符来确定（如下图）：</p>
+<p><img src="images/blog/image-20201008203048944.png" alt="image-20201008203048944"></p>
+<p>从左至右用0-9这些数字来表示。</p>
+<p>第0位确定文件类型，第1-3位确定属主（该文件的所有者）拥有该文件的权限。第4-6位确定属组（所有者的同组用户）拥有该文件的权限，第7-9位确定其他用户拥有该文件的权限。</p>
+<p>其中：</p>
+<p>第1、4、7位表示读权限，如果用”r”字符表示，则有读权限，如果用”-“字符表示，则没有读权限；</p>
+<p>第2、5、8位表示写权限，如果用”w”字符表示，则有写权限，如果用”-“字符表示没有写权限；</p>
+<p>第3、6、9位表示可执行权限，如果用”x”字符表示，则有执行权限，如果用”-“字符表示，则没有执行权限。</p>
+<p>对于文件来说，它都有一个特定的所有者，也就是对该文件具有所有权的用户。</p>
+<p>同时，在Linux系统中，用户是按组分类的，一个用户属于一个或多个组。</p>
+<p>文件所有者以外的用户又可以分为文件所有者的同组用户和其他用户。</p>
+<p>因此，Linux系统按文件所有者、文件所有者同组用户和其他用户来规定了不同的文件访问权限。</p>
+<p>在以上实例中，boot 文件是一个目录文件，属主和属组都为 root。<em>第一个root位置表示属主，第二个root表示属组</em></p>
+<blockquote>
+<p>修改文件属性</p>
+</blockquote>
+<p><strong>1、chgrp：更改文件属组</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">chgrp [-R] 属组名 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>-R：递归更改文件属组，就是在更改某个目录文件的属组时，如果加上-R的参数，那么该目录下的所有文件的属组都会更改。</p>
+<p>3vS_j:hG/n&lt;,</p>
+<p><strong>2、chown：更改文件属主，也可以同时更改文件属组</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">chown [–R] 属主名 文件名
+chown [-R] 属主名：属组	名 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>==<strong>3、chmod：更改文件9个属性（必须要掌握）</strong>==</p>
+<pre class="line-numbers language-none"><code class="language-none">chmod [-R] xyz 文件或目录<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>Linux文件属性有两种设置方法，一种是数字(常用的是数字），一种是符号。</p>
+<p>Linux文件的基本权限就有九个，分别是owner/group/others三种身份各有自己的read/write/execute权限。</p>
+<p>先复习一下刚刚上面提到的数据：文件的权限字符为：『-rwxrwxrwx』， 这九个权限是三个三个一组的！其中，我们可以使用数字来代表各个权限，各权限的分数对照表如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">r:4     w:2         x:1
+
+可读可写不可执行    rw- 6
+可读可写可执行      rwx 7
+chmod 777  文件赋予所有用户可读可写可执行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>每种身份(owner/group/others)各自的三个权限(r/w/x)分数是需要累加的，例如当权限为：[-rwxrwx—] 分数则是：</p>
+<ul>
+<li>owner = rwx = 4+2+1 = 7</li>
+<li>group = rwx = 4+2+1 = 7</li>
+<li>others= — = 0+0+0 = 0</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> <span class="token number">770</span> filename
+<span class="token comment"># 把filename设置权限为rwxrwx---</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="文件内容查看"><a href="#文件内容查看" class="headerlink" title="文件内容查看"></a>文件内容查看</h3><blockquote>
+<p>概述</p>
+</blockquote>
+<p>Linux系统中使用以下命令来查看文件的内容：</p>
+<ul>
+<li>==cat 由第一行开始显示文件内容 ，==</li>
+<li>tac 从最后一行开始显示，可以看出 tac 是 cat 的倒着写！</li>
+<li>nl  显示的时候，顺道输出行号！看代码的时候希望显示行号</li>
+<li>more 一页一页的显示文件内容 ==空格表示翻页，enter代表向下看一行 :f可以看到当前的行号==</li>
+<li>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！==空格下翻页，上下键代表翻动页面！q命令退出==</li>
+<li>head 只看头几行</li>
+<li>tail 只看尾巴几行</li>
+</ul>
+<p>你可以使用 *man [命令]*来查看各个命令的使用文档，如 ：man cp。</p>
+<p>网络配置目录：<code>cd /etc/sysconfig/network-scripts</code></p>
+<p><img src="images/blog/image-20201008210213118.png" alt="image-20201008210213118"></p>
+<p><strong>使用ifconfig来查看网络配置</strong></p>
+<blockquote>
+<p>cat 由第一行开始显示文件内容</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat [-AbEnTv]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-A ：相当於 -vET 的整合选项，可列出一些特殊字符而不是空白而已；</li>
+<li>-b ：列出行号，仅针对非空白行做行号显示，空白行不标行号！</li>
+<li>-E ：将结尾的断行字节 $ 显示出来；</li>
+<li>-n ：列印出行号，连同空白行也会有行号，与 -b 的选项不同；</li>
+<li>-T ：将 [tab] 按键以 ^I 显示出来；</li>
+<li>-v ：列出一些看不出来的特殊字符</li>
+</ul>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看网络配置: 文件地址 /etc/sysconfig/network-scripts/</span>
+<span class="token punctuation">[</span>root@kuangshen ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/sysconfig/network-scripts/ifcfg-eth0</span>
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>eth0
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>dhcp
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>tac</p>
+</blockquote>
+<p>tac与cat命令刚好相反，文件内容从最后一行开始显示，可以看出 tac 是 cat 的倒着写！如：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@kuangshen ~<span class="token punctuation">]</span><span class="token comment"># tac /etc/sysconfig/network-scripts/ifcfg-eth0</span>
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>dhcp
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>eth0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>nl  显示行号</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">nl [-bnw] 文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-b ：指定行号指定的方式，主要有两种：-b a ：表示不论是否为空行，也同样列出行号(类似 cat -n)；-b t ：如果有空行，空的那一行不要列出行号(默认值)；</li>
+<li>-n ：列出行号表示的方法，主要有三种：-n ln ：行号在荧幕的最左方显示；-n rn ：行号在自己栏位的最右方显示，且不加 0 ；-n rz ：行号在自己栏位的最右方显示，且加 0 ；</li>
+<li>-w ：行号栏位的占用的位数。</li>
+</ul>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@kuangshen ~<span class="token punctuation">]</span><span class="token comment"># nl /etc/sysconfig/network-scripts/ifcfg-eth0</span>
+<span class="token assign-left variable">1DEVICE</span><span class="token operator">=</span>eth0
+<span class="token assign-left variable">2BOOTPROTO</span><span class="token operator">=</span>dhcp
+<span class="token assign-left variable">3ONBOOT</span><span class="token operator">=</span>yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>more  一页一页翻动</p>
+</blockquote>
+<p>在 more 这个程序的运行过程中，你有几个按键可以按的：</p>
+<ul>
+<li>空白键 (space)：代表向下翻一页；</li>
+<li>Enter   ：代表向下翻『一行』；</li>
+<li>/字串   ：代表在这个显示的内容当中，向下搜寻『字串』这个关键字；</li>
+<li>:f    ：立刻显示出档名以及目前显示的行数；</li>
+<li>q    ：代表立刻离开 more ，不再显示该文件内容。</li>
+<li>b 或 [ctrl]-b ：代表往回翻页，不过这动作只对文件有用，对管线无用。</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@kuangshen etc<span class="token punctuation">]</span><span class="token comment"># more /etc/csh.login</span>
+<span class="token punctuation">[</span>root@iZ2ze1m5qjg1tjthcel6gcZ etc<span class="token punctuation">]</span><span class="token comment"># more csh.login</span>
+<span class="token comment"># /etc/csh.login</span>
+
+<span class="token comment"># System wide environment and startup programs, for login setup</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span> <span class="token variable">$&#123;?PATH&#125;</span> <span class="token punctuation">)</span> <span class="token keyword">then</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token variable">$uid</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token keyword">then</span>
+		setenv <span class="token environment constant">PATH</span> <span class="token string">"/usr/local/sbin:/usr/sbin:/usr/local/bin:/usr/bin"</span>
+        <span class="token keyword">else</span>
+		setenv <span class="token environment constant">PATH</span> <span class="token string">"/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"</span>
+        endif
+<span class="token keyword">else</span>
+	<span class="token comment">#add sbin directories to the path</span>
+	foreach p <span class="token punctuation">(</span> /usr/local/sbin /usr/sbin <span class="token punctuation">)</span>
+		switch <span class="token punctuation">(</span><span class="token string">":<span class="token variable">$&#123;<span class="token environment constant">PATH</span>&#125;</span>:"</span><span class="token punctuation">)</span>
+		<span class="token keyword">case</span> <span class="token string">"*:<span class="token variable">$&#123;p&#125;</span>:*"</span><span class="token builtin class-name">:</span>
+			breaksw
+		default:
+			<span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token variable">$uid</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token keyword">then</span>
+                        	<span class="token builtin class-name">set</span> path <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token variable">$&#123;p&#125;</span> <span class="token variable">$&#123;path<span class="token operator">:</span>q&#125;</span> <span class="token punctuation">)</span>
+			<span class="token keyword">else</span>
+--More--<span class="token punctuation">(</span><span class="token number">47</span>%<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>less  一页一页翻动，以下实例输出/etc/man.config文件的内容：</p>
+</blockquote>
+<p>less运行时可以输入的命令有：</p>
+<ul>
+<li>空白键  ：向下翻动一页；</li>
+<li>[pagedown]：向下翻动一页；</li>
+<li>[pageup] ：向上翻动一页；</li>
+<li>/字串  ：向下搜寻『字串』的功能；</li>
+<li>?字串  ：向上搜寻『字串』的功能；</li>
+<li>n   ：重复前一个搜寻 (与 / 或 ? 有关！)</li>
+<li>N   ：反向的重复前一个搜寻 (与 / 或 ? 有关！)</li>
+<li>q   ：离开 less 这个程序；</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@iZ2ze1m5qjg1tjthcel6gcZ etc<span class="token punctuation">]</span><span class="token comment"># less csh.login</span>
+
+
+<span class="token comment"># /etc/csh.login</span>
+
+<span class="token comment"># System wide environment and startup programs, for login setup</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span> <span class="token variable">$&#123;?PATH&#125;</span> <span class="token punctuation">)</span> <span class="token keyword">then</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token variable">$uid</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token keyword">then</span>
+                setenv <span class="token environment constant">PATH</span> <span class="token string">"/usr/local/sbin:/usr/sbin:/usr/local/bin:/usr/bin"</span>
+        <span class="token keyword">else</span>
+                setenv <span class="token environment constant">PATH</span> <span class="token string">"/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"</span>
+        endif
+<span class="token keyword">else</span>
+        <span class="token comment">#add sbin directories to the path</span>
+        foreach p <span class="token punctuation">(</span> /usr/local/sbin /usr/sbin <span class="token punctuation">)</span>
+                switch <span class="token punctuation">(</span><span class="token string">":<span class="token variable">$&#123;<span class="token environment constant">PATH</span>&#125;</span>:"</span><span class="token punctuation">)</span>
+                <span class="token keyword">case</span> <span class="token string">"*:<span class="token variable">$&#123;p&#125;</span>:*"</span><span class="token builtin class-name">:</span>
+                        breaksw
+                default:
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token variable">$uid</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token keyword">then</span>
+                                <span class="token builtin class-name">set</span> path <span class="token operator">=</span> <span class="token punctuation">(</span> <span class="token variable">$&#123;p&#125;</span> <span class="token variable">$&#123;path<span class="token operator">:</span>q&#125;</span> <span class="token punctuation">)</span>
+                        <span class="token keyword">else</span>
+csh.login
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>head  取出文件前面几行</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">head [-n number] 文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：**-n** 后面接数字，代表显示几行的意思！</p>
+<p>默认的情况中，显示前面 10 行！若要显示前 20 行，就得要这样：</p>
+<pre class="line-numbers language-none"><code class="language-none">[root@kuangshen etc]# head -n 20 &#x2F;etc&#x2F;csh.login<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>tail  取出文件后面几行</p>
+</blockquote>
+<p>语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">tail [-n number] 文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-n ：后面接数字，代表显示几行的意思</li>
+</ul>
+<p>默认的情况中，显示最后 10 行！若要显示最后 20 行，就得要这样：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@kuangshen etc<span class="token punctuation">]</span><span class="token comment"># tail -n 20 /etc/csh.login</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>拓展：Linux 链接概念</p>
+</blockquote>
+<p>Linux 链接分两种，一种被称为硬链接（Hard Link），另一种被称为软链接（Symbolic Link）。</p>
+<p>情况下，<strong>ln</strong> 命令产生硬链接。</p>
+<p><strong>硬连接</strong></p>
+<p>硬连接指通过索引节点来进行连接。在 Linux 的文件系统中，保存在磁盘分区中的文件不管是什么类型都给它分配一个编号，称为索引节点号(Inode Index)。在 Linux 中，多个文件名指向同一索引节点是存在的。比如：A 是 B 的硬链接（A 和 B 都是文件名），则 A 的目录项中的 inode 节点号与 B 的目录项中的 inode 节点号相同，<strong>即一个 inode 节点对应两个不同的文件名，两个文件名指向同一个文件，A 和 B 对文件系统来说是完全平等的。删除其中任何一个都不会影响另外一个的访问</strong>。</p>
+<p>硬连接的作用是允许一个文件拥有多个有效路径名，这样用户就可以建立硬连接到重要文件，以防止“误删”的功能。其原因如上所述，因为对应该目录的索引节点有一个以上的连接。只删除一个连接并不影响索引节点本身和其它的连接，只有当最后一个连接被删除后，文件的数据块及目录的连接才会被释放。也就是说，文件真正删除的条件是与之相关的所有硬连接文件均被删除。</p>
+<p><strong>软连接</strong> </p>
+<p>另外一种连接称之为符号连接（Symbolic Link），也叫软连接。<strong>软链接文件有类似于 Windows 的快捷方式，如果删除了原文件，那么快捷方式也访问不了了</strong>。它实际上是一个特殊的文件。在符号连接中，文件实际上是一个文本文件，其中包含的有另一文件的位置信息。比如：A 是 B 的软链接（A 和 B 都是文件名），A 的目录项中的 inode 节点号与 B 的目录项中的 inode 节点号不相同，A 和 B 指向的是两个不同的 inode，继而指向两块不同的数据块。但是 A 的数据块中存放的只是 B 的路径名（可以根据这个找到 B 的目录项）。A 和 B 之间是“主从”关系，如果 B 被删除了，A 仍然存在（因为两个是不同的文件），但指向的是一个无效的链接。</p>
+<p><strong>测试：</strong></p>
+<ul>
+<li>创建连接： ln命令 </li>
+<li>touch 创建文件</li>
+<li>echo 输入字符串</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@kuangshen /<span class="token punctuation">]</span><span class="token comment"># cd /home</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># touch f1 # 创建一个测试文件f1</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ls</span>
+f1
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ln f1 f2     # 创建f1的一个硬连接文件f2 默认是硬链接</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ln -s f1 f3   # 创建f1的一个符号连接文件f3 加个-s参数 创建的是软连接</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># ls -li       # -i参数显示文件的inode节点信息</span>
+<span class="token number">397247</span> -rw-r--r-- <span class="token number">2</span> root root     <span class="token number">0</span> Mar <span class="token number">13</span> 00:50 f1
+<span class="token number">397247</span> -rw-r--r-- <span class="token number">2</span> root root     <span class="token number">0</span> Mar <span class="token number">13</span> 00:50 f2
+<span class="token number">397248</span> lrwxrwxrwx <span class="token number">1</span> root root     <span class="token number">2</span> Mar <span class="token number">13</span> 00:50 f3 -<span class="token operator">></span> f1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="images/blog/image-20201008214542041.png" alt="image-20201008214542041"></p>
+<p>从上面的结果中可以看出，硬连接文件 f2 与原文件 f1 的 inode 节点相同，均为 397247，然而软连接文件的 inode 节点不同。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># echo 字符串输出 >> f1 输出到 f1文件</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># echo "I am f1 file" >>f1</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cat f1</span>
+I am f1 <span class="token function">file</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cat f2</span>
+I am f1 <span class="token function">file</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cat f3</span>
+I am f1 <span class="token function">file</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># rm -f f1</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cat f2</span>
+I am f1 <span class="token function">file</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># cat f3</span>
+cat: f3: No such <span class="token function">file</span> or directory<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过上面的测试可以看出：当删除原始文件 f1 后，硬连接 f2 不受影响，但是软连接 f1 文件无效；</p>
+<p>依此您可以做一些相关的测试，可以得到以下全部结论：</p>
+<ul>
+<li>删除符号连接f3,对f1,f2无影响；</li>
+<li>删除硬连接f2，对f1,f3也无影响；</li>
+<li>删除原文件f1，对硬连接f2没有影响，导致符号连接f3失效；</li>
+<li>同时删除原文件f1,硬连接f2，整个文件会真正的被删除。</li>
+</ul>
+<h3 id="vim编译器"><a href="#vim编译器" class="headerlink" title="vim编译器"></a>vim编译器</h3><blockquote>
+<p>什么是Vim编辑器</p>
+</blockquote>
+<p>vim通过一些插件可以实现和IDE一样的查看</p>
+<p>Vim是从 vi 发展出来的一个文本编辑器。代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。==（查看内容，编辑内容，保存内容）==</p>
+<p>简单的来说， vi 是老式的字处理器，不过功能已经很齐全了，但是还是有可以进步的地方。</p>
+<p>vim 则可以说是程序开发者的一项很好用的工具。</p>
+<p>所有的 Unix Like 系统都会内建 vi 文书编辑器，其他的文书编辑器则不一定会存在。</p>
+<p>连 vim 的官方网站 (<a target="_blank" rel="noopener" href="http://www.vim.org/">http://www.vim.org</a>) 自己也说 vim 是一个程序开发工具而不是文字处理软件。</p>
+<p>vim 键盘图：</p>
+<p><img src="images/blog/64116-20191222111829090-17043451.gif" alt="vim键盘图"></p>
+<blockquote>
+<p>三种使用模式</p>
+</blockquote>
+<p>基本上 vi/vim 共分为三种模式，分别是<strong>命令模式（Command mode）</strong>，<strong>输入模式（Insert mode）</strong>和<strong>底线命令模式（Last line mode）</strong>。这三种模式的作用分别是：</p>
+<p><strong>命令模式：</strong></p>
+<p>用户刚刚启动 vi/vim，便进入了命令模式。</p>
+<p>此状态下敲击键盘动作会被Vim识别为命令，而非输入字符。比如我们此时按下i，并不会输入一个字符，i被当作了一个命令。</p>
+<p>以下是常用的几个命令：</p>
+<ul>
+<li><strong>i</strong> 切换到输入模式，以输入字符。</li>
+<li><strong>x</strong> 删除当前光标所在处的字符。</li>
+<li><strong>:</strong> 切换到底线命令模式，以在最底一行输入命令。如果是编辑模式，需要先退出编辑模式。使用ESC</li>
+</ul>
+<p>若想要编辑文本：启动Vim，进入了命令模式，按下i，切换到输入模式。</p>
+<p>命令模式只有一些最基本的命令，因此仍要依靠底线命令模式输入更多命令。</p>
+<p><strong>输入模式：</strong></p>
+<p>在命令模式下按下i就进入了输入模式。</p>
+<p>在输入模式中，可以使用以下按键：</p>
+<ul>
+<li><strong>字符按键以及Shift组合</strong>，输入字符</li>
+<li><strong>ENTER</strong>，回车键，换行</li>
+<li><strong>BACK SPACE</strong>，退格键，删除光标前一个字符</li>
+<li><strong>DEL</strong>，删除键，删除光标后一个字符</li>
+<li><strong>方向键</strong>，在文本中移动光标</li>
+<li><strong>HOME</strong>/<strong>END</strong>，移动光标到行首/行尾</li>
+<li><strong>Page Up</strong>/<strong>Page Down</strong>，上/下翻页</li>
+<li><strong>Insert</strong>，切换光标为输入/替换模式，光标将变成竖线/下划线</li>
+<li><strong>ESC</strong>，退出输入模式，切换到命令模式</li>
+</ul>
+<p><strong>底线命令模式</strong></p>
+<p>在命令模式下按下:（英文冒号）就进入了底线命令模式。光标移动到了最底下，就可以在这里输入一些底线命令了</p>
+<p>底线命令模式可以输入单个或多个字符的命令，可用的命令非常多。</p>
+<p>在底线命令模式中，基本的命令有（已经省略了冒号）：</p>
+<ul>
+<li>q 退出程序</li>
+<li>w 保存文件</li>
+</ul>
+<p>按ESC键可随时退出底线命令模式。</p>
+<p><img src="images/blog/image-20201008220932366.png" alt="image-20201008220932366"></p>
+<p>简单的说，我们可以将这三个模式想成底下的图标来表示：</p>
+<p><img src="images/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20201008221127.jpg" alt="vim操作流程"></p>
+<blockquote>
+<p>完整的演示说明</p>
+</blockquote>
+<ol>
+<li>新建或者编辑文件  <code>vim filename</code></li>
+<li>按i a o 进入输入模式，编写内容</li>
+<li>编写完成后按ESC退出编辑模式</li>
+<li>按:进入底线模式  输入<code>wq</code>保存退出</li>
+</ol>
+<blockquote>
+<p>Vim 按键说明</p>
+</blockquote>
+<p>除了上面简易范例的 i, Esc, :wq 之外，其实 vim 还有非常多的按键可以使用。</p>
+<p><strong>第一部分：一般模式（命令模式）可用的光标移动、复制粘贴、搜索替换等</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">移动光标的方法</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">h 或 向左箭头键(←)</td>
+<td>光标向左移动一个字符</td>
+</tr>
+<tr>
+<td align="left">j 或 向下箭头键(↓)</td>
+<td>光标向下移动一个字符</td>
+</tr>
+<tr>
+<td align="left">k 或 向上箭头键(↑)</td>
+<td>光标向上移动一个字符</td>
+</tr>
+<tr>
+<td align="left">l 或 向右箭头键(→)</td>
+<td>光标向右移动一个字符</td>
+</tr>
+<tr>
+<td align="left">[Ctrl] + [f]</td>
+<td>屏幕『向下』移动一页，相当于 [Page Down]按键 (常用)</td>
+</tr>
+<tr>
+<td align="left">[Ctrl] + [b]</td>
+<td>屏幕『向上』移动一页，相当于 [Page Up] 按键 (常用)</td>
+</tr>
+<tr>
+<td align="left">[Ctrl] + [d]</td>
+<td>屏幕『向下』移动半页</td>
+</tr>
+<tr>
+<td align="left">[Ctrl] + [u]</td>
+<td>屏幕『向上』移动半页</td>
+</tr>
+<tr>
+<td align="left">+</td>
+<td>光标移动到非空格符的下一行</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td>光标移动到非空格符的上一行  配置文件中空格较多使用这个方便</td>
+</tr>
+<tr>
+<td align="left">==n&lt; space&gt;==</td>
+<td>那个 n 表示『数字』，例如 20 。按下数字后再按空格键，光标会向右移动这一行的 n 个字符。</td>
+</tr>
+<tr>
+<td align="left">0 或功能键[Home]</td>
+<td>这是数字『 0 』：移动到这一行的最前面字符处 (常用)</td>
+</tr>
+<tr>
+<td align="left">$ 或功能键[End]</td>
+<td>移动到这一行的最后面字符处(常用)</td>
+</tr>
+<tr>
+<td align="left">H</td>
+<td>光标移动到这个屏幕的最上方那一行的第一个字符</td>
+</tr>
+<tr>
+<td align="left">M</td>
+<td>光标移动到这个屏幕的中央那一行的第一个字符</td>
+</tr>
+<tr>
+<td align="left">L</td>
+<td>光标移动到这个屏幕的最下方那一行的第一个字符</td>
+</tr>
+<tr>
+<td align="left">G</td>
+<td>移动到这个档案的最后一行(常用)</td>
+</tr>
+<tr>
+<td align="left">nG</td>
+<td>n 为数字。移动到这个档案的第 n 行。例如 20G 则会移动到这个档案的第 20 行(可配合 :set nu)</td>
+</tr>
+<tr>
+<td align="left">gg</td>
+<td>移动到这个档案的第一行，相当于 1G 啊！(常用)</td>
+</tr>
+<tr>
+<td align="left">==n&lt; Enter&gt;==</td>
+<td>n 为数字。光标向下移动 n 行(常用)</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">搜索替换</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">==/word==</td>
+<td>向光标之下寻找一个名称为 word 的字符串。例如要在档案内搜寻 vbird 这个字符串，就输入 /vbird 即可！(常用)</td>
+</tr>
+<tr>
+<td align="left">?word</td>
+<td>向光标之上寻找一个字符串名称为 word 的字符串。</td>
+</tr>
+<tr>
+<td align="left">==n==</td>
+<td>这个 n 是英文按键。代表重复前一个搜寻的动作。举例来说， 如果刚刚我们执行 /vbird 去向下搜寻 vbird 这个字符串，则按下 n 后，会向下继续搜寻下一个名称为 vbird 的字符串。如果是执行 ?vbird 的话，那么按下 n 则会向上继续搜寻名称为 vbird 的字符串！</td>
+</tr>
+<tr>
+<td align="left">==N==</td>
+<td>这个 N 是英文按键。与 n 刚好相反，为『反向』进行前一个搜寻动作。例如 /vbird 后，按下 N 则表示『向上』搜寻 vbird 。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">删除、复制与粘贴</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">x, X</td>
+<td>在一行字当中，x 为向后删除一个字符 (相当于 [del] 按键)， X 为向前删除一个字符(相当于 [backspace] 亦即是退格键) (常用)</td>
+</tr>
+<tr>
+<td align="left">nx</td>
+<td>n 为数字，连续向后删除 n 个字符。举例来说，我要连续删除 10 个字符， 『10x』。</td>
+</tr>
+<tr>
+<td align="left">dd</td>
+<td>删除游标所在的那一整行(常用)</td>
+</tr>
+<tr>
+<td align="left">ndd</td>
+<td>n 为数字。删除光标所在的向下 n 行，例如 20dd 则是删除 20 行 (常用)</td>
+</tr>
+<tr>
+<td align="left">d1G</td>
+<td>删除光标所在到第一行的所有数据</td>
+</tr>
+<tr>
+<td align="left">dG</td>
+<td>删除光标所在到最后一行的所有数据</td>
+</tr>
+<tr>
+<td align="left">d$</td>
+<td>删除游标所在处，到该行的最后一个字符</td>
+</tr>
+<tr>
+<td align="left">d0</td>
+<td>那个是数字的 0 ，删除游标所在处，到该行的最前面一个字符</td>
+</tr>
+<tr>
+<td align="left">yy</td>
+<td>复制游标所在的那一行(常用)</td>
+</tr>
+<tr>
+<td align="left">nyy</td>
+<td>n 为数字。复制光标所在的向下 n 行，例如 20yy 则是复制 20 行(常用)</td>
+</tr>
+<tr>
+<td align="left">y1G</td>
+<td>复制游标所在行到第一行的所有数据</td>
+</tr>
+<tr>
+<td align="left">yG</td>
+<td>复制游标所在行到最后一行的所有数据</td>
+</tr>
+<tr>
+<td align="left">y0</td>
+<td>复制光标所在的那个字符到该行行首的所有数据</td>
+</tr>
+<tr>
+<td align="left">y$</td>
+<td>复制光标所在的那个字符到该行行尾的所有数据</td>
+</tr>
+<tr>
+<td align="left">p, P</td>
+<td>p 为将已复制的数据在光标下一行贴上，P 则为贴在游标上一行！举例来说，我目前光标在第 20 行，且已经复制了 10 行数据。则按下 p 后， 那 10 行数据会贴在原本的 20 行之后，亦即由 21 行开始贴。但如果是按下 P 呢？那么原本的第 20 行会被推到变成 30 行。(常用)</td>
+</tr>
+<tr>
+<td align="left">J</td>
+<td>将光标所在行与下一行的数据结合成同一行</td>
+</tr>
+<tr>
+<td align="left">c</td>
+<td>重复删除多个数据，例如向下删除 10 行，[ 10cj ]</td>
+</tr>
+<tr>
+<td align="left">==u==</td>
+<td>复原前一个动作。(常用)</td>
+</tr>
+<tr>
+<td align="left">[Ctrl]+r</td>
+<td>重做上一个动作。(常用)</td>
+</tr>
+</tbody></table>
+<p><strong>第二部分：一般模式切换到编辑模式的可用的按钮说明</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">进入输入或取代的编辑模式</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">==i, I==</td>
+<td>进入输入模式(Insert mode)：i 为『从目前光标所在处输入』， I 为『在目前所在行的第一个非空格符处开始输入』。(常用)</td>
+</tr>
+<tr>
+<td align="left">a, A</td>
+<td>进入输入模式(Insert mode)：a 为『从目前光标所在的下一个字符处开始输入』， A 为『从光标所在行的最后一个字符处开始输入』。(常用)</td>
+</tr>
+<tr>
+<td align="left">o, O</td>
+<td>进入输入模式(Insert mode)：这是英文字母 o 的大小写。o 为『在目前光标所在的下一行处输入新的一行』；O 为在目前光标所在处的上一行输入新的一行！(常用)</td>
+</tr>
+<tr>
+<td align="left">r, R</td>
+<td>进入取代模式(Replace mode)：r 只会取代光标所在的那一个字符一次；R会一直取代光标所在的文字，直到按下 ESC 为止；(常用)</td>
+</tr>
+<tr>
+<td align="left">==[Esc]==</td>
+<td>退出编辑模式，回到一般模式中(常用)</td>
+</tr>
+</tbody></table>
+<p><strong>第三部分：一般模式切换到指令行模式的可用的按钮说明</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">指令行的储存、离开等指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">:w</td>
+<td>将编辑的数据写入硬盘档案中(常用)</td>
+</tr>
+<tr>
+<td align="left">:w!</td>
+<td>若文件属性为『只读』时，强制写入该档案。不过，到底能不能写入， 还是跟你对该档案的档案权限有关啊！</td>
+</tr>
+<tr>
+<td align="left">:q</td>
+<td>离开 vi (常用)</td>
+</tr>
+<tr>
+<td align="left">:q!</td>
+<td>若曾修改过档案，又不想储存，使用 ! 为强制离开不储存档案。</td>
+</tr>
+<tr>
+<td align="left">注意一下啊，那个惊叹号 (!) 在 vi 当中，常常具有『强制』的意思～</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">==:wq==</td>
+<td>储存后离开，若为 :wq! 则为强制储存后离开 (常用)</td>
+</tr>
+<tr>
+<td align="left">ZZ</td>
+<td>这是大写的 Z 喔！若档案没有更动，则不储存离开，若档案已经被更动过，则储存后离开！</td>
+</tr>
+<tr>
+<td align="left">:w [filename]</td>
+<td>将编辑的数据储存成另一个档案（类似另存新档）</td>
+</tr>
+<tr>
+<td align="left">:r [filename]</td>
+<td>在编辑的数据中，读入另一个档案的数据。亦即将 『filename』 这个档案内容加到游标所在行后面</td>
+</tr>
+<tr>
+<td align="left">:n1,n2 w [filename]</td>
+<td>将 n1 到 n2 的内容储存成 filename 这个档案。</td>
+</tr>
+<tr>
+<td align="left">:! command</td>
+<td>暂时离开 vi 到指令行模式下执行 command 的显示结果！例如 『:! ls /home』即可在 vi 当中看 /home 底下以 ls 输出的档案信息！</td>
+</tr>
+<tr>
+<td align="left">==:set nu==</td>
+<td>显示行号，设定之后，会在每一行的前缀显示该行的行号</td>
+</tr>
+<tr>
+<td align="left">:set nonu</td>
+<td>与 set nu 相反，为取消行号！</td>
+</tr>
+</tbody></table>
+<p>以上标红的掌握熟练即可，其余的了解，我们平时使用VIM最多的就是修改下文件内容而已！</p>
+<h3 id="账号管理"><a href="#账号管理" class="headerlink" title="账号管理"></a>账号管理</h3><p>一般在公司中，员工用的都不是root账户</p>
+<blockquote>
+<p>简介</p>
+</blockquote>
+<p>Linux系统是一个多用户多任务的分时操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。</p>
+<p>用户的账号一方面可以帮助系统管理员对使用系统的用户进行跟踪，并控制他们对系统资源的访问；另一方面也可以帮助用户组织文件，并为用户提供安全性保护。</p>
+<p>每个用户账号都拥有一个唯一的用户名和各自的口令。</p>
+<p>用户在登录时键入正确的用户名和口令后，就能够进入系统和自己的主目录。</p>
+<p>实现用户账号的管理，要完成的工作主要有如下几个方面：</p>
+<ul>
+<li>用户账号的添加、删除与修改。</li>
+<li>用户口令的管理。</li>
+<li>用户组的管理。</li>
+</ul>
+<blockquote>
+<p>用户账号的管理</p>
+</blockquote>
+<p>用户账号的管理工作主要涉及到用户账号的添加、修改和删除。</p>
+<p>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等资源。</p>
+<blockquote>
+<p>添加账号 useradd</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">useradd 选项 用户名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>参数说明：</p>
+<ul>
+<li><p>选项 :</p>
+</li>
+<li><ul>
+<li>-c comment 指定一段注释性描述。</li>
+<li>-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</li>
+<li>-g 用户组 指定用户所属的用户组。</li>
+<li>-G 用户组，给用户指定组。</li>
+<li>-m　使用者目录如不存在则自动建立。</li>
+<li>-s Shell文件 指定用户的登录Shell。</li>
+<li>-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</li>
+</ul>
+</li>
+<li><p>用户名 :</p>
+</li>
+<li><ul>
+<li>指定新账号的登录名。</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 此命令创建了一个用户kuangshen，其中-m选项用来为登录名kuangshen产生一个主目录 /home/kuangshen</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># useradd -m kuangshen</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>在Linux中一切皆文件，这里的添加用户说白了就是在<code>/etc/password</code>文件中写入用户的信息  ,同时更新其他系统文件如/etc/shadow,/etc/grou等。</p>
+<blockquote>
+<p>删除帐号</p>
+</blockquote>
+<p>如果一个用户的账号不再使用，可以从系统中删除。</p>
+<p>删除用户账号就是要将/etc/passwd等系统文件中的该用户记录删除，必要时还删除用户的主目录。</p>
+<p>删除一个已有的用户账号使用userdel命令，其格式如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">userdel 选项 用户名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常用的选项是 <strong>-r</strong>，它的作用是把用户的主目录一起删除。</p>
+<pre class="line-numbers language-none"><code class="language-none">[root@kuangshen home]# userdel -r kuangshen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>此命令删除用户kuangshen在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的记录，同时删除用户的主目录。</p>
+<blockquote>
+<p>修改用户</p>
+</blockquote>
+<p>修改用户账号就是根据实际情况更改用户的有关属性，如用户号、主目录、用户组、登录Shell等。</p>
+<p>修改已有用户的信息使用usermod命令，其格式如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">usermod 选项 用户名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常用的选项包括-c, -d, -m, -g, -G, -s, -u以及-o等，这些选项的意义与useradd命令中的选项一样，可以为用户指定新的资源值。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none"># usermod -s &#x2F;bin&#x2F;ksh -d &#x2F;home&#x2F;z –g developer kuangshen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>此命令将用户kuangshen的登录Shell修改为ksh，主目录改为/home/z，用户组改为developer。</p>
+<p>修改完毕之后查看配置文件即可。</p>
+<blockquote>
+<p>Linux下如何切换用户</p>
+</blockquote>
+<p><img src="images/blog/image-20201009142632806.png" alt="image-20201009142632806"></p>
+<p><img src="images/blog/image-20201009143240133.png" alt="image-20201009143240133"></p>
+<p>1.切换用户的命令为：su username 【username是你的用户名哦】</p>
+<p>2.从普通用户切换到root用户，还可以使用命令：sudo su</p>
+<p>3.在终端输入exit或logout或使用快捷方式ctrl+d，可以退回到原来用户，其实ctrl+d也是执行的exit命令</p>
+<p>4.在切换用户时，如果想在切换用户之后使用新用户的工作环境，可以在su和username之间加-，例如：【su - root】</p>
+<p>$表示普通用户    </p>
+<p>#表示超级用户，也就是root用户</p>
+<p><img src="images/blog/image-20201009143755163.png" alt="image-20201009143755163"></p>
+<blockquote>
+<p>用户的密码设置</p>
+</blockquote>
+<p>我们一般通过root创建用户的时候，需要配置密码</p>
+<p>在Linux上输入密码是不会显示出来的，正常数据就行了，不是电脑或系统的问题 </p>
+<p>超级用户设置密码</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">passwd</span> username:
+new password
+re password   <span class="token comment">#确认密码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="images/blog/image-20201009145025270.png" alt="image-20201009145025270"></p>
+<p>普通用户</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Old password:
+New password:
+Re-enter new password:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="images/blog/image-20201009145220437.png" alt="image-20201009145220437"></p>
+<blockquote>
+<p>锁定账户</p>
+</blockquote>
+<p>冻结账户之后，这个账户就不能再登录！</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">passwd</span> -l pty <span class="token comment">#将pty这个用户锁定，锁定之后这个用户就不能再登录</span>
+<span class="token function">passwd</span> -d pty <span class="token comment">#清楚pty这个用户的密码，没有密码无法登陆</span>
+<span class="token function">passwd</span> -u pty <span class="token comment">#启用已被停止的pty这个用户，让他能再次登录</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h3><p>每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理。不同Linux 系统对用户组的规定有所不同，<strong>如Linux下的用户属于与它同名的用户组，这个用户组在创建用户时同时创建</strong>。</p>
+<p>用户组的管理涉及用户组的添加、删除和修改。==组的增加、删除和修改实际上就是对/etc/group文件的更新。==</p>
+<blockquote>
+<p>增加一个新的用户组使用groupadd命令</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">groupadd 选项 用户组<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以使用的选项有：</p>
+<ul>
+<li>-g GID 指定新用户组的组标识号（GID）。</li>
+<li>-o 一般与-g选项同时使用，表示新用户组的GID可以与系统已有用户组的GID相同。</li>
+</ul>
+<p>实例1：</p>
+<pre class="line-numbers language-none"><code class="language-none"># groupadd group1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>此命令向系统中增加了一个新组group1，新组的组标识号是在当前已有的最大组标识号的基础上加1。</p>
+<p>实例2：</p>
+<pre class="line-numbers language-none"><code class="language-none"># groupadd -g 101 group2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>此命令向系统中增加了一个新组group2，同时指定新组的组标识号是101。</p>
+<p><img src="images/blog/image-20201009172752807.png" alt="image-20201009172752807"></p>
+<blockquote>
+<p>如果要删除一个已有的用户组，使用groupdel命令</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">groupdel 用户组<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none"># groupdel group1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>此命令从系统中删除组group1。</p>
+<blockquote>
+<p>修改用户组的属性使用groupmod命令</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">groupmod 选项 用户组<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常用的选项有：</p>
+<ul>
+<li>-g GID 为用户组指定新的组标识号。</li>
+<li>-o 与-g选项同时使用，用户组的新GID可以与系统已有用户组的GID相同。</li>
+<li>-n新用户组 将用户组的名字改为新名字</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none"># 此命令将组group2的组标识号修改为102。
+groupmod -g 102 group2
+
+# 将组group2的标识号改为10000，组名修改为group3。
+groupmod –g 10000 -n group3 group2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<blockquote>
+<p>切换组</p>
+</blockquote>
+<p>如果一个用户同时属于多个用户组，那么用户可以在用户组之间切换，以便具有其他用户组的权限。</p>
+<p>用户可以在登录后，使用命令newgrp切换到其他用户组，这个命令的参数就是目的用户组。例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">$ newgrp root<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这条命令将当前用户切换到root用户组，前提条件是root用户组确实是该用户的主组或附加组。</p>
+<blockquote>
+<p>/etc/passwd</p>
+</blockquote>
+<p>完成用户管理的工作有许多种方法，但是每一种方法实际上都是对有关的系统文件进行修改。</p>
+<p>与用户和用户组相关的信息都存放在一些系统文件中，这些文件包括/etc/passwd, /etc/shadow, /etc/group等。</p>
+<p>下面分别介绍这些文件的内容。</p>
+<p><strong>/etc/passwd文件是用户管理工作涉及的最重要的一个文件。</strong></p>
+<p>Linux系统中的每个用户都在/etc/passwd文件中有一个对应的记录行，它记录了这个用户的一些基本属性。</p>
+<p>这个文件对所有用户都是可读的。它的内容类似下面的例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">＃ cat &#x2F;etc&#x2F;passwd
+
+root:x:0:0:Superuser:&#x2F;:
+daemon:x:1:1:System daemons:&#x2F;etc:
+bin:x:2:2:Owner of system commands:&#x2F;bin:
+sys:x:3:3:Owner of system files:&#x2F;usr&#x2F;sys:
+adm:x:4:4:System accounting:&#x2F;usr&#x2F;adm:
+uucp:x:5:5:UUCP administrator:&#x2F;usr&#x2F;lib&#x2F;uucp:
+auth:x:7:21:Authentication administrator:&#x2F;tcb&#x2F;files&#x2F;auth:
+cron:x:9:16:Cron daemon:&#x2F;usr&#x2F;spool&#x2F;cron:
+listen:x:37:4:Network daemon:&#x2F;usr&#x2F;net&#x2F;nls:
+lp:x:71:18:Printer administrator:&#x2F;usr&#x2F;spool&#x2F;lp:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从上面的例子我们可以看到，/etc/passwd中一行记录对应着一个用户，每行记录又被冒号(:)分隔为7个字段，其格式和具体含义如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pty:x:1000:1000::/home/pty:/bin/bash
+
+<span class="token comment">#pty: 用户名</span>
+<span class="token comment">#x：口令（登录密码，我们看不见）</span>
+<span class="token comment">#1000：用户标示</span>
+<span class="token comment">#1000：组标示</span>
+<span class="token comment">#/home/pty 主目录</span>
+<span class="token comment">#/bin/bash 登录shell</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>登录口令放在/etc/shadow中</p>
+<p>用户组的所有信息放在/etc/group中</p>
+<h3 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h3><blockquote>
+<p>概述</p>
+</blockquote>
+<p>Linux磁盘管理好坏直接关系到整个系统的性能问题。</p>
+<p>Linux磁盘管理常用命令为 df、du。</p>
+<ul>
+<li>df ：列出文件系统的整体磁盘使用量</li>
+<li>du：检查磁盘空间使用量</li>
+</ul>
+<blockquote>
+<p>df</p>
+</blockquote>
+<p>df命令参数功能：检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</p>
+<p>语法：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">df</span> <span class="token punctuation">[</span>-ahikHTm<span class="token punctuation">]</span> <span class="token punctuation">[</span>目录或文件名<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；</li>
+<li>-k ：以 KBytes 的容量显示各文件系统；</li>
+<li>-m ：以 MBytes 的容量显示各文件系统；</li>
+<li>-h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；</li>
+<li>-H ：以 M=1000K 取代 M=1024K 的进位方式；</li>
+<li>-T ：显示文件系统类型, 连同该 partition 的 filesystem 名称 (例如 ext3) 也列出；</li>
+<li>-i ：不用硬盘容量，而以 inode 的数量来显示</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将容量结果以易读的容量格式显示出来</span>
+<span class="token punctuation">[</span>root@kuangshen /<span class="token punctuation">]</span><span class="token comment"># df -h</span>
+Filesystem     Size Used Avail Use% Mounted on
+devtmpfs       869M     <span class="token number">0</span> 869M   <span class="token number">0</span>% /dev
+tmpfs           879M 708K 878M   <span class="token number">1</span>% /dev/shm
+tmpfs           879M 496K 878M   <span class="token number">1</span>% /run
+tmpfs           879M     <span class="token number">0</span> 879M   <span class="token number">0</span>% /sys/fs/cgroup
+/dev/vda1       40G  <span class="token number">6</span>.3G   32G  <span class="token number">17</span>% /
+tmpfs           176M     <span class="token number">0</span> 176M   <span class="token number">0</span>% /run/user/0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将 /etc 底下的可用的磁盘容量以易读的容量格式显示</span>
+
+<span class="token punctuation">[</span>root@kuangshen /<span class="token punctuation">]</span><span class="token comment"># df -h /etc</span>
+Filesystem     Size Used Avail Use% Mounted on
+/dev/vda1       40G  <span class="token number">6</span>.3G   32G  <span class="token number">17</span>% /<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>du</p>
+</blockquote>
+<p>Linux du命令也是查看使用空间的，但是与df命令不同的是Linux du命令是对文件和目录磁盘使用的空间的查看，还是和df命令有一些区别的，这里介绍Linux du命令。</p>
+<p>语法：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token punctuation">[</span>-ahskm<span class="token punctuation">]</span> 文件或目录名称<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>选项与参数：</p>
+<ul>
+<li>-a ：列出所有的文件与目录容量，因为默认仅统计目录底下的文件量而已。</li>
+<li>-h ：以人们较易读的容量格式 (G/M) 显示；</li>
+<li>-s ：列出总量，而不列出每个各别的目录占用容量；</li>
+<li>-S ：不包括子目录下的总计，与 -s 有点差别。</li>
+<li>-k ：以 KBytes 列出容量显示；</li>
+<li>-m ：以 MBytes 列出容量显示；</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 只列出当前目录下的所有文件夹容量（包括隐藏文件夹）:</span>
+<span class="token comment"># 直接输入 du 没有加任何选项时，则 du 会分析当前所在目录的文件与目录所占用的硬盘空间。</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># du</span>
+<span class="token number">16</span>./redis
+<span class="token number">8</span>./www/.oracle_jre_usage  <span class="token comment"># 包括隐藏文件的目录</span>
+<span class="token number">24</span>./www
+<span class="token number">48</span>.                        <span class="token comment"># 这个目录(.)所占用的总量</span>
+<span class="token comment"># 将文件的容量也列出来</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># du -a</span>
+<span class="token number">4</span>./redis/.bash_profile
+<span class="token number">4</span>./redis/.bash_logout    
+<span class="token punctuation">..</span><span class="token punctuation">..</span>中间省略<span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token number">4</span>./kuangstudy.txt <span class="token comment"># 有文件的列表了</span>
+<span class="token number">48</span>.
+<span class="token comment"># 检查根目录底下每个目录所占用的容量</span>
+<span class="token punctuation">[</span>root@kuangshen home<span class="token punctuation">]</span><span class="token comment"># du -sm /*</span>
+<span class="token number">0</span>/bin
+<span class="token number">146</span>/boot
+<span class="token punctuation">..</span><span class="token punctuation">..</span>.中间省略<span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token number">0</span>/proc
+<span class="token punctuation">..</span><span class="token punctuation">..</span>.中间省略<span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token number">1</span>/tmp
+<span class="token number">3026</span>/usr  <span class="token comment"># 系统初期最大就是他了啦！</span>
+<span class="token number">513</span>/var
+<span class="token number">2666</span>/www<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通配符 * 来代表每个目录。</p>
+<p>与 df 不一样的是，du 这个命令其实会直接到文件系统内去搜寻所有的文件数据。</p>
+<h3 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h3><p>对于我们开发人员来说，其实Linux更多偏向于使用即可</p>
+<blockquote>
+<p>什么是进程</p>
+</blockquote>
+<ol>
+<li>在Linux中，每一个程序都是由自己的一个进程，每一个进程都有自己的id号</li>
+<li>每一个进程都有一个父进程</li>
+<li>进程可以有两种存在方式：前台！后台运行！</li>
+<li>一般的话服务都是后台运行的，基本的程序都是前台运行的！</li>
+</ol>
+<blockquote>
+<p>命令</p>
+</blockquote>
+<p><strong>ps</strong>查看当前系统中正在执行的各种进程的信息！</p>
+<p>ps-xx:</p>
+<ul>
+<li>-a 显示当前终端运行的所有进程的信息</li>
+<li>-u 以用户的信息显示进程</li>
+<li>-x 显示后台运行进程的参数</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#ps -aux 查看所有的进程</span>
+<span class="token function">ps</span> -aux<span class="token operator">|</span>
+
+<span class="token comment"># |  在Linux中这个叫做管道符    A|B  把A的结果作为输出操作B命令</span>
+<span class="token comment"># grep 查找文件中符合条件的字符串</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对我我们来说，这里目前只需要记住一个命令即可  ps-xxx|grep 进程名   查找该进程名的全部信息</p>
+<p><strong>ps -ef:可以查看到父进程的信息</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ps</span> -ef<span class="token operator">|</span><span class="token function">grep</span> mysql   <span class="token comment">#看父进程我们一般可以通过目录树结构来查看！</span>
+
+<span class="token comment">#进程树</span>
+pstree -pu
+	-p  显示父id
+	-u  显示用户组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结束进程：杀掉进程，等价于window结束任务</p>
+<p>kill-9 进程的id 表示强制结束进程</p>
+<p>一般不需要结束进程，但有时候java程序进入死循环可以使用这个杀死程序</p>
+<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>安装软件一般有三种方式：rpm、解压缩、yum在线安装！</p>
+<h3 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h3><ol>
+<li>下载jdk rpm。去Oracle官网下载</li>
+<li>使用ftp工具将文件上传到服务器</li>
+<li>安装java环境</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 检测当前系统是否存在java环境！ java -version</span>
+<span class="token comment"># 如果有的话就需要卸载  </span>
+<span class="token comment"># rpm -qa|grep jdk    #检测JDK版本信息</span>
+<span class="token comment"># rpm -e --nodeps jdk_(jdk版本)</span>
+
+<span class="token comment">#卸载完毕后即可安装jdk</span>
+<span class="token comment"># rpm -ivk rpm包   安装jdk</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="images/blog/image-20201009195244369.png" alt="image-20201009195244369"></p>
+<p><img src="images/blog/image-20201009195752656.png" alt="image-20201009195752656"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 查看firewall服务状态</span>
+systemctl status firewalld
+
+<span class="token comment"># 开启、重启、关闭、firewalld.service服务</span>
+<span class="token comment"># 开启</span>
+<span class="token function">service</span> firewalld start
+<span class="token comment"># 重启</span>
+<span class="token function">service</span> firewalld restart
+<span class="token comment"># 关闭</span>
+<span class="token function">service</span> firewalld stop
+
+<span class="token comment"># 查看防火墙规则</span>
+firewall-cmd --list-all    <span class="token comment"># 查看全部信息</span>
+firewall-cmd --list-ports  <span class="token comment"># 只看端口信息</span>
+
+<span class="token comment"># 开启端口</span>
+开端口命令：firewall-cmd --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">80</span>/tcp --permanent  <span class="token comment">#开启80端口，如果是阿里云需要配置安全组规则</span>
+重启防火墙：systemctl restart firewalld.service  <span class="token comment">#开启端口后要重启防火墙</span>
+
+命令含义：
+--zone <span class="token comment">#作用域</span>
+--add-port<span class="token operator">=</span><span class="token number">80</span>/tcp  <span class="token comment">#添加端口，格式为：端口/通讯协议</span>
+--permanent   <span class="token comment">#永久生效，没有此参数重启后失效</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="Tomcat安装"><a href="#Tomcat安装" class="headerlink" title="Tomcat安装"></a>Tomcat安装</h3><ol>
+<li><p>在官网下载tomcat文件</p>
+</li>
+<li><p>解压这个文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> -zxvf apache-tomcat-9.0.22.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>启动tomcat程序  <code>./xxx.sh</code>脚本即可运行</p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 执行  ./startup.sh</span>
+<span class="token comment"># 结束  ./shoutdown.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="Docker-yum安装）"><a href="#Docker-yum安装）" class="headerlink" title="Docker(yum安装）"></a>Docker(yum安装）</h3><p>我们现在是在Linux下执行，一定要联网，yum是在线安装！</p>
+<blockquote>
+<p>安装</p>
+</blockquote>
+<ol>
+<li>安装我们的准备环境（安装gcc)</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum -y <span class="token function">install</span> 包名    <span class="token comment">#yum install 安装命令  -y 所有的提示都为y</span>
+yum -y <span class="token function">install</span> gcc
+yum -y <span class="token function">install</span> gcc-c++<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>卸载docker旧版本</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum remove docker <span class="token punctuation">\</span>
+          docker-client <span class="token punctuation">\</span>
+          docker-client-latest <span class="token punctuation">\</span>
+          docker-common <span class="token punctuation">\</span>
+          docker-latest <span class="token punctuation">\</span>
+          docker-latest-logrotate <span class="token punctuation">\</span>
+          docker-logrotate <span class="token punctuation">\</span>
+          docker-engine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>安装需要的软件包</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> -y yum-utils device-mapper-persistent-data lvm2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="4">
+<li>设置stable镜像仓库</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo  <span class="token comment">#阿里云镜像</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="5">
+<li>更新yum软件包索引</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">yum makecache fast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="6">
+<li>安装Docker CE</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum -y <span class="token function">install</span> docker-ce docker-ce-cli containerd.io<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="7">
+<li>启动docker</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">systemctl start docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="8">
+<li>测试</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker version    <span class="token comment">#查看docker版本号</span>
+ 
+docker run hello-world  <span class="token comment"># 跑hello-world程序</span>
+ 
+docker images   <span class="token comment">#查看docker镜像</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/12/Springmvc%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/12/%E8%8B%B1%E8%AF%AD/" rel="next" title="今年一定过四级">
+      今年一定过四级 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">连接服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">上传文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B0%E8%BF%9BLinux"><span class="nav-number">3.</span> <span class="nav-text">走进Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E7%99%BB%E5%BD%95"><span class="nav-number">3.1.</span> <span class="nav-text">开机登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA"><span class="nav-number">3.2.</span> <span class="nav-text">关机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">系统目录结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">常用的基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">目录管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%B1%9E%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text">基本属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%9F%A5%E7%9C%8B"><span class="nav-number">4.3.</span> <span class="nav-text">文件内容查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">4.4.</span> <span class="nav-text">vim编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86"><span class="nav-number">4.5.</span> <span class="nav-text">账号管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-number">4.6.</span> <span class="nav-text">用户组管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="nav-number">4.7.</span> <span class="nav-text">磁盘管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">4.8.</span> <span class="nav-text">进程管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk%E5%AE%89%E8%A3%85"><span class="nav-number">5.1.</span> <span class="nav-text">jdk安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat%E5%AE%89%E8%A3%85"><span class="nav-number">5.2.</span> <span class="nav-text">Tomcat安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-yum%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">Docker(yum安装）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="pty"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">pty</p>
+  <div class="site-description" itemprop="description">努力最坏的结果不过是大器晚成</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/penty7710" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;penty7710" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1219002685@qq.com" title="E-Mail → mailto:1219002685@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pty</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script src="/js/prism/prism.js" async></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
