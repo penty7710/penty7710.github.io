@@ -1,6 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux部署开发环境</title>
+    <url>/2021/04/12/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h3 id="Linux部署开发环境"><a href="#Linux部署开发环境" class="headerlink" title="Linux部署开发环境"></a>Linux部署开发环境</h3><h4 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h4><h5 id="获取mysql-YUM源"><a href="#获取mysql-YUM源" class="headerlink" title="获取mysql YUM源"></a>获取mysql YUM源</h5><ol>
+<li>打开网址  <a href="https://dev.mysql.com/downloads/repo/yum/">Mysql yum存储库</a></li>
+<li>进入需要下载的文件，点击这里，获取到链接地址，这样就不需要把文件下载到本地。</li>
+</ol>
+<a id="more"></a>
+
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095725914.png" alt="image-20210407095725914"></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095911292.png" alt="image-20210407095911292"></p>
+<h5 id="下载和安装mysql源"><a href="#下载和安装mysql源" class="headerlink" title="下载和安装mysql源"></a>下载和安装mysql源</h5><ol>
+<li><p>先创建一个MySQL的文件夹 ：<code>mkdir mysql</code>    </p>
+</li>
+<li><p>设置权限：<code>chmod 777 mysql </code></p>
+</li>
+<li><p>进入mysql文件夹，wget加上刚才复制的地址，下载mysql源</p>
+</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407100358273.png" alt="image-20210407100358273"></p>
+<ol start="4">
+<li>如果显示wget未找到命令，则先安装wget：<code>yum -y install wget</code>,然后在执行刚才的命令。</li>
+<li>安装mysql源 ：<code>yum -y localinstall mysql80-community-release-el8-1.noarch.rpm</code></li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407100801585.png" alt="image-20210407100801585"></p>
+<h5 id="在线安装mysql"><a href="#在线安装mysql" class="headerlink" title="在线安装mysql"></a>在线安装mysql</h5><ol>
+<li><code>yum -y install mysql-community-server</code>  会安装mysql服务器(mysql-community-server) 所需要的依赖和相关组件。</li>
+<li>直接输入这个命令会报错</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407101844829.png" alt="image-20210407101844829"></p>
+<ol start="3">
+<li>在使用这个命令前，先输入<code>yum module disable mysql</code></li>
+<li>输入<code>yum -y install mysql-community-server</code>,下载的时间会有点长，因为需要下载很多东西</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407102007009.png" alt="image-20210407102007009"></p>
+<h5 id="启动mysql"><a href="#启动mysql" class="headerlink" title="启动mysql"></a>启动mysql</h5><p><code>systemctl start mysqld</code></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407102153546.png" alt="image-20210407102153546"></p>
+<h5 id="设置开机自启动"><a href="#设置开机自启动" class="headerlink" title="设置开机自启动"></a>设置开机自启动</h5><p><code>systemctl enable mysqld</code>   <code>systemctl daemon-reload</code></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407102344314.png" alt="image-20210407102344314"></p>
+<h5 id="登录mysql，并且修改密码"><a href="#登录mysql，并且修改密码" class="headerlink" title="登录mysql，并且修改密码"></a>登录mysql，并且修改密码</h5><ol>
+<li>网上的教程说会随机生成一个密码，但是我这个并没有生成密码，也就是在登录的时候不需要输入密码<code>mysql -u root -p</code> 登录数据库</li>
+<li><strong>通过</strong> <strong>ALTER USER ‘root’@’localhost’ IDENTIFIED WITH mysql_native_password BY ‘你的密码’;</strong> <strong>命令来修改密码</strong></li>
+</ol>
+<h5 id="修改用户登录权限"><a href="#修改用户登录权限" class="headerlink" title="修改用户登录权限"></a>修改用户登录权限</h5><p>我们使用root用户登录mysql，但是刚刚部署的环境中，只允许本机访问数据库，不允许其他地址访问，因此我们需要修改权限。</p>
+<ol>
+<li>查看一共有哪几个数据库：<code>show databases;</code></li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103023040.png" alt="image-20210407103023040"></p>
+<ol start="2">
+<li>进入mysql这个库:<code>use mysql</code>;</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407103113302.png" alt="image-20210407103113302"></p>
+<ol start="3">
+<li>查询user和host：<code>select user,host from user</code>,我这里已经修改过了，正常刚部署的时候，root后面的host也是localhost。</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103209085.png" alt="image-20210407103209085"></p>
+<ol start="4">
+<li>修改root的host：<code>update user set host =&#39;%&#39; where user=root;</code></li>
+</ol>
+<h5 id="服务器开启3306端口"><a href="#服务器开启3306端口" class="headerlink" title="服务器开启3306端口"></a>服务器开启3306端口</h5><p>登录阿里云控制台，在安全组规则中添加访问规则，开放3306端口。开启的时候注意是在服务器的实例的那个安全组添加，我一开始就是重新创建了一个安全组，但是那个安全组并没有对应的实例，浪费了好久的时间。可以在本机dos窗口下使用<code>tcping ip地址 端口号</code>查看该端口能不能访问。</p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103500323.png" alt="image-20210407103500323"></p>
+<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p>就可以用navicat连接数据库了。</p>
+<h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4><h5 id="下载redis"><a href="#下载redis" class="headerlink" title="下载redis"></a>下载redis</h5><ol>
+<li><p>进入官方网站下载redis：<a href="https://redis.io/download">下载地址</a></p>
+</li>
+<li><p>获取下载链接地址，复制链接。</p>
+</li>
+<li><p>使用wget下载redis文件：<code>wget https://download.redis.io/releases/redis-6.2.1.tar.gz?_ga=2.218275550.693953461.1617763684-492675992.1602071540 </code>   wget+刚才复制的地址。</p>
+</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407105237017.png" alt="image-20210407105237017"></p>
+<p><strong>注意：我这个地址是直接从官网下载地址复制过来的，但是他后面多了一串字符，从”?_ga=”开始，为什么会这样我也不清楚，因此我们需要将这个文件重新改名。如果后缀直接是.tar.gz就不需要改名了</strong></p>
+<ol start="4">
+<li>使用<code>mv 原来文件的名字  需要修改的名字</code>修改文件的名字。</li>
+</ol>
+<h5 id="解压并移动redis"><a href="#解压并移动redis" class="headerlink" title="解压并移动redis"></a>解压并移动redis</h5><ol>
+<li><p>使用<code>tar zvxf redis-6.2.1.tar.gz</code>解压文件，可以看到多出了redis-6.2.1这个文件夹。</p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407110251832.png" alt="image-20210407110251832"></p>
+</li>
+<li><p>将redis目录移动到/usr/local/redis目录下，使用<code>mv /root/redis-6.2.1 /usr/local/redis</code>移动文件，该命令会自动创建一个redis子目录，因此不需要手动去创建一个redis目录。</p>
+</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407110706199.png" alt="image-20210407110706199"></p>
+<h5 id="编译安装redis"><a href="#编译安装redis" class="headerlink" title="编译安装redis"></a>编译安装redis</h5><ol>
+<li>输入<code>make</code>执行编译命令，最终会出现这个结果：</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407111216978.png" alt="image-20210407111216978"></p>
+<ol start="2">
+<li>使用<code>make PREFIX=/usr/local/redis install</code>安装redis 。<strong>这里多了一个关键字 <code>PREFIX=</code> ，这个关键字的作用是编译的时候用于指定程序存放的路径。比如我们现在就是指定了redis必须存放在/usr/local/redis目录。假设不添加该关键字Linux会将可执行文件存放在/usr/local/bin目录，库文件会存放在/usr/local/lib目录。配置文件会存放在/usr/local/etc目录。其他的资源文件会存放在usr/local/share目录。这里指定号目录也方便后续的卸载，后续直接rm -rf /usr/local/redis 即可删除redis。</strong></li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407111505750.png" alt="image-20210407111505750"></p>
+<h5 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h5><p>上面的操作已经完成了redis的安装.</p>
+<h6 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h6><p>在redis的安装目录下直接启动redis：使用<code>redis-server</code>启动redis，<strong>注意是在/bin这个目录下</strong></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407112151333.png" alt="image-20210407112151333"></p>
+<h6 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h6><ol>
+<li>将redis.conf复制到/user/local/redis/bin 目录下 <code>cp redis.conf /usr/local/redis/bin</code></li>
+<li>修改redis.conf配置 ，进入/bin目录  输入<code>vim redis.conf</code>进入修改界面，向下找，将daemonize设置为yes（原来为no）。</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407112834813.png" alt="image-20210407112834813"></p>
+<ol start="3">
+<li>启动redis ：/bin目录下，<code>./redis-server redis.conf</code></li>
+<li>查看redis是否启动 <code>ps aux|grep redis</code>  **ps:想要关闭redis，  <code>kill -9 44565</code>后面的数字就是前面那个命令显示出来的第二个。</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407120052553.png" alt="image-20210407120052553"></p>
+<h5 id="修改开启指令"><a href="#修改开启指令" class="headerlink" title="修改开启指令"></a>修改开启指令</h5><p>经过上面的操作，我们可以通过<code>./redis-cli</code>连接redis，但是每次输入./比较麻烦，因此我们可以修改启动的命令，在任意界面下都可以开启，也就是添加一个环境变量。</p>
+<ol>
+<li>修改profile文件：<code>vim /etc/profile</code></li>
+<li>在文件的最后添加如下代码  <code>export PATH=$PATH:/usr/local/redis/src</code>。然后我们就可以通过<code>redis-cli</code>连接redis了。</li>
+</ol>
+<h5 id="开启6379端口"><a href="#开启6379端口" class="headerlink" title="开启6379端口"></a>开启6379端口</h5><p>注意要开启6379端口，开启方式和mysql中开启3306端口一样。</p>
+<h5 id="配置redis-config"><a href="#配置redis-config" class="headerlink" title="配置redis.config"></a>配置redis.config</h5><p><code>vim redis.config</code> hao</p>
+<ol>
+<li>修改bind 为0.0.0.0 </li>
+<li>修改protected-mod 为no</li>
+</ol>
+<p>连接redis：<code>redis-cli</code>,使用<code>config set requirepass 密码</code>设置密码，今后在进行操作的时候就需要先输入<code>AUTH 密码</code>在进行操作。</p>
+<p><strong>注意：阿里云服务器默认没有开启8080端口，只开启了80端口，我在部署springboot项目的时候，发现请求超时，然后就想到应该是没有开启8080端口，需要到安全组中配置规则，一开始以为80端口就是8080端口，而且在快速添加中也没有8080端口这个选项，浪费了好久时间，以后要注意</strong></p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>开发环境</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Springmvc文件上传</title>
     <url>/2020/09/25/SprigMVC%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<h2 id="单文件上传"><a href="#单文件上传" class="headerlink" title="单文件上传"></a>单文件上传</h2><h3 id="前端页面的要求"><a href="#前端页面的要求" class="headerlink" title="前端页面的要求"></a>前端页面的要求</h3><p>为了上传文件，必须将表单的method设置为POST，并将enctype设置为multipart/form-data。只有在这样的情况下，浏览器才会把用户选择的文件以二进制流数据发送给服务器。</p>
@@ -281,6 +407,154 @@
       </tags>
   </entry>
   <entry>
+    <title>markdown语法</title>
+    <url>/2020/09/08/markdown%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h2><p>在想要设置为标题的文字前面加#来表示</p>
+<p>一个#是一级标题，两个#是二级标题，以此类推。支持六级标题</p>
+<a id="more"></a>
+
+<p>并且在#后面加上空格之后在添加文字</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> 一级标题</span>
+<span class="token title important"><span class="token punctuation">##</span> 二级标题</span>
+<span class="token title important"><span class="token punctuation">###</span> 三级标题</span>
+<span class="token title important"><span class="token punctuation">####</span> 四级标题</span>
+<span class="token title important"><span class="token punctuation">#####</span> 五级标题</span>
+<span class="token title important"><span class="token punctuation">######</span> 六级标题</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>效果如下</p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="二、字体"><a href="#二、字体" class="headerlink" title="二、字体"></a>二、字体</h2><ul>
+<li><p>加粗</p>
+<p>要加粗的文字左右分别使用两个*号包起来</p>
+</li>
+<li><p>斜体</p>
+<p>使用一个*包起来</p>
+</li>
+<li><p>斜体加粗</p>
+<p>使用三个*号包起来</p>
+</li>
+<li><p>删除线</p>
+<p>使用两个~~号包起来</p>
+</li>
+</ul>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token bold"><span class="token punctuation">**</span><span class="token content">加粗</span><span class="token punctuation">**</span></span>
+<span class="token italic"><span class="token punctuation">*</span><span class="token content">斜体</span><span class="token punctuation">*</span></span>
+<span class="token bold"><span class="token punctuation">**</span><span class="token content"><span class="token italic"><span class="token punctuation">*</span><span class="token content">斜体加粗</span><span class="token punctuation">*</span></span></span><span class="token punctuation">**</span></span>
+<span class="token strike"><span class="token punctuation">~~</span><span class="token content">删除线</span><span class="token punctuation">~~</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>效果如下</p>
+<p><strong>加粗</strong><br><em>斜体</em><br><strong><em>斜体加粗</em></strong><br><del>删除线</del></p>
+<h2 id="三、引用"><a href="#三、引用" class="headerlink" title="三、引用"></a>三、引用</h2><p>在引用的文字前面加&gt;即可，也可以嵌套使用，如加两个&gt;,三个&gt;,n个&gt;</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span>引用
+<span class="token blockquote punctuation">>></span>引用2
+<span class="token blockquote punctuation">>>></span>引用3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>效果如下</p>
+<blockquote>
+<p>引用</p>
+<blockquote>
+<p>引用2</p>
+<blockquote>
+<p>引用3</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="四、分割线"><a href="#四、分割线" class="headerlink" title="四、分割线"></a>四、分割线</h2><p>三个或三个以上的+ - *都可以</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">+++
+<span class="token title important">*****
+<span class="token punctuation">----</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="五、图片"><a href="#五、图片" class="headerlink" title="五、图片"></a>五、图片</h2><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token url">![<span class="token content">图片alt</span>](图片地址 <span class="token string">"图片title"</span>)</span>
+图片alt就是显示在图片下面的文字，相当于对图片内容的解释
+图片title是图片的标题，当鼠标移到图片上时显示的内容，title可加可不加<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">![blockchain](https:&#x2F;&#x2F;ss0.bdstatic.com&#x2F;70cFvHSh_Q1YnxGkpoWK1HF6hhy&#x2F;it&#x2F;
+u&#x3D;702257389,1274025419&amp;fm&#x3D;27&amp;gp&#x3D;0.jpg &quot;区块链&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>效果如下：</p>
+<p>![blockchain](<a href="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/">https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/</a><br>u=702257389,1274025419&amp;fm=27&amp;gp=0.jpg “区块链”)</p>
+<h2 id="六、超链接"><a href="#六、超链接" class="headerlink" title="六、超链接"></a>六、超链接</h2><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token url">[<span class="token content">超链接名</span>](超链接地址 <span class="token string">"超链接title"</span>)</span>
+title 可加可不加
+[百度] (http://www.baidu.com)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>效果如下：</p>
+<p><a href="http://baidu.com/" title="百度">百度</a></p>
+<p><strong>注意</strong>：markdown本身不支持超链接在新页面中打开，如果想在新页面中打开的话可以用html中的a标签来代替</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>超链接地址<span class="token punctuation">"</span></span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>_blank<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>超链接名<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>效果如下</p>
+<p><a href="http://www.baidu.com" target="_blank">百度</a>  (但是这个好像也打开不了)</p>
+<h2 id="七、列表"><a href="#七、列表" class="headerlink" title="七、列表"></a>七、列表</h2><p><strong>无序列表</strong></p>
+<p>使用 + - * 任意一种都可以</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token list punctuation">-</span> 无序列表
+<span class="token list punctuation">+</span> 无序列表
+<span class="token list punctuation">*</span> 无序列表<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>效果如下</p>
+<ul>
+<li>无序列表</li>
+</ul>
+<ul>
+<li>无序列表</li>
+</ul>
+<ul>
+<li>无序列表</li>
+</ul>
+<p><strong>有序列表</strong></p>
+<p>数字加点    <em>在点的后面要加空格</em></p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">1. 
+2. 
+3. <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>列表的嵌套</strong></p>
+<p>只需要在字列表的选项前面添加4个空格即可</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token list punctuation">1.</span> 有序列表
+    <span class="token list punctuation">-</span> 无序列表1
+    <span class="token list punctuation">-</span> 无序列表2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol>
+<li>有序列表<ul>
+<li>无序列表1</li>
+<li>无序列表2</li>
+</ul>
+</li>
+</ol>
+<pre class="line-numbers language-markd" data-language="markd"><code class="language-markd">- 无序列表
+    1. 有序列表
+    2. 有序列表<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>无序列表<ol>
+<li>有序列表</li>
+<li>有序列表</li>
+</ol>
+</li>
+</ul>
+<h2 id="八、代码"><a href="#八、代码" class="headerlink" title="八、代码"></a>八、代码</h2><p>代码之间分别用一个反引号包起来</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token code keyword">`void main`</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>效果如下</p>
+<p><code>public static void main(String args[])</code></p>
+<p><strong>代码块</strong></p>
+<p>用四个反引号包起来，后面写语言名称(三个反引号也可以)</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">​<span class="token code keyword">````java    ``</span>`java<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>效果如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>​        </p>
+]]></content>
+      <categories>
+        <category>markdown</category>
+      </categories>
+      <tags>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring boot整合mybatis 和 druid</title>
     <url>/2020/09/13/Springboot%E6%95%B4%E5%90%88Mybatis%E5%92%8Cdruid/</url>
     <content><![CDATA[<p>在实际开发中，我们一般不使用springboot自带的数据池，通常会整合mybatis和druid连接池，这篇博客就是用来记录怎么整合mybatis和druid</p>
@@ -444,154 +718,6 @@
       <tags>
         <tag>spring</tag>
         <tag>mybatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>markdown语法</title>
-    <url>/2020/09/08/markdown%E8%AF%AD%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h2><p>在想要设置为标题的文字前面加#来表示</p>
-<p>一个#是一级标题，两个#是二级标题，以此类推。支持六级标题</p>
-<a id="more"></a>
-
-<p>并且在#后面加上空格之后在添加文字</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> 一级标题</span>
-<span class="token title important"><span class="token punctuation">##</span> 二级标题</span>
-<span class="token title important"><span class="token punctuation">###</span> 三级标题</span>
-<span class="token title important"><span class="token punctuation">####</span> 四级标题</span>
-<span class="token title important"><span class="token punctuation">#####</span> 五级标题</span>
-<span class="token title important"><span class="token punctuation">######</span> 六级标题</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>效果如下</p>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="二、字体"><a href="#二、字体" class="headerlink" title="二、字体"></a>二、字体</h2><ul>
-<li><p>加粗</p>
-<p>要加粗的文字左右分别使用两个*号包起来</p>
-</li>
-<li><p>斜体</p>
-<p>使用一个*包起来</p>
-</li>
-<li><p>斜体加粗</p>
-<p>使用三个*号包起来</p>
-</li>
-<li><p>删除线</p>
-<p>使用两个~~号包起来</p>
-</li>
-</ul>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token bold"><span class="token punctuation">**</span><span class="token content">加粗</span><span class="token punctuation">**</span></span>
-<span class="token italic"><span class="token punctuation">*</span><span class="token content">斜体</span><span class="token punctuation">*</span></span>
-<span class="token bold"><span class="token punctuation">**</span><span class="token content"><span class="token italic"><span class="token punctuation">*</span><span class="token content">斜体加粗</span><span class="token punctuation">*</span></span></span><span class="token punctuation">**</span></span>
-<span class="token strike"><span class="token punctuation">~~</span><span class="token content">删除线</span><span class="token punctuation">~~</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>效果如下</p>
-<p><strong>加粗</strong><br><em>斜体</em><br><strong><em>斜体加粗</em></strong><br><del>删除线</del></p>
-<h2 id="三、引用"><a href="#三、引用" class="headerlink" title="三、引用"></a>三、引用</h2><p>在引用的文字前面加&gt;即可，也可以嵌套使用，如加两个&gt;,三个&gt;,n个&gt;</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span>引用
-<span class="token blockquote punctuation">>></span>引用2
-<span class="token blockquote punctuation">>>></span>引用3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>效果如下</p>
-<blockquote>
-<p>引用</p>
-<blockquote>
-<p>引用2</p>
-<blockquote>
-<p>引用3</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="四、分割线"><a href="#四、分割线" class="headerlink" title="四、分割线"></a>四、分割线</h2><p>三个或三个以上的+ - *都可以</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">+++
-<span class="token title important">*****
-<span class="token punctuation">----</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="五、图片"><a href="#五、图片" class="headerlink" title="五、图片"></a>五、图片</h2><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token url">![<span class="token content">图片alt</span>](图片地址 <span class="token string">"图片title"</span>)</span>
-图片alt就是显示在图片下面的文字，相当于对图片内容的解释
-图片title是图片的标题，当鼠标移到图片上时显示的内容，title可加可不加<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-none"><code class="language-none">![blockchain](https:&#x2F;&#x2F;ss0.bdstatic.com&#x2F;70cFvHSh_Q1YnxGkpoWK1HF6hhy&#x2F;it&#x2F;
-u&#x3D;702257389,1274025419&amp;fm&#x3D;27&amp;gp&#x3D;0.jpg &quot;区块链&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>效果如下：</p>
-<p>![blockchain](<a href="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/">https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/</a><br>u=702257389,1274025419&amp;fm=27&amp;gp=0.jpg “区块链”)</p>
-<h2 id="六、超链接"><a href="#六、超链接" class="headerlink" title="六、超链接"></a>六、超链接</h2><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token url">[<span class="token content">超链接名</span>](超链接地址 <span class="token string">"超链接title"</span>)</span>
-title 可加可不加
-[百度] (http://www.baidu.com)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>效果如下：</p>
-<p><a href="http://baidu.com/" title="百度">百度</a></p>
-<p><strong>注意</strong>：markdown本身不支持超链接在新页面中打开，如果想在新页面中打开的话可以用html中的a标签来代替</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>超链接地址<span class="token punctuation">"</span></span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>_blank<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>超链接名<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>效果如下</p>
-<p><a href="http://www.baidu.com" target="_blank">百度</a>  (但是这个好像也打开不了)</p>
-<h2 id="七、列表"><a href="#七、列表" class="headerlink" title="七、列表"></a>七、列表</h2><p><strong>无序列表</strong></p>
-<p>使用 + - * 任意一种都可以</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token list punctuation">-</span> 无序列表
-<span class="token list punctuation">+</span> 无序列表
-<span class="token list punctuation">*</span> 无序列表<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>效果如下</p>
-<ul>
-<li>无序列表</li>
-</ul>
-<ul>
-<li>无序列表</li>
-</ul>
-<ul>
-<li>无序列表</li>
-</ul>
-<p><strong>有序列表</strong></p>
-<p>数字加点    <em>在点的后面要加空格</em></p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">1. 
-2. 
-3. <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>列表的嵌套</strong></p>
-<p>只需要在字列表的选项前面添加4个空格即可</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token list punctuation">1.</span> 有序列表
-    <span class="token list punctuation">-</span> 无序列表1
-    <span class="token list punctuation">-</span> 无序列表2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ol>
-<li>有序列表<ul>
-<li>无序列表1</li>
-<li>无序列表2</li>
-</ul>
-</li>
-</ol>
-<pre class="line-numbers language-markd" data-language="markd"><code class="language-markd">- 无序列表
-    1. 有序列表
-    2. 有序列表<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>无序列表<ol>
-<li>有序列表</li>
-<li>有序列表</li>
-</ol>
-</li>
-</ul>
-<h2 id="八、代码"><a href="#八、代码" class="headerlink" title="八、代码"></a>八、代码</h2><p>代码之间分别用一个反引号包起来</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token code keyword">`void main`</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>效果如下</p>
-<p><code>public static void main(String args[])</code></p>
-<p><strong>代码块</strong></p>
-<p>用四个反引号包起来，后面写语言名称(三个反引号也可以)</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">​<span class="token code keyword">````java    ``</span>`java<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>效果如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>​        </p>
-]]></content>
-      <categories>
-        <category>markdown</category>
-      </categories>
-      <tags>
-        <tag>语法</tag>
       </tags>
   </entry>
   <entry>

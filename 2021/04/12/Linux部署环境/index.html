@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"auto","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+  <meta name="description" content="Linux部署开发环境Mysql获取mysql YUM源 打开网址  Mysql yum存储库 进入需要下载的文件，点击这里，获取到链接地址，这样就不需要把文件下载到本地。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux部署开发环境">
+<meta property="og:url" content="http://example.com/2021/04/12/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="Linux部署开发环境Mysql获取mysql YUM源 打开网址  Mysql yum存储库 进入需要下载的文件，点击这里，获取到链接地址，这样就不需要把文件下载到本地。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095725914.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095911292.png">
+<meta property="og:image" content="http://example.com/.com//笔记/img/Linux部署环境/image-20210407100358273.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407100801585.png">
+<meta property="og:image" content="http://example.com/.com//笔记/img/Linux部署环境/image-20210407101844829.png">
+<meta property="og:image" content="http://example.com/.com//笔记/img/Linux部署环境/image-20210407102007009.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407102153546.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407102344314.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103023040.png">
+<meta property="og:image" content="http://example.com/.com//笔记/img/Linux部署环境/image-20210407103113302.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103209085.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103500323.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407105237017.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407110251832.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407110706199.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407111216978.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407111505750.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407112151333.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407112834813.png">
+<meta property="og:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407120052553.png">
+<meta property="article:published_time" content="2021-04-12T05:18:46.812Z">
+<meta property="article:modified_time" content="2021-04-12T05:24:57.905Z">
+<meta property="article:author" content="pty">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="开发环境">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095725914.png">
+
+<link rel="canonical" href="http://example.com/2021/04/12/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux部署开发环境 | Myblog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Myblog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年，你渴望力量吗</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/12/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="pty">
+      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux部署开发环境
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-12 13:18:46 / 修改时间：13:24:57" itemprop="dateCreated datePublished" datetime="2021-04-12T13:18:46+08:00">2021-04-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Linux部署开发环境"><a href="#Linux部署开发环境" class="headerlink" title="Linux部署开发环境"></a>Linux部署开发环境</h3><h4 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h4><h5 id="获取mysql-YUM源"><a href="#获取mysql-YUM源" class="headerlink" title="获取mysql YUM源"></a>获取mysql YUM源</h5><ol>
+<li>打开网址  <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/repo/yum/">Mysql yum存储库</a></li>
+<li>进入需要下载的文件，点击这里，获取到链接地址，这样就不需要把文件下载到本地。</li>
+</ol>
+<a id="more"></a>
+
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095725914.png" alt="image-20210407095725914"></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407095911292.png" alt="image-20210407095911292"></p>
+<h5 id="下载和安装mysql源"><a href="#下载和安装mysql源" class="headerlink" title="下载和安装mysql源"></a>下载和安装mysql源</h5><ol>
+<li><p>先创建一个MySQL的文件夹 ：<code>mkdir mysql</code>    </p>
+</li>
+<li><p>设置权限：<code>chmod 777 mysql </code></p>
+</li>
+<li><p>进入mysql文件夹，wget加上刚才复制的地址，下载mysql源</p>
+</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407100358273.png" alt="image-20210407100358273"></p>
+<ol start="4">
+<li>如果显示wget未找到命令，则先安装wget：<code>yum -y install wget</code>,然后在执行刚才的命令。</li>
+<li>安装mysql源 ：<code>yum -y localinstall mysql80-community-release-el8-1.noarch.rpm</code></li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407100801585.png" alt="image-20210407100801585"></p>
+<h5 id="在线安装mysql"><a href="#在线安装mysql" class="headerlink" title="在线安装mysql"></a>在线安装mysql</h5><ol>
+<li><code>yum -y install mysql-community-server</code>  会安装mysql服务器(mysql-community-server) 所需要的依赖和相关组件。</li>
+<li>直接输入这个命令会报错</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407101844829.png" alt="image-20210407101844829"></p>
+<ol start="3">
+<li>在使用这个命令前，先输入<code>yum module disable mysql</code></li>
+<li>输入<code>yum -y install mysql-community-server</code>,下载的时间会有点长，因为需要下载很多东西</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407102007009.png" alt="image-20210407102007009"></p>
+<h5 id="启动mysql"><a href="#启动mysql" class="headerlink" title="启动mysql"></a>启动mysql</h5><p><code>systemctl start mysqld</code></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407102153546.png" alt="image-20210407102153546"></p>
+<h5 id="设置开机自启动"><a href="#设置开机自启动" class="headerlink" title="设置开机自启动"></a>设置开机自启动</h5><p><code>systemctl enable mysqld</code>   <code>systemctl daemon-reload</code></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407102344314.png" alt="image-20210407102344314"></p>
+<h5 id="登录mysql，并且修改密码"><a href="#登录mysql，并且修改密码" class="headerlink" title="登录mysql，并且修改密码"></a>登录mysql，并且修改密码</h5><ol>
+<li>网上的教程说会随机生成一个密码，但是我这个并没有生成密码，也就是在登录的时候不需要输入密码<code>mysql -u root -p</code> 登录数据库</li>
+<li><strong>通过</strong> <strong>ALTER USER ‘root’@’localhost’ IDENTIFIED WITH mysql_native_password BY ‘你的密码’;</strong> <strong>命令来修改密码</strong></li>
+</ol>
+<h5 id="修改用户登录权限"><a href="#修改用户登录权限" class="headerlink" title="修改用户登录权限"></a>修改用户登录权限</h5><p>我们使用root用户登录mysql，但是刚刚部署的环境中，只允许本机访问数据库，不允许其他地址访问，因此我们需要修改权限。</p>
+<ol>
+<li>查看一共有哪几个数据库：<code>show databases;</code></li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103023040.png" alt="image-20210407103023040"></p>
+<ol start="2">
+<li>进入mysql这个库:<code>use mysql</code>;</li>
+</ol>
+<p><img src="/.com//笔记\img\Linux部署环境\image-20210407103113302.png" alt="image-20210407103113302"></p>
+<ol start="3">
+<li>查询user和host：<code>select user,host from user</code>,我这里已经修改过了，正常刚部署的时候，root后面的host也是localhost。</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103209085.png" alt="image-20210407103209085"></p>
+<ol start="4">
+<li>修改root的host：<code>update user set host =&#39;%&#39; where user=root;</code></li>
+</ol>
+<h5 id="服务器开启3306端口"><a href="#服务器开启3306端口" class="headerlink" title="服务器开启3306端口"></a>服务器开启3306端口</h5><p>登录阿里云控制台，在安全组规则中添加访问规则，开放3306端口。开启的时候注意是在服务器的实例的那个安全组添加，我一开始就是重新创建了一个安全组，但是那个安全组并没有对应的实例，浪费了好久的时间。可以在本机dos窗口下使用<code>tcping ip地址 端口号</code>查看该端口能不能访问。</p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407103500323.png" alt="image-20210407103500323"></p>
+<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p>就可以用navicat连接数据库了。</p>
+<h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4><h5 id="下载redis"><a href="#下载redis" class="headerlink" title="下载redis"></a>下载redis</h5><ol>
+<li><p>进入官方网站下载redis：<a target="_blank" rel="noopener" href="https://redis.io/download">下载地址</a></p>
+</li>
+<li><p>获取下载链接地址，复制链接。</p>
+</li>
+<li><p>使用wget下载redis文件：<code>wget https://download.redis.io/releases/redis-6.2.1.tar.gz?_ga=2.218275550.693953461.1617763684-492675992.1602071540 </code>   wget+刚才复制的地址。</p>
+</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407105237017.png" alt="image-20210407105237017"></p>
+<p><strong>注意：我这个地址是直接从官网下载地址复制过来的，但是他后面多了一串字符，从”?_ga=”开始，为什么会这样我也不清楚，因此我们需要将这个文件重新改名。如果后缀直接是.tar.gz就不需要改名了</strong></p>
+<ol start="4">
+<li>使用<code>mv 原来文件的名字  需要修改的名字</code>修改文件的名字。</li>
+</ol>
+<h5 id="解压并移动redis"><a href="#解压并移动redis" class="headerlink" title="解压并移动redis"></a>解压并移动redis</h5><ol>
+<li><p>使用<code>tar zvxf redis-6.2.1.tar.gz</code>解压文件，可以看到多出了redis-6.2.1这个文件夹。</p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407110251832.png" alt="image-20210407110251832"></p>
+</li>
+<li><p>将redis目录移动到/usr/local/redis目录下，使用<code>mv /root/redis-6.2.1 /usr/local/redis</code>移动文件，该命令会自动创建一个redis子目录，因此不需要手动去创建一个redis目录。</p>
+</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407110706199.png" alt="image-20210407110706199"></p>
+<h5 id="编译安装redis"><a href="#编译安装redis" class="headerlink" title="编译安装redis"></a>编译安装redis</h5><ol>
+<li>输入<code>make</code>执行编译命令，最终会出现这个结果：</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407111216978.png" alt="image-20210407111216978"></p>
+<ol start="2">
+<li>使用<code>make PREFIX=/usr/local/redis install</code>安装redis 。<strong>这里多了一个关键字 <code>PREFIX=</code> ，这个关键字的作用是编译的时候用于指定程序存放的路径。比如我们现在就是指定了redis必须存放在/usr/local/redis目录。假设不添加该关键字Linux会将可执行文件存放在/usr/local/bin目录，库文件会存放在/usr/local/lib目录。配置文件会存放在/usr/local/etc目录。其他的资源文件会存放在usr/local/share目录。这里指定号目录也方便后续的卸载，后续直接rm -rf /usr/local/redis 即可删除redis。</strong></li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407111505750.png" alt="image-20210407111505750"></p>
+<h5 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h5><p>上面的操作已经完成了redis的安装.</p>
+<h6 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h6><p>在redis的安装目录下直接启动redis：使用<code>redis-server</code>启动redis，<strong>注意是在/bin这个目录下</strong></p>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407112151333.png" alt="image-20210407112151333"></p>
+<h6 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h6><ol>
+<li>将redis.conf复制到/user/local/redis/bin 目录下 <code>cp redis.conf /usr/local/redis/bin</code></li>
+<li>修改redis.conf配置 ，进入/bin目录  输入<code>vim redis.conf</code>进入修改界面，向下找，将daemonize设置为yes（原来为no）。</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407112834813.png" alt="image-20210407112834813"></p>
+<ol start="3">
+<li>启动redis ：/bin目录下，<code>./redis-server redis.conf</code></li>
+<li>查看redis是否启动 <code>ps aux|grep redis</code>  **ps:想要关闭redis，  <code>kill -9 44565</code>后面的数字就是前面那个命令显示出来的第二个。</li>
+</ol>
+<p><img src="/images/Linux%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83/image-20210407120052553.png" alt="image-20210407120052553"></p>
+<h5 id="修改开启指令"><a href="#修改开启指令" class="headerlink" title="修改开启指令"></a>修改开启指令</h5><p>经过上面的操作，我们可以通过<code>./redis-cli</code>连接redis，但是每次输入./比较麻烦，因此我们可以修改启动的命令，在任意界面下都可以开启，也就是添加一个环境变量。</p>
+<ol>
+<li>修改profile文件：<code>vim /etc/profile</code></li>
+<li>在文件的最后添加如下代码  <code>export PATH=$PATH:/usr/local/redis/src</code>。然后我们就可以通过<code>redis-cli</code>连接redis了。</li>
+</ol>
+<h5 id="开启6379端口"><a href="#开启6379端口" class="headerlink" title="开启6379端口"></a>开启6379端口</h5><p>注意要开启6379端口，开启方式和mysql中开启3306端口一样。</p>
+<h5 id="配置redis-config"><a href="#配置redis-config" class="headerlink" title="配置redis.config"></a>配置redis.config</h5><p><code>vim redis.config</code> hao</p>
+<ol>
+<li>修改bind 为0.0.0.0 </li>
+<li>修改protected-mod 为no</li>
+</ol>
+<p>连接redis：<code>redis-cli</code>,使用<code>config set requirepass 密码</code>设置密码，今后在进行操作的时候就需要先输入<code>AUTH 密码</code>在进行操作。</p>
+<p><strong>注意：阿里云服务器默认没有开启8080端口，只开启了80端口，我在部署springboot项目的时候，发现请求超时，然后就想到应该是没有开启8080端口，需要到安全组中配置规则，一开始以为80端口就是8080端口，而且在快速添加中也没有8080端口这个选项，浪费了好久时间，以后要注意</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag"><i class="fa fa-tag"></i> 开发环境</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/12/%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84/" rel="prev" title="注解和反射">
+      <i class="fa fa-chevron-left"></i> 注解和反射
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E9%83%A8%E7%BD%B2%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">Linux部署开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mysql"><span class="nav-number">1.1.</span> <span class="nav-text">Mysql</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96mysql-YUM%E6%BA%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">获取mysql YUM源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85mysql%E6%BA%90"><span class="nav-number">1.1.2.</span> <span class="nav-text">下载和安装mysql源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85mysql"><span class="nav-number">1.1.3.</span> <span class="nav-text">在线安装mysql</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8mysql"><span class="nav-number">1.1.4.</span> <span class="nav-text">启动mysql</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.5.</span> <span class="nav-text">设置开机自启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%99%BB%E5%BD%95mysql%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.1.6.</span> <span class="nav-text">登录mysql，并且修改密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%9D%83%E9%99%90"><span class="nav-number">1.1.7.</span> <span class="nav-text">修改用户登录权限</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%90%AF3306%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.1.8.</span> <span class="nav-text">服务器开启3306端口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">1.1.9.</span> <span class="nav-text">最后</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis"><span class="nav-number">1.2.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDredis"><span class="nav-number">1.2.1.</span> <span class="nav-text">下载redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E5%B9%B6%E7%A7%BB%E5%8A%A8redis"><span class="nav-number">1.2.2.</span> <span class="nav-text">解压并移动redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85redis"><span class="nav-number">1.2.3.</span> <span class="nav-text">编译安装redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8redis"><span class="nav-number">1.2.4.</span> <span class="nav-text">启动redis</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%90%AF%E5%8A%A8"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">前端启动</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E5%90%AF%E5%8A%A8"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">后台启动</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%BC%80%E5%90%AF%E6%8C%87%E4%BB%A4"><span class="nav-number">1.2.5.</span> <span class="nav-text">修改开启指令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AF6379%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.2.6.</span> <span class="nav-text">开启6379端口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEredis-config"><span class="nav-number">1.2.7.</span> <span class="nav-text">配置redis.config</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="pty"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">pty</p>
+  <div class="site-description" itemprop="description">努力最坏的结果不过是大器晚成</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/penty7710" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;penty7710" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1219002685@qq.com" title="E-Mail → mailto:1219002685@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pty</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script src="/js/prism/prism.js" async></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
