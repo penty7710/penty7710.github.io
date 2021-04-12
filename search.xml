@@ -595,6 +595,140 @@ title 可加可不加
       </tags>
   </entry>
   <entry>
+    <title>springboot发送邮箱验证</title>
+    <url>/2020/09/15/%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
+    <content><![CDATA[<p>在实际开发中，我们通常需要登录和注册用户。在登录的时候我们可以使用验证码来进行验证，但在注册的时候我们看到更多的是使用邮箱验证，即给你发送的邮箱发送一个验证码，然后你将这个验证码输在页面。</p>
+<a id="more"></a>
+
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ol>
+<li><p>我们使用qq邮箱进行邮件发送，需要开启QQ邮箱的POP3/SMTP服务和IMAP/SMTP服务</p>
+<ul>
+<li>进入QQ邮箱首页，找到设置<img src="/images/blog/qqemail.png" alt="qq邮箱"></li>
+<li>进入设置后点击账户，往下拉找到<strong>POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</strong></li>
+</ul>
+<p><img src="/images/blog/pop3.png" alt="pop3"></p>
+<ul>
+<li>开启POP3和IMAP服务（只开启一个好像也行）</li>
+<li>开始这两项服务后各自会生成一串密文密码，把这个保存起来，以后会用到。</li>
+<li>我的两个密码分别是  POP3:cplcsiqntwidfgib    IMAP:zxisvqcbpucmiifb</li>
+</ul>
+</li>
+<li><p>springboot配置邮箱服务</p>
+<ul>
+<li>导入支持邮箱的依赖</li>
+</ul>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一个小插曲：</p>
+<blockquote>
+<p>在后面写代码的时候需要用到<code>JavaMailSenderImpl</code>这个类。</p>
+</blockquote>
+<blockquote>
+<p>但是我导入这个包以后找不到这个类，我以为是还需要添加其他的依赖，百度了一下，导入了<code>spring-context-support</code>这个依赖。然后我点进<code>spring-boot-starter-mail</code>后发现里面已经引入了<code>spring-context-support</code>，所以应该是我最开始没有导入好。</p>
+</blockquote>
+<ul>
+<li>在application.yml中配置邮箱信息</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span> 
+	<span class="token key atrule">mail</span><span class="token punctuation">:</span>
+		<span class="token key atrule">username</span><span class="token punctuation">:</span> 1219002685@qq.com  <span class="token comment">#发件人账号</span>
+		<span class="token key atrule">password</span><span class="token punctuation">:</span> zxisvqcbpucmiifb  <span class="token comment">#这里的password不是填你的qq密码，而是你开去那两个服务后生成的密码</span>
+		<span class="token key atrule">host</span><span class="token punctuation">:</span> smtp.qq.com        	<span class="token comment">#邮箱服务器</span>
+		<span class="token key atrule">default-encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8</span>		<span class="token comment">#默认编码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+</li>
+</ol>
+<p>至此，发送邮箱验证的前期准备工作都已经做完了，接下来就是写代码了！！！！</p>
+<h3 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h3><ol>
+<li>Controller层</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Email</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">EmailService</span> emailService<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/email"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAdress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
+            emailService<span class="token punctuation">.</span><span class="token function">sendEmail</span><span class="token punctuation">(</span>emailAdress<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token keyword">return</span> <span class="token string">"发送邮件成功"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token string">"邮件发送失败"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>Service层</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EmailService</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">JavaMailSenderImpl</span> javaMailSender<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> code<span class="token punctuation">;</span> <span class="token comment">//验证码</span>
+
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&#123;spring.mail.username&#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> sender<span class="token punctuation">;</span>   <span class="token comment">//发送邮件的地址</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAddress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        code<span class="token operator">=</span> <span class="token class-name">VerifyCode</span><span class="token punctuation">.</span><span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+        <span class="token class-name">SimpleMailMessage</span> message <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleMailMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        message<span class="token punctuation">.</span><span class="token function">setSubject</span><span class="token punctuation">(</span><span class="token string">"验证码"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+        message<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"尊敬的用户你好：\n"</span><span class="token operator">+</span>
+                <span class="token string">"\n本次请求的邮件验证码为："</span><span class="token operator">+</span>code<span class="token operator">+</span><span class="token string">",本次验证码5分钟内有效，请及时输入。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        message<span class="token punctuation">.</span><span class="token function">setTo</span><span class="token punctuation">(</span>emailAddress<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        message<span class="token punctuation">.</span><span class="token function">setFrom</span><span class="token punctuation">(</span>sender<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        javaMailSender<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//发送邮件</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>@Value()注解：<code> @Value(&quot;$&#123;spring.mail.username&#125;&quot;)</code> 从配置文件中读取username的数据。</li>
+<li><code> SimpleMailMessage message = new SimpleMailMessage();</code>创建一个简单的邮件对象。</li>
+<li><code>message.setSubject()</code>设置邮件的标题</li>
+<li><code>message.setText()</code>设置邮件的内容</li>
+<li><code>message.setTo()</code>设置收件人的地址</li>
+<li><code>message.setFrom()</code>设置发件人的地址</li>
+</ul>
+<ol start="3">
+<li>随机生成6位数的验证码</li>
+</ol>
+<p>使用SecureRandom生成随机数。</p>
+<blockquote>
+<p>Math.random生成的是一般随机数，采用的是类似于统计学的随机数生成规则，其输出结果很容易预测，因此可能导致被攻击者击中。而SecureRandom是真随机数，采用的是类似于密码学的随机数生成规则，其输出结果较难预测，若想要预防被攻击者攻击，最好做到使攻击者根本无法，或不可能鉴别生成的随机值和真正的随机值</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VerifyCode</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> SYMBOLS<span class="token operator">=</span><span class="token string">"0123456789"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Random</span> RANDOM <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SecureRandom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> verifycode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">//生成一个长度为6的字符数组</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> verifycode<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">//SYMBOLS.charAt()：返回目标索引下的字符</span>
+            <span class="token comment">//RANDOM.nextInt(xx)：生成0~xx-1的随机数</span>
+            <span class="token comment">//每次随机生成一个数x，并将SYMBOLS中的第n+1个数字返回给verifycode</span>
+            verifycode<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>RANDOM<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>verifycode<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//将字符数组转成字符串</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springboot整合日志框架</title>
     <url>/2020/09/15/springboot%E6%95%B4%E5%90%88%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/</url>
     <content><![CDATA[<p>在项目的开发中，日志是必不可少的一个记录事件的组件，所以也会相应的在项目中实现和构建我们所需要的日志框架。</p>
@@ -742,298 +876,6 @@ title 可加可不加
       <tags>
         <tag>spring</tag>
         <tag>日志框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springboot发送邮箱验证</title>
-    <url>/2020/09/15/%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
-    <content><![CDATA[<p>在实际开发中，我们通常需要登录和注册用户。在登录的时候我们可以使用验证码来进行验证，但在注册的时候我们看到更多的是使用邮箱验证，即给你发送的邮箱发送一个验证码，然后你将这个验证码输在页面。</p>
-<a id="more"></a>
-
-<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ol>
-<li><p>我们使用qq邮箱进行邮件发送，需要开启QQ邮箱的POP3/SMTP服务和IMAP/SMTP服务</p>
-<ul>
-<li>进入QQ邮箱首页，找到设置<img src="/images/blog/qqemail.png" alt="qq邮箱"></li>
-<li>进入设置后点击账户，往下拉找到<strong>POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</strong></li>
-</ul>
-<p><img src="/images/blog/pop3.png" alt="pop3"></p>
-<ul>
-<li>开启POP3和IMAP服务（只开启一个好像也行）</li>
-<li>开始这两项服务后各自会生成一串密文密码，把这个保存起来，以后会用到。</li>
-<li>我的两个密码分别是  POP3:cplcsiqntwidfgib    IMAP:zxisvqcbpucmiifb</li>
-</ul>
-</li>
-<li><p>springboot配置邮箱服务</p>
-<ul>
-<li>导入支持邮箱的依赖</li>
-</ul>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>一个小插曲：</p>
-<blockquote>
-<p>在后面写代码的时候需要用到<code>JavaMailSenderImpl</code>这个类。</p>
-</blockquote>
-<blockquote>
-<p>但是我导入这个包以后找不到这个类，我以为是还需要添加其他的依赖，百度了一下，导入了<code>spring-context-support</code>这个依赖。然后我点进<code>spring-boot-starter-mail</code>后发现里面已经引入了<code>spring-context-support</code>，所以应该是我最开始没有导入好。</p>
-</blockquote>
-<ul>
-<li>在application.yml中配置邮箱信息</li>
-</ul>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span> 
-	<span class="token key atrule">mail</span><span class="token punctuation">:</span>
-		<span class="token key atrule">username</span><span class="token punctuation">:</span> 1219002685@qq.com  <span class="token comment">#发件人账号</span>
-		<span class="token key atrule">password</span><span class="token punctuation">:</span> zxisvqcbpucmiifb  <span class="token comment">#这里的password不是填你的qq密码，而是你开去那两个服务后生成的密码</span>
-		<span class="token key atrule">host</span><span class="token punctuation">:</span> smtp.qq.com        	<span class="token comment">#邮箱服务器</span>
-		<span class="token key atrule">default-encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8</span>		<span class="token comment">#默认编码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-</li>
-</ol>
-<p>至此，发送邮箱验证的前期准备工作都已经做完了，接下来就是写代码了！！！！</p>
-<h3 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h3><ol>
-<li>Controller层</li>
-</ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Email</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token class-name">EmailService</span> emailService<span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/email"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAdress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
-            emailService<span class="token punctuation">.</span><span class="token function">sendEmail</span><span class="token punctuation">(</span>emailAdress<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token keyword">return</span> <span class="token string">"发送邮件成功"</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token string">"邮件发送失败"</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="2">
-<li>Service层</li>
-</ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EmailService</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token class-name">JavaMailSenderImpl</span> javaMailSender<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">String</span> code<span class="token punctuation">;</span> <span class="token comment">//验证码</span>
-
-    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&#123;spring.mail.username&#125;"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> sender<span class="token punctuation">;</span>   <span class="token comment">//发送邮件的地址</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAddress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        code<span class="token operator">=</span> <span class="token class-name">VerifyCode</span><span class="token punctuation">.</span><span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
-        <span class="token class-name">SimpleMailMessage</span> message <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleMailMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        message<span class="token punctuation">.</span><span class="token function">setSubject</span><span class="token punctuation">(</span><span class="token string">"验证码"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
-        message<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"尊敬的用户你好：\n"</span><span class="token operator">+</span>
-                <span class="token string">"\n本次请求的邮件验证码为："</span><span class="token operator">+</span>code<span class="token operator">+</span><span class="token string">",本次验证码5分钟内有效，请及时输入。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        message<span class="token punctuation">.</span><span class="token function">setTo</span><span class="token punctuation">(</span>emailAddress<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        message<span class="token punctuation">.</span><span class="token function">setFrom</span><span class="token punctuation">(</span>sender<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        javaMailSender<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//发送邮件</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>@Value()注解：<code> @Value(&quot;$&#123;spring.mail.username&#125;&quot;)</code> 从配置文件中读取username的数据。</li>
-<li><code> SimpleMailMessage message = new SimpleMailMessage();</code>创建一个简单的邮件对象。</li>
-<li><code>message.setSubject()</code>设置邮件的标题</li>
-<li><code>message.setText()</code>设置邮件的内容</li>
-<li><code>message.setTo()</code>设置收件人的地址</li>
-<li><code>message.setFrom()</code>设置发件人的地址</li>
-</ul>
-<ol start="3">
-<li>随机生成6位数的验证码</li>
-</ol>
-<p>使用SecureRandom生成随机数。</p>
-<blockquote>
-<p>Math.random生成的是一般随机数，采用的是类似于统计学的随机数生成规则，其输出结果很容易预测，因此可能导致被攻击者击中。而SecureRandom是真随机数，采用的是类似于密码学的随机数生成规则，其输出结果较难预测，若想要预防被攻击者攻击，最好做到使攻击者根本无法，或不可能鉴别生成的随机值和真正的随机值</p>
-</blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VerifyCode</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> SYMBOLS<span class="token operator">=</span><span class="token string">"0123456789"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Random</span> RANDOM <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SecureRandom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> verifycode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">//生成一个长度为6的字符数组</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> verifycode<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">//SYMBOLS.charAt()：返回目标索引下的字符</span>
-            <span class="token comment">//RANDOM.nextInt(xx)：生成0~xx-1的随机数</span>
-            <span class="token comment">//每次随机生成一个数x，并将SYMBOLS中的第n+1个数字返回给verifycode</span>
-            verifycode<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>RANDOM<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>verifycode<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//将字符数组转成字符串</span>
-    <span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>今年一定过四级</title>
-    <url>/2020/10/12/%E8%8B%B1%E8%AF%AD/</url>
-    <content><![CDATA[<ol>
-<li><p><strong>stability：</strong> n  稳定（性）、稳固（性）</p>
-<ul>
-<li>social stability          社会稳定</li>
-<li>stable        adj  稳定的    n 马厩，牛棚</li>
-</ul>
-<a id="more"></a></li>
-<li><p><strong>trace：</strong> n   痕迹、踪迹、足迹、微量、追查；v   仔细寻找、追踪、研究….的历史、探究…..的发展;  v 描绘</p>
-<ul>
-<li>trace back       追溯</li>
-<li>a trace of   少量的，一丝的</li>
-<li>without trace  了无踪迹</li>
-</ul>
-</li>
-<li><p><strong>admission：</strong> n  允许加入，许可；入场费；承认</p>
-<ul>
-<li>admit   vt  承认，允许进入；vi 承认，容许</li>
-<li>admission office     招生办</li>
-<li>permission   n    允许，许可</li>
-</ul>
-</li>
-<li><p><strong>arrival：</strong>  n    到达，抵达，到达者</p>
-<ul>
-<li>cash on arrival   货到付款</li>
-<li>with the arrival of    随着…的到来</li>
-<li>arrive  vi 到达</li>
-</ul>
-</li>
-<li><p><strong>fifty：</strong>   n   五十几，五十年代；num  五十 ；adj 许多的</p>
-<ul>
-<li>fiftieth    第五十的，五十分之一的</li>
-</ul>
-</li>
-<li><p><strong>pollution：</strong> n 污染，污染物，垃圾</p>
-<ul>
-<li>to reduce levels of environmental pollution    降低环境污染的程度</li>
-<li>environmental pollution   环境污染</li>
-<li>popular  n   流行</li>
-<li>population  n  人口</li>
-</ul>
-</li>
-<li><p><strong>mile：</strong> n  英里，很远的距离 </p>
-<ul>
-<li>meter   n  米</li>
-<li>mile better  好得多  ： she’s felling mile better today.   她今天觉得好多了</li>
-<li>stand out a mile 显而易见</li>
-<li>kilometer  公里</li>
-</ul>
-</li>
-<li><p><strong>glove：</strong>  n   手套 ；  v  给戴手套</p>
-<ul>
-<li>a pair of gloves   一副手套</li>
-<li>fit…..like a glove    恰当，合身,对….来说很合适</li>
-<li>as right as my glove  完全正确</li>
-</ul>
-</li>
-<li><p><strong>romantic：</strong>  adj  浪漫的，爱情的；n 浪漫的人，耽于幻想的人</p>
-<ul>
-<li>I‘m not interested in a romantic relationship   我对谈情说爱不感兴趣</li>
-<li>romantic notions    异想天开的念头</li>
-<li>romance   浪漫史，爱情小说，恋爱关系</li>
-<li>romantic movement  n  浪漫主义运动</li>
-</ul>
-</li>
-<li><p><strong>angle：</strong> n  角，角度，观点，斜角   v.钓鱼</p>
-<ul>
-<li>eye angle    视野</li>
-<li>angle for  谋取   angle for promotion   谋求升职</li>
-<li>triangle   三角形</li>
-<li>anger  生气；  angel  天使</li>
-</ul>
-</li>
-<li><p><strong>lawn：</strong> n  草坪，草地，上等细棉布</p>
-<ul>
-<li>He spent a whole afternoon mowing the lawn in front of his house  他花了一下午的时间修剪门前的草坪</li>
-<li>lawn mower  割草机</li>
-<li>meadow  草原</li>
-</ul>
-</li>
-<li><p><strong>bite：</strong>  v  咬，叮； n  咬，少量食物</p>
-<ul>
-<li>Stop biting your nails   别咬指甲了</li>
-<li>bite the dust  碰瓷了</li>
-</ul>
-</li>
-<li><p><strong>brilliant：</strong> adj  聪颖的，才华横溢的，优秀的，卓越的；  n  钻石</p>
-<ul>
-<li>a brilliant performance  精彩的表演</li>
-<li>a brilliant culture  灿烂的文化</li>
-<li>a brilliant sunshine  灿烂的阳光</li>
-<li>brilliant idea 高招，绝妙的主意   He came up a brilliant idea. 他想出了一个绝妙的主意。</li>
-</ul>
-</li>
-<li><p><strong>vital：</strong> adj  重要的，必不可少的，生机勃勃的</p>
-<ul>
-<li>The police play a vital role in our society   警察在我们的社会中扮演着重要的角色。</li>
-<li>vitality   n  精神，活力，力量，生命力</li>
-<li>vital issue  至关重要的问题</li>
-</ul>
-</li>
-<li><p><strong>convert：</strong>  v  （使）转变，（使）改变信仰 ;   n  皈依者</p>
-<ul>
-<li>convert…into   将…改变成   convert stocks into cash   将股票兑换成现金</li>
-<li>unconverted   adj  不改变的</li>
-<li>converter  转换器</li>
-<li>conversation  交谈</li>
-</ul>
-</li>
-<li><p><strong>comprehensive：</strong> adj  综合的，全面的，有理解力的</p>
-<ul>
-<li>They did a comprehensive study on leanring styles  他们对学习方式做了全面的研究</li>
-<li>comprehension  n  理解力，理解</li>
-<li>comprehensive university  综合性大学</li>
-<li>comprehensive  quality  综合素质</li>
-<li>prehensive  adj  握住的，抓住的</li>
-</ul>
-</li>
-<li><p><strong>prominent：</strong> adj 杰出的，显著的，突出的</p>
-<ul>
-<li>As the leader,he played a prominent part in the team’s victory.  作为队长，他在小组的胜利中发挥了重要的作用</li>
-<li>prominently  显著的，明显的</li>
-</ul>
-</li>
-<li><p><strong>load：</strong> v  装填，装载  n  负荷，负担</p>
-<ul>
-<li>The trucks watied at the warehouse to pick up their loads.货车在仓库等着装载货物。</li>
-<li>a load of 大量，许多</li>
-<li>study load 学习任务</li>
-</ul>
-</li>
-<li><p><strong>introduction：</strong> n  引入，引进，采用，介绍，入门</p>
-<ul>
-<li>the introduction of new manufacturing methods 新制造方法的采用</li>
-<li>recommend  vt  推荐，介绍，劝告 </li>
-<li>letter of introduction   介绍信</li>
-<li>brief introduction  简介，简短介绍</li>
-<li>introduce  vt 提出 介绍</li>
-</ul>
-</li>
-<li><p><strong>pretend：</strong> v 假装 佯装 自称 模拟；  adj 假装的，想象的</p>
-<ul>
-<li>I’m tired of having to pretend all the time  我厌倦了一直假装</li>
-<li>pretend to 假装 </li>
-<li>pretend anger 假装生气 </li>
-<li>pretend to be   假装是</li>
-<li>pretend to do sth   假装做某事</li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>单词</tag>
-        <tag>英语</tag>
       </tags>
   </entry>
   <entry>
@@ -1202,6 +1044,164 @@ defaultValue：默认参数值，如果设置了该值，required=true将失效�
         <tag>mybatis</tag>
         <tag>springboot</tag>
         <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>今年一定过四级</title>
+    <url>/2020/10/12/%E8%8B%B1%E8%AF%AD/</url>
+    <content><![CDATA[<ol>
+<li><p><strong>stability：</strong> n  稳定（性）、稳固（性）</p>
+<ul>
+<li>social stability          社会稳定</li>
+<li>stable        adj  稳定的    n 马厩，牛棚</li>
+</ul>
+<a id="more"></a></li>
+<li><p><strong>trace：</strong> n   痕迹、踪迹、足迹、微量、追查；v   仔细寻找、追踪、研究….的历史、探究…..的发展;  v 描绘</p>
+<ul>
+<li>trace back       追溯</li>
+<li>a trace of   少量的，一丝的</li>
+<li>without trace  了无踪迹</li>
+</ul>
+</li>
+<li><p><strong>admission：</strong> n  允许加入，许可；入场费；承认</p>
+<ul>
+<li>admit   vt  承认，允许进入；vi 承认，容许</li>
+<li>admission office     招生办</li>
+<li>permission   n    允许，许可</li>
+</ul>
+</li>
+<li><p><strong>arrival：</strong>  n    到达，抵达，到达者</p>
+<ul>
+<li>cash on arrival   货到付款</li>
+<li>with the arrival of    随着…的到来</li>
+<li>arrive  vi 到达</li>
+</ul>
+</li>
+<li><p><strong>fifty：</strong>   n   五十几，五十年代；num  五十 ；adj 许多的</p>
+<ul>
+<li>fiftieth    第五十的，五十分之一的</li>
+</ul>
+</li>
+<li><p><strong>pollution：</strong> n 污染，污染物，垃圾</p>
+<ul>
+<li>to reduce levels of environmental pollution    降低环境污染的程度</li>
+<li>environmental pollution   环境污染</li>
+<li>popular  n   流行</li>
+<li>population  n  人口</li>
+</ul>
+</li>
+<li><p><strong>mile：</strong> n  英里，很远的距离 </p>
+<ul>
+<li>meter   n  米</li>
+<li>mile better  好得多  ： she’s felling mile better today.   她今天觉得好多了</li>
+<li>stand out a mile 显而易见</li>
+<li>kilometer  公里</li>
+</ul>
+</li>
+<li><p><strong>glove：</strong>  n   手套 ；  v  给戴手套</p>
+<ul>
+<li>a pair of gloves   一副手套</li>
+<li>fit…..like a glove    恰当，合身,对….来说很合适</li>
+<li>as right as my glove  完全正确</li>
+</ul>
+</li>
+<li><p><strong>romantic：</strong>  adj  浪漫的，爱情的；n 浪漫的人，耽于幻想的人</p>
+<ul>
+<li>I‘m not interested in a romantic relationship   我对谈情说爱不感兴趣</li>
+<li>romantic notions    异想天开的念头</li>
+<li>romance   浪漫史，爱情小说，恋爱关系</li>
+<li>romantic movement  n  浪漫主义运动</li>
+</ul>
+</li>
+<li><p><strong>angle：</strong> n  角，角度，观点，斜角   v.钓鱼</p>
+<ul>
+<li>eye angle    视野</li>
+<li>angle for  谋取   angle for promotion   谋求升职</li>
+<li>triangle   三角形</li>
+<li>anger  生气；  angel  天使</li>
+</ul>
+</li>
+<li><p><strong>lawn：</strong> n  草坪，草地，上等细棉布</p>
+<ul>
+<li>He spent a whole afternoon mowing the lawn in front of his house  他花了一下午的时间修剪门前的草坪</li>
+<li>lawn mower  割草机</li>
+<li>meadow  草原</li>
+</ul>
+</li>
+<li><p><strong>bite：</strong>  v  咬，叮； n  咬，少量食物</p>
+<ul>
+<li>Stop biting your nails   别咬指甲了</li>
+<li>bite the dust  碰瓷了</li>
+</ul>
+</li>
+<li><p><strong>brilliant：</strong> adj  聪颖的，才华横溢的，优秀的，卓越的；  n  钻石</p>
+<ul>
+<li>a brilliant performance  精彩的表演</li>
+<li>a brilliant culture  灿烂的文化</li>
+<li>a brilliant sunshine  灿烂的阳光</li>
+<li>brilliant idea 高招，绝妙的主意   He came up a brilliant idea. 他想出了一个绝妙的主意。</li>
+</ul>
+</li>
+<li><p><strong>vital：</strong> adj  重要的，必不可少的，生机勃勃的</p>
+<ul>
+<li>The police play a vital role in our society   警察在我们的社会中扮演着重要的角色。</li>
+<li>vitality   n  精神，活力，力量，生命力</li>
+<li>vital issue  至关重要的问题</li>
+</ul>
+</li>
+<li><p><strong>convert：</strong>  v  （使）转变，（使）改变信仰 ;   n  皈依者</p>
+<ul>
+<li>convert…into   将…改变成   convert stocks into cash   将股票兑换成现金</li>
+<li>unconverted   adj  不改变的</li>
+<li>converter  转换器</li>
+<li>conversation  交谈</li>
+</ul>
+</li>
+<li><p><strong>comprehensive：</strong> adj  综合的，全面的，有理解力的</p>
+<ul>
+<li>They did a comprehensive study on leanring styles  他们对学习方式做了全面的研究</li>
+<li>comprehension  n  理解力，理解</li>
+<li>comprehensive university  综合性大学</li>
+<li>comprehensive  quality  综合素质</li>
+<li>prehensive  adj  握住的，抓住的</li>
+</ul>
+</li>
+<li><p><strong>prominent：</strong> adj 杰出的，显著的，突出的</p>
+<ul>
+<li>As the leader,he played a prominent part in the team’s victory.  作为队长，他在小组的胜利中发挥了重要的作用</li>
+<li>prominently  显著的，明显的</li>
+</ul>
+</li>
+<li><p><strong>load：</strong> v  装填，装载  n  负荷，负担</p>
+<ul>
+<li>The trucks watied at the warehouse to pick up their loads.货车在仓库等着装载货物。</li>
+<li>a load of 大量，许多</li>
+<li>study load 学习任务</li>
+</ul>
+</li>
+<li><p><strong>introduction：</strong> n  引入，引进，采用，介绍，入门</p>
+<ul>
+<li>the introduction of new manufacturing methods 新制造方法的采用</li>
+<li>recommend  vt  推荐，介绍，劝告 </li>
+<li>letter of introduction   介绍信</li>
+<li>brief introduction  简介，简短介绍</li>
+<li>introduce  vt 提出 介绍</li>
+</ul>
+</li>
+<li><p><strong>pretend：</strong> v 假装 佯装 自称 模拟；  adj 假装的，想象的</p>
+<ul>
+<li>I’m tired of having to pretend all the time  我厌倦了一直假装</li>
+<li>pretend to 假装 </li>
+<li>pretend anger 假装生气 </li>
+<li>pretend to be   假装是</li>
+<li>pretend to do sth   假装做某事</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>单词</tag>
+        <tag>英语</tag>
       </tags>
   </entry>
   <entry>
@@ -2266,6 +2266,379 @@ ByType: 会自动在容器上下文中查找，和自己对象属性类型相同
       </categories>
       <tags>
         <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注解和反射</title>
+    <url>/2021/04/12/%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84/</url>
+    <content><![CDATA[<h3 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h3><h4 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h4><p>元注解的作用就是负责注解其他注解，java定义了4个标准的meta-annotation类型，他们被用来提供对其他annotation类型做说明。</p>
+<ul>
+<li>@Target：用于描述注解的使用范围（即：被描述的注解可以用在什么地方）</li>
+<li>@Retention：表示需要在什么级别保存该注解信息，用户描述注解的生命周期（source&lt;class&lt;runtime)</li>
+<li>@Document：说明该注解将包含在javadoc中</li>
+<li>@Inherited：说明子类可以继承父类中的该注解</li>
+</ul>
+<h4 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h4><p><strong>使用@Interface自定义注解</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">ElementType</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Retention</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Target</span><span class="token punctuation">;</span>i
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//因为age已经有了默认值，可以不用再赋值，如果只有一个参数，还可以直接省略前面你的参数名，直接写参数</span>
+    <span class="token annotation punctuation">@MyAnnotation</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"pty"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token comment">//表示这个注解我们可以用在哪些地方，type表示类，method表示方法，field表示属性</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span>METHOD<span class="token punctuation">)</span>
+<span class="token comment">//表示这个注解在什么地方还有效</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@interface</span> <span class="token class-name">MyAnnotation</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//注解的参数： 参数类型+参数名();</span>
+    <span class="token class-name">String</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token function">age</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span>  <span class="token number">12</span><span class="token punctuation">;</span>  <span class="token comment">//还可以使用default "xxx" 设置默认值</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p><strong>反射是java被视为动态语言的关键，反射机制就是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性，这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。</strong></p>
+<p>实际上，我们创建的每一个类都是对象。在加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象，这个类对象包含了完成的类的结构信息。我们可以通过这个对象看到类的结构。</p>
+<p><img src="/.com//笔记\img\多线程\20170513133210763" alt="img"></p>
+<h4 id="获得反射对象"><a href="#获得反射对象" class="headerlink" title="获得反射对象"></a>获得反射对象</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">AllArgsConstructor</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">Data</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">NoArgsConstructor</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//通过反射过去类的Class对象， 使用.forname()方法，参数为实体类的包名+类名</span>
+        <span class="token class-name">Class</span> c1 <span class="token operator">=</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.mp.demo.reflection.User"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span>
+
+<span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>一个类只能有一个Class对象</strong>‘’</p>
+<h4 id="Class类常用的方法"><a href="#Class类常用的方法" class="headerlink" title="Class类常用的方法"></a>Class类常用的方法</h4><p><img src="/.com//笔记\img\多线程\image-20210411194627729.png" alt="image-20210411194627729"></p>
+<h4 id="获得Class类对象"><a href="#获得Class类对象" class="headerlink" title="获得Class类对象"></a>获得Class类对象</h4><ul>
+<li>已经知道具体的类，通过类的Class属性获取。推荐使用这种，这种最为安全可靠，程序性能高</li>
+</ul>
+<p><code>Class c = User.class;</code> </p>
+<ul>
+<li>已经有某个类的具体对象，需要获取这个类的Class对象，可以调用这个具体对象的getClass方法</li>
+</ul>
+<p><code>Class c = user.getClass()</code>  user是User类具体的对象</p>
+<ul>
+<li>知道一个类的全类名（包名+类名）,且该类在类路径下，可以通过Class类的静态方法forName()获取，但是可能会抛出异常。</li>
+</ul>
+<p><code>Class c1 = Class.forName(&quot;com.mp.demo.reflection.User&quot;);</code></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//通过.class 方法获取实例</span>
+        <span class="token class-name">Class</span> cl <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>cl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//通过具体对象调用getClass方法创建class实例</span>
+        <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Class</span> c2 <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//使用全类名创建class对象</span>
+        <span class="token class-name">Class</span> c3 <span class="token operator">=</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.mp.demo.reflection.User"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取父类的class对象</span>
+        <span class="token class-name">Class</span> c4 <span class="token operator">=</span> c2<span class="token punctuation">.</span><span class="token function">getSuperclass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="类加载器（JVM-目前先了解）"><a href="#类加载器（JVM-目前先了解）" class="headerlink" title="类加载器（JVM   目前先了解）"></a>类加载器（JVM   目前先了解）</h4><p>作用：将class文件字节码内容加载到内存中，并将这些景泰数据转换成为方法区的运行时的数据结构，然后在堆中生成一个代表这个类的java.lang.Class对象，作为方法区中类数据的访问入口。</p>
+<p><img src="/.com//笔记\img\多线程\image-20210411214155426.png" alt="image-20210411214155426"></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//获取系统类的加载器</span>
+        <span class="token class-name">ClassLoader</span> systemClassLoader <span class="token operator">=</span> <span class="token class-name">ClassLoader</span><span class="token punctuation">.</span><span class="token function">getSystemClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>systemClassLoader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取系统类加载器得到父类加载器->拓展类加载器</span>
+        <span class="token class-name">ClassLoader</span> parent <span class="token operator">=</span> systemClassLoader<span class="token punctuation">.</span><span class="token function">getParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取拓展类加载器的父类加载器->根加载器（c/c++)   根（引导类）加载器无法读取到</span>
+        <span class="token class-name">ClassLoader</span> parent1 <span class="token operator">=</span> parent<span class="token punctuation">.</span><span class="token function">getParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parent1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token comment">//测试当前类是哪个加载器加载的</span>
+        <span class="token class-name">ClassLoader</span> classLoader <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>classLoader<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/.com//笔记\img\多线程\image-20210411215250373.png" alt="image-20210411215250373"></p>
+<h4 id="获取运行时类的完整结构（方法，属性，类名，构造器…"><a href="#获取运行时类的完整结构（方法，属性，类名，构造器…" class="headerlink" title="获取运行时类的完整结构（方法，属性，类名，构造器….)"></a>获取运行时类的完整结构（方法，属性，类名，构造器….)</h4><p>==获取属性和方法、构造器的方法有两种，一种是没加Declared的，一种是加了Declared的。前者只能获取到公共的属性、方法和构造器（即由public修饰的），后者可以获取到所有的，包括被private、protected修饰的==</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Constructor</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Field</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Method</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span><span class="token punctuation">,</span> <span class="token class-name">NoSuchFieldException</span><span class="token punctuation">,</span> <span class="token class-name">NoSuchMethodException</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//获取user类对象</span>
+        <span class="token class-name">Class</span> c1 <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"=================名字========================"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取类的名字</span>
+        <span class="token class-name">String</span> name <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//获取类的包名+类名</span>
+        <span class="token class-name">String</span> name1 <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//获取类的类名</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>name1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"=================属性========================"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获得类的属性</span>
+        <span class="token class-name">Field</span><span class="token punctuation">[</span><span class="token punctuation">]</span> fields <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredFields</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//获得所有的属性</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Field</span> field <span class="token operator">:</span> fields<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>field<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token class-name">Field</span> name2 <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredField</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//获取指定的属性</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>name2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"=================方法========================"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取类的方法</span>
+        <span class="token class-name">Method</span><span class="token punctuation">[</span><span class="token punctuation">]</span> declaredMethods <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredMethods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//获取所有的方法</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Method</span> declaredMethod <span class="token operator">:</span> declaredMethods<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>declaredMethod<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//获取指定的方法,参数1是方法名，参数二是参数的类型，没有参数填写null</span>
+        <span class="token comment">//为什么要填写参数类型，因为java存在重载</span>
+        <span class="token class-name">Method</span> setName <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"setName"</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>setName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"=================构造器========================"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">Constructor</span><span class="token punctuation">[</span><span class="token punctuation">]</span> declaredConstructors <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredConstructors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//获取所有的构造器</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Constructor</span> declaredConstructor <span class="token operator">:</span> declaredConstructors<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>declaredConstructor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+		<span class="token comment">//此处的参数的类型必须和构造器的参数类型一样。由于我使用了@AllArgsConstructor注解，因此含所有参数的构造器的参数类型的顺序与你定义属性时的顺序一样</span>
+        <span class="token class-name">Constructor</span> declaredConstructor <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredConstructor</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>declaredConstructor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/.com//笔记\img\多线程\image-20210411222729261.png" alt="image-20210411222729261"></p>
+<h4 id="动态创建对象、调用方法、操作属性"><a href="#动态创建对象、调用方法、操作属性" class="headerlink" title="动态创建对象、调用方法、操作属性"></a>动态创建对象、调用方法、操作属性</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Constructor</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Field</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">InvocationTargetException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Method</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IllegalAccessException</span><span class="token punctuation">,</span> <span class="token class-name">InstantiationException</span><span class="token punctuation">,</span> <span class="token class-name">InvocationTargetException</span><span class="token punctuation">,</span> <span class="token class-name">NoSuchMethodException</span><span class="token punctuation">,</span> <span class="token class-name">NoSuchFieldException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Class</span> c1 <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//直接使用newInstance()方法，调用的是无参构造器，如果没有无参构造器，会报错</span>
+        <span class="token class-name">Object</span> user <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"=================构造器======================"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//通过构造器创建实例</span>
+        <span class="token comment">//通过Class对象获取构造器</span>
+        <span class="token class-name">Constructor</span> constructor <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredConstructor</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">User</span> user1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> constructor<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"pty"</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//通过构造器创建实例，参数为构造器所需的具体的值</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"====================调用普通方法================="</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取普通方法</span>
+        <span class="token class-name">Method</span> setName <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"setName"</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        setName<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>user1<span class="token punctuation">,</span> <span class="token string">"彭天怡"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//通过invoke()方法激活方法，第一个参数为执行的对象，第二个是方法需要的具体参数</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"===================操作属性====================="</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取属性</span>
+        <span class="token class-name">Field</span> name <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredField</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//因为name设置为私有属性，因此不能被外界访问到，使用setAccessible(true)可以使其被访问</span>
+        name<span class="token punctuation">.</span><span class="token function">setAccessible</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        name<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>user1<span class="token punctuation">,</span><span class="token string">"pty1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//设置属性</span>
+        name<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>user1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">User</span><span class="token punctuation">(</span>id<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>构造器<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token class-name">User</span><span class="token punctuation">(</span>id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">=</span>pty<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">)</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>调用普通方法<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token class-name">User</span><span class="token punctuation">(</span>id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">=</span>彭天怡<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">)</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>操作属性<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token class-name">User</span><span class="token punctuation">(</span>id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">=</span>pty1<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">)</span>
+
+<span class="token class-name">Process</span> finished <span class="token keyword">with</span> <span class="token namespace">exit</span> code <span class="token number">0</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>总结</strong></p>
+<ul>
+<li>如果实体类没有无参构造，不能直接使用newInstance()方法，会报错，应该使用构造器来创建对象</li>
+<li>使用<code>构造器.newInstance()</code>创建对象时，参数为构造器具体需要的值</li>
+<li>获取到方法后，通过<code>方法.invoke()</code>来激活方法，第一个参数为执行方法的对象，第二个是方法所需的参数。</li>
+<li>由于私有方法和私有属性不能被直接操作，因此需要在操作前使用<code>setAccessibel(true)</code>方法，这样就可以操作private修饰的方法和属性了。（setAccessibel(true) 也称为暴力忽略）</li>
+<li><code>getMathod()</code>和<code>getField()</code>不仅可以获取到本类的方法和属性，还可以获取到从父类继承的方法和属性。</li>
+</ul>
+<h4 id="反射操作泛型"><a href="#反射操作泛型" class="headerlink" title="反射操作泛型"></a>反射操作泛型</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Method</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">ParameterizedType</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Type</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Map</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span>  <span class="token keyword">void</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">User</span><span class="token punctuation">></span></span> map<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> list<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">NoSuchMethodException</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//获取Class对象</span>
+        <span class="token class-name">Class</span> c1 <span class="token operator">=</span> <span class="token class-name">Test</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+        <span class="token comment">//获取具体的方法</span>
+        <span class="token class-name">Method</span> test1 <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"test1"</span><span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//getGenericParameterTypes()返回一个Type对象数组，获取方法的形参类型，如果参数是泛型，将会返回完整的泛型信息</span>
+        <span class="token class-name">Type</span><span class="token punctuation">[</span><span class="token punctuation">]</span> genericParameterTypes <span class="token operator">=</span> test1<span class="token punctuation">.</span><span class="token function">getGenericParameterTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Type</span> genericParameterType <span class="token operator">:</span> genericParameterTypes<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>genericParameterType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//判断参数类型是否属于参数化类型（只要是泛型，且不是数组和本类上定义的泛型）</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>genericParameterType <span class="token keyword">instanceof</span> <span class="token class-name">ParameterizedType</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token comment">//将genericParameterTyp强转为ParameterizedType类型，并且调用getActualTypeArguments()方法获取参数化类型中的实际参数</span>
+                <span class="token class-name">Type</span><span class="token punctuation">[</span><span class="token punctuation">]</span> actualTypeArguments <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">ParameterizedType</span><span class="token punctuation">)</span> genericParameterType<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getActualTypeArguments</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Type</span> actualTypeArgument <span class="token operator">:</span> actualTypeArguments<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>actualTypeArgument<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"=============方法返回值的泛型============"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//操作与获取上面方法的参数类型一致，不同的是获取的是返回值的参数类型 getGenericReturnType()</span>
+        <span class="token class-name">Method</span> test2 <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Type</span> genericReturnType <span class="token operator">=</span> test2<span class="token punctuation">.</span><span class="token function">getGenericReturnType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>genericReturnType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>genericReturnType <span class="token keyword">instanceof</span>  <span class="token class-name">ParameterizedType</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token class-name">Type</span><span class="token punctuation">[</span><span class="token punctuation">]</span> actualTypeArguments <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">ParameterizedType</span><span class="token punctuation">)</span> genericReturnType<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getActualTypeArguments</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Type</span> actualTypeArgument <span class="token operator">:</span> actualTypeArguments<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>actualTypeArgument<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span>java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">String</span><span class="token punctuation">,</span> com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection<span class="token punctuation">.</span><span class="token class-name">User</span><span class="token punctuation">></span></span>  <span class="token comment">//获得了完整的泛型信息</span>
+<span class="token keyword">class</span> java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">String</span>    <span class="token comment">//获得了泛型里面具体的参数类型</span>
+<span class="token keyword">class</span> com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection<span class="token punctuation">.</span><span class="token class-name">User</span>
+java<span class="token punctuation">.</span>util<span class="token punctuation">.</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span>com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection<span class="token punctuation">.</span><span class="token class-name">User</span><span class="token punctuation">></span></span>
+<span class="token keyword">class</span> com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection<span class="token punctuation">.</span><span class="token class-name">User</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>方法返回值的泛型<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+java<span class="token punctuation">.</span>util<span class="token punctuation">.</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span>java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">String</span><span class="token punctuation">,</span> com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection<span class="token punctuation">.</span><span class="token class-name">User</span><span class="token punctuation">></span></span>
+<span class="token keyword">class</span> java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">String</span>
+<span class="token keyword">class</span> com<span class="token punctuation">.</span>mp<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>reflection<span class="token punctuation">.</span><span class="token class-name">User</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="反射操作注解"><a href="#反射操作注解" class="headerlink" title="反射操作注解"></a>反射操作注解</h4><p><strong>User类 + 自定义注解</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">AllArgsConstructor</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">Data</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">NoArgsConstructor</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">ElementType</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Retention</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Target</span><span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span><span class="token string">"用户表"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@FieldUser</span><span class="token punctuation">(</span>columnName <span class="token operator">=</span> <span class="token string">"id"</span><span class="token punctuation">,</span>type <span class="token operator">=</span> <span class="token string">"int"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@FieldUser</span><span class="token punctuation">(</span>columnName <span class="token operator">=</span> <span class="token string">"name"</span><span class="token punctuation">,</span>type <span class="token operator">=</span> <span class="token string">"String"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@FieldUser</span><span class="token punctuation">(</span>columnName <span class="token operator">=</span> <span class="token string">"age"</span><span class="token punctuation">,</span>type <span class="token operator">=</span> <span class="token string">"int"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//自定义注解</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span>TYPE<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@interface</span> <span class="token class-name">Table</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span>FIELD<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@interface</span> <span class="token class-name">FieldUser</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> <span class="token function">columnName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> <span class="token function">type</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>测试类</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Annotation</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>reflect<span class="token punctuation">.</span></span><span class="token class-name">Field</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">NoSuchFieldException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Class</span> c1 <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+        <span class="token comment">//获取类全部的注解</span>
+        <span class="token class-name">Annotation</span><span class="token punctuation">[</span><span class="token punctuation">]</span> annotations <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getAnnotations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Annotation</span> annotation <span class="token operator">:</span> annotations<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>annotation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">//获取类特定的注解,并强转为特定的类型</span>
+        <span class="token class-name">Table</span> annotation <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Table</span><span class="token punctuation">)</span> c1<span class="token punctuation">.</span><span class="token function">getAnnotation</span><span class="token punctuation">(</span><span class="token class-name">Table</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> value <span class="token operator">=</span> annotation<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//获取属性特定的注解</span>
+        <span class="token comment">//先获取属性</span>
+        <span class="token class-name">Field</span> name <span class="token operator">=</span> c1<span class="token punctuation">.</span><span class="token function">getDeclaredField</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//获取属性的注解，这里不需要进行强转，已经是FieldUser类了</span>
+        <span class="token class-name">FieldUser</span> annotation1 <span class="token operator">=</span> name<span class="token punctuation">.</span><span class="token function">getAnnotation</span><span class="token punctuation">(</span><span class="token class-name">FieldUser</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//获取注解的值</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>annotation1<span class="token punctuation">.</span><span class="token function">columnName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>annotation1<span class="token punctuation">.</span><span class="token function">type</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>==只有当注解的@Retention=RUNTIME时，才能在反射中被获取到==</p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>框架</tag>
+        <tag>底层</tag>
       </tags>
   </entry>
   <entry>
