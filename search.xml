@@ -573,6 +573,155 @@
       </tags>
   </entry>
   <entry>
+    <title>java生成二维码</title>
+    <url>/2021/04/27/java%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81/</url>
+    <content><![CDATA[<h3 id="Java生成二维码"><a href="#Java生成二维码" class="headerlink" title="Java生成二维码"></a>Java生成二维码</h3><h4 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h4><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.google.zxing<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.3.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.google.zxing<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>javase<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.3.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="不带logo"><a href="#不带logo" class="headerlink" title="不带logo"></a>不带logo</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>pdf<span class="token punctuation">.</span>pty</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">BarcodeFormat</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">EncodeHintType</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">MultiFormatWriter</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">WriterException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span>client<span class="token punctuation">.</span>j2se<span class="token punctuation">.</span></span><span class="token class-name">MatrixToImageWriter</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span>common<span class="token punctuation">.</span></span><span class="token class-name">BitMatrix</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span>qrcode<span class="token punctuation">.</span>decoder<span class="token punctuation">.</span></span><span class="token class-name">ErrorCorrectionLevel</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">File</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>file<span class="token punctuation">.</span></span><span class="token class-name">Path</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">HashMap</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QRCodeUtil</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 二维码尺寸</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> QRCODE_SIZE <span class="token operator">=</span> <span class="token number">500</span><span class="token punctuation">;</span>
+    <span class="token comment">// LOGO宽度</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIDTH <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+    <span class="token comment">// LOGO高度</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> HEIGHT <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">createQrcode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">WriterException</span><span class="token punctuation">,</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+       <span class="token comment">//二维码中的内容，这个内容一般都需要传参过来，我这里先写死</span>
+       <span class="token class-name">String</span> contents <span class="token operator">=</span> <span class="token string">"http://baidu.com"</span><span class="token punctuation">;</span>
+       <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment">//设置字符集</span>
+       map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">.</span>CHARACTER_SET<span class="token punctuation">,</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment">//设置纠错等级L/M/Q/H,等级越高越不容易识别，等级最高为H</span>
+       map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">.</span>ERROR_CORRECTION<span class="token punctuation">,</span> <span class="token class-name">ErrorCorrectionLevel</span><span class="token punctuation">.</span><span class="token class-name">M</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment">//设置边框</span>
+       map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">.</span>MARGIN<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment">//设置生成的图片的后缀名</span>
+       <span class="token class-name">String</span> format <span class="token operator">=</span> <span class="token string">"png"</span><span class="token punctuation">;</span>
+       <span class="token class-name">BitMatrix</span> bitMatrix <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MultiFormatWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>contents<span class="token punctuation">,</span> <span class="token class-name">BarcodeFormat</span><span class="token punctuation">.</span>QR_CODE<span class="token punctuation">,</span> WIDTH<span class="token punctuation">,</span> HEIGHT<span class="token punctuation">,</span> map<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment">//设置输出地址</span>
+       <span class="token class-name">Path</span> file<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"D:/new.png"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token class-name">MatrixToImageWriter</span><span class="token punctuation">.</span><span class="token function">writeToPath</span><span class="token punctuation">(</span>bitMatrix<span class="token punctuation">,</span>format<span class="token punctuation">,</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一般来说上面的工具类已经够用了，但是有时候我们想搞点不一样的，比如说在二维码上面添加一个logo，这样让二维码看起来不一样，于是就有了下面这个工具类</p>
+<h4 id="带logo"><a href="#带logo" class="headerlink" title="带logo"></a>带logo</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>pdf<span class="token punctuation">.</span>pty</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">BarcodeFormat</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">EncodeHintType</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">MultiFormatWriter</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span></span><span class="token class-name">WriterException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span>client<span class="token punctuation">.</span>j2se<span class="token punctuation">.</span></span><span class="token class-name">MatrixToImageConfig</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span>client<span class="token punctuation">.</span>j2se<span class="token punctuation">.</span></span><span class="token class-name">MatrixToImageWriter</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>zxing<span class="token punctuation">.</span>common<span class="token punctuation">.</span></span><span class="token class-name">BitMatrix</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>itextpdf<span class="token punctuation">.</span>text<span class="token punctuation">.</span>pdf<span class="token punctuation">.</span>qrcode<span class="token punctuation">.</span></span><span class="token class-name">ErrorCorrectionLevel</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>imageio<span class="token punctuation">.</span></span><span class="token class-name">ImageIO</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>awt<span class="token punctuation">.</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>awt<span class="token punctuation">.</span>geom<span class="token punctuation">.</span></span><span class="token class-name">RoundRectangle2D</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>awt<span class="token punctuation">.</span>image<span class="token punctuation">.</span></span><span class="token class-name">BufferedImage</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">File</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">HashMap</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QRCodeUtil</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//二维码高度和宽度</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WIDTH <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> HEIGHT <span class="token operator">=</span> <span class="token number">400</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">createCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">WriterException</span><span class="token punctuation">,</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//二维码内容</span>
+        <span class="token class-name">String</span> contents <span class="token operator">=</span> <span class="token string">"http://baidu.com"</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//设置字符集</span>
+        map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">.</span>CHARACTER_SET<span class="token punctuation">,</span> <span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//设置纠错等级</span>
+        map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">.</span>ERROR_CORRECTION<span class="token punctuation">,</span> <span class="token class-name">ErrorCorrectionLevel</span><span class="token punctuation">.</span><span class="token class-name">M</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//设置边框</span>
+        map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token class-name">EncodeHintType</span><span class="token punctuation">.</span>MARGIN<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//生成二维码对应的位矩阵对象</span>
+        <span class="token class-name">BitMatrix</span> bitMatrix <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MultiFormatWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>contents<span class="token punctuation">,</span> <span class="token class-name">BarcodeFormat</span><span class="token punctuation">.</span>QR_CODE<span class="token punctuation">,</span> WIDTH<span class="token punctuation">,</span> HEIGHT<span class="token punctuation">,</span> map<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//设置位矩阵转图片的参数</span>
+        <span class="token class-name">MatrixToImageConfig</span> config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MatrixToImageConfig</span><span class="token punctuation">(</span><span class="token number">0xFF000001</span><span class="token punctuation">,</span> <span class="token number">0xFFFFFFFF</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 位矩阵对象转BufferedImage对象</span>
+        <span class="token class-name">BufferedImage</span> qrcode <span class="token operator">=</span> <span class="token class-name">MatrixToImageWriter</span><span class="token punctuation">.</span><span class="token function">toBufferedImage</span><span class="token punctuation">(</span>bitMatrix<span class="token punctuation">,</span> config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//将不带logo的输出</span>
+        <span class="token class-name">ImageIO</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>qrcode<span class="token punctuation">,</span> <span class="token string">"png"</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"D://1.png"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">BufferedImage</span> <span class="token class-name">QRcode</span> <span class="token operator">=</span> <span class="token function">createQRCodeWithLogo</span><span class="token punctuation">(</span>qrcode<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"D:\\logo.png"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">//将带logo的输出</span>
+        <span class="token class-name">ImageIO</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token class-name">QRcode</span><span class="token punctuation">,</span> <span class="token string">"png"</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"D://code.png"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"输出成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+	<span class="token comment">//增加logo</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">BufferedImage</span> <span class="token function">createQRCodeWithLogo</span><span class="token punctuation">(</span><span class="token class-name">BufferedImage</span> bufferedImage<span class="token punctuation">,</span> <span class="token class-name">File</span> logofile<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token comment">//创建绘图对象</span>
+        <span class="token class-name">Graphics2D</span> g2 <span class="token operator">=</span> bufferedImage<span class="token punctuation">.</span><span class="token function">createGraphics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment">//设置logo的宽高,这里除4是为了让图片比二维码小，这里有个问题，可能是因为我的高和宽都设置为400，我一开始除3，发现生成的带logo的二维码无法识别，我猜想是因为400/3是一个浮点数，导致图片不全，当我除4、 5的时候就可以了。</span>
+        <span class="token keyword">int</span> height <span class="token operator">=</span> bufferedImage<span class="token punctuation">.</span><span class="token function">getHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">4</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> width <span class="token operator">=</span> bufferedImage<span class="token punctuation">.</span><span class="token function">getWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">4</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//设置logo在二维码图片上的起始坐标</span>
+        <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token punctuation">(</span>bufferedImage<span class="token punctuation">.</span><span class="token function">getWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span>width<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token punctuation">(</span>bufferedImage<span class="token punctuation">.</span><span class="token function">getHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span>height<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//读取logo文件</span>
+        <span class="token class-name">BufferedImage</span> logo <span class="token operator">=</span> <span class="token class-name">ImageIO</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>logofile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//开始绘制图像</span>
+        g2<span class="token punctuation">.</span><span class="token function">drawImage</span><span class="token punctuation">(</span>logo<span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>width<span class="token punctuation">,</span>height<span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">BasicStroke</span> stroke <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BasicStroke</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token class-name">BasicStroke</span><span class="token punctuation">.</span>CAP_ROUND<span class="token punctuation">,</span><span class="token class-name">BasicStroke</span><span class="token punctuation">.</span>JOIN_ROUND<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        g2<span class="token punctuation">.</span><span class="token function">setStroke</span><span class="token punctuation">(</span>stroke<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 设置笔画对象</span>
+        <span class="token comment">//指定弧度的圆角矩形</span>
+        <span class="token class-name">RoundRectangle2D</span><span class="token punctuation">.</span><span class="token class-name">Float</span> round <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RoundRectangle2D</span><span class="token punctuation">.</span><span class="token class-name">Float</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>width<span class="token punctuation">,</span>height<span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        g2<span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span><span class="token class-name">Color</span><span class="token punctuation">.</span>white<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//指定圆弧边框的颜色</span>
+        g2<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>round<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        g2<span class="token punctuation">.</span><span class="token function">dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bufferedImage<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> bufferedImage<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      <tags>
+        <tag>工具类</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>markdown语法</title>
     <url>/2020/09/08/markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h2 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h2><p>在想要设置为标题的文字前面加#来表示</p>
@@ -718,6 +867,140 @@ title 可加可不加
       </categories>
       <tags>
         <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springboot发送邮箱验证</title>
+    <url>/2020/09/15/%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
+    <content><![CDATA[<p>在实际开发中，我们通常需要登录和注册用户。在登录的时候我们可以使用验证码来进行验证，但在注册的时候我们看到更多的是使用邮箱验证，即给你发送的邮箱发送一个验证码，然后你将这个验证码输在页面。</p>
+<a id="more"></a>
+
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ol>
+<li><p>我们使用qq邮箱进行邮件发送，需要开启QQ邮箱的POP3/SMTP服务和IMAP/SMTP服务</p>
+<ul>
+<li>进入QQ邮箱首页，找到设置<img src="/images/blog/qqemail.png" alt="qq邮箱"></li>
+<li>进入设置后点击账户，往下拉找到<strong>POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</strong></li>
+</ul>
+<p><img src="/images/blog/pop3.png" alt="pop3"></p>
+<ul>
+<li>开启POP3和IMAP服务（只开启一个好像也行）</li>
+<li>开始这两项服务后各自会生成一串密文密码，把这个保存起来，以后会用到。</li>
+<li>我的两个密码分别是  POP3:cplcsiqntwidfgib    IMAP:zxisvqcbpucmiifb</li>
+</ul>
+</li>
+<li><p>springboot配置邮箱服务</p>
+<ul>
+<li>导入支持邮箱的依赖</li>
+</ul>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一个小插曲：</p>
+<blockquote>
+<p>在后面写代码的时候需要用到<code>JavaMailSenderImpl</code>这个类。</p>
+</blockquote>
+<blockquote>
+<p>但是我导入这个包以后找不到这个类，我以为是还需要添加其他的依赖，百度了一下，导入了<code>spring-context-support</code>这个依赖。然后我点进<code>spring-boot-starter-mail</code>后发现里面已经引入了<code>spring-context-support</code>，所以应该是我最开始没有导入好。</p>
+</blockquote>
+<ul>
+<li>在application.yml中配置邮箱信息</li>
+</ul>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span> 
+	<span class="token key atrule">mail</span><span class="token punctuation">:</span>
+		<span class="token key atrule">username</span><span class="token punctuation">:</span> 1219002685@qq.com  <span class="token comment">#发件人账号</span>
+		<span class="token key atrule">password</span><span class="token punctuation">:</span> zxisvqcbpucmiifb  <span class="token comment">#这里的password不是填你的qq密码，而是你开去那两个服务后生成的密码</span>
+		<span class="token key atrule">host</span><span class="token punctuation">:</span> smtp.qq.com        	<span class="token comment">#邮箱服务器</span>
+		<span class="token key atrule">default-encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8</span>		<span class="token comment">#默认编码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+</li>
+</ol>
+<p>至此，发送邮箱验证的前期准备工作都已经做完了，接下来就是写代码了！！！！</p>
+<h3 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h3><ol>
+<li>Controller层</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Email</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">EmailService</span> emailService<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/email"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAdress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
+            emailService<span class="token punctuation">.</span><span class="token function">sendEmail</span><span class="token punctuation">(</span>emailAdress<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token keyword">return</span> <span class="token string">"发送邮件成功"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token string">"邮件发送失败"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>Service层</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EmailService</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token class-name">JavaMailSenderImpl</span> javaMailSender<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> code<span class="token punctuation">;</span> <span class="token comment">//验证码</span>
+
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&#123;spring.mail.username&#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> sender<span class="token punctuation">;</span>   <span class="token comment">//发送邮件的地址</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAddress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        code<span class="token operator">=</span> <span class="token class-name">VerifyCode</span><span class="token punctuation">.</span><span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+        <span class="token class-name">SimpleMailMessage</span> message <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleMailMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        message<span class="token punctuation">.</span><span class="token function">setSubject</span><span class="token punctuation">(</span><span class="token string">"验证码"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+        message<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"尊敬的用户你好：\n"</span><span class="token operator">+</span>
+                <span class="token string">"\n本次请求的邮件验证码为："</span><span class="token operator">+</span>code<span class="token operator">+</span><span class="token string">",本次验证码5分钟内有效，请及时输入。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        message<span class="token punctuation">.</span><span class="token function">setTo</span><span class="token punctuation">(</span>emailAddress<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        message<span class="token punctuation">.</span><span class="token function">setFrom</span><span class="token punctuation">(</span>sender<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        javaMailSender<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//发送邮件</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>@Value()注解：<code> @Value(&quot;$&#123;spring.mail.username&#125;&quot;)</code> 从配置文件中读取username的数据。</li>
+<li><code> SimpleMailMessage message = new SimpleMailMessage();</code>创建一个简单的邮件对象。</li>
+<li><code>message.setSubject()</code>设置邮件的标题</li>
+<li><code>message.setText()</code>设置邮件的内容</li>
+<li><code>message.setTo()</code>设置收件人的地址</li>
+<li><code>message.setFrom()</code>设置发件人的地址</li>
+</ul>
+<ol start="3">
+<li>随机生成6位数的验证码</li>
+</ol>
+<p>使用SecureRandom生成随机数。</p>
+<blockquote>
+<p>Math.random生成的是一般随机数，采用的是类似于统计学的随机数生成规则，其输出结果很容易预测，因此可能导致被攻击者击中。而SecureRandom是真随机数，采用的是类似于密码学的随机数生成规则，其输出结果较难预测，若想要预防被攻击者攻击，最好做到使攻击者根本无法，或不可能鉴别生成的随机值和真正的随机值</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VerifyCode</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> SYMBOLS<span class="token operator">=</span><span class="token string">"0123456789"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Random</span> RANDOM <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SecureRandom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> verifycode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">//生成一个长度为6的字符数组</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> verifycode<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">//SYMBOLS.charAt()：返回目标索引下的字符</span>
+            <span class="token comment">//RANDOM.nextInt(xx)：生成0~xx-1的随机数</span>
+            <span class="token comment">//每次随机生成一个数x，并将SYMBOLS中的第n+1个数字返回给verifycode</span>
+            verifycode<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>RANDOM<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>verifycode<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//将字符数组转成字符串</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
@@ -868,140 +1151,6 @@ title 可加可不加
       <tags>
         <tag>spring</tag>
         <tag>日志框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springboot发送邮箱验证</title>
-    <url>/2020/09/15/%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
-    <content><![CDATA[<p>在实际开发中，我们通常需要登录和注册用户。在登录的时候我们可以使用验证码来进行验证，但在注册的时候我们看到更多的是使用邮箱验证，即给你发送的邮箱发送一个验证码，然后你将这个验证码输在页面。</p>
-<a id="more"></a>
-
-<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ol>
-<li><p>我们使用qq邮箱进行邮件发送，需要开启QQ邮箱的POP3/SMTP服务和IMAP/SMTP服务</p>
-<ul>
-<li>进入QQ邮箱首页，找到设置<img src="/images/blog/qqemail.png" alt="qq邮箱"></li>
-<li>进入设置后点击账户，往下拉找到<strong>POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</strong></li>
-</ul>
-<p><img src="/images/blog/pop3.png" alt="pop3"></p>
-<ul>
-<li>开启POP3和IMAP服务（只开启一个好像也行）</li>
-<li>开始这两项服务后各自会生成一串密文密码，把这个保存起来，以后会用到。</li>
-<li>我的两个密码分别是  POP3:cplcsiqntwidfgib    IMAP:zxisvqcbpucmiifb</li>
-</ul>
-</li>
-<li><p>springboot配置邮箱服务</p>
-<ul>
-<li>导入支持邮箱的依赖</li>
-</ul>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>一个小插曲：</p>
-<blockquote>
-<p>在后面写代码的时候需要用到<code>JavaMailSenderImpl</code>这个类。</p>
-</blockquote>
-<blockquote>
-<p>但是我导入这个包以后找不到这个类，我以为是还需要添加其他的依赖，百度了一下，导入了<code>spring-context-support</code>这个依赖。然后我点进<code>spring-boot-starter-mail</code>后发现里面已经引入了<code>spring-context-support</code>，所以应该是我最开始没有导入好。</p>
-</blockquote>
-<ul>
-<li>在application.yml中配置邮箱信息</li>
-</ul>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span> 
-	<span class="token key atrule">mail</span><span class="token punctuation">:</span>
-		<span class="token key atrule">username</span><span class="token punctuation">:</span> 1219002685@qq.com  <span class="token comment">#发件人账号</span>
-		<span class="token key atrule">password</span><span class="token punctuation">:</span> zxisvqcbpucmiifb  <span class="token comment">#这里的password不是填你的qq密码，而是你开去那两个服务后生成的密码</span>
-		<span class="token key atrule">host</span><span class="token punctuation">:</span> smtp.qq.com        	<span class="token comment">#邮箱服务器</span>
-		<span class="token key atrule">default-encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8</span>		<span class="token comment">#默认编码</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-</li>
-</ol>
-<p>至此，发送邮箱验证的前期准备工作都已经做完了，接下来就是写代码了！！！！</p>
-<h3 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h3><ol>
-<li>Controller层</li>
-</ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Email</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token class-name">EmailService</span> emailService<span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/email"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAdress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
-            emailService<span class="token punctuation">.</span><span class="token function">sendEmail</span><span class="token punctuation">(</span>emailAdress<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token keyword">return</span> <span class="token string">"发送邮件成功"</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token string">"邮件发送失败"</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ol start="2">
-<li>Service层</li>
-</ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EmailService</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token class-name">JavaMailSenderImpl</span> javaMailSender<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">String</span> code<span class="token punctuation">;</span> <span class="token comment">//验证码</span>
-
-    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&#123;spring.mail.username&#125;"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> sender<span class="token punctuation">;</span>   <span class="token comment">//发送邮件的地址</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendEmail</span><span class="token punctuation">(</span><span class="token class-name">String</span> emailAddress<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        code<span class="token operator">=</span> <span class="token class-name">VerifyCode</span><span class="token punctuation">.</span><span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
-        <span class="token class-name">SimpleMailMessage</span> message <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleMailMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        message<span class="token punctuation">.</span><span class="token function">setSubject</span><span class="token punctuation">(</span><span class="token string">"验证码"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
-        message<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"尊敬的用户你好：\n"</span><span class="token operator">+</span>
-                <span class="token string">"\n本次请求的邮件验证码为："</span><span class="token operator">+</span>code<span class="token operator">+</span><span class="token string">",本次验证码5分钟内有效，请及时输入。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        message<span class="token punctuation">.</span><span class="token function">setTo</span><span class="token punctuation">(</span>emailAddress<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        message<span class="token punctuation">.</span><span class="token function">setFrom</span><span class="token punctuation">(</span>sender<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        javaMailSender<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//发送邮件</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>@Value()注解：<code> @Value(&quot;$&#123;spring.mail.username&#125;&quot;)</code> 从配置文件中读取username的数据。</li>
-<li><code> SimpleMailMessage message = new SimpleMailMessage();</code>创建一个简单的邮件对象。</li>
-<li><code>message.setSubject()</code>设置邮件的标题</li>
-<li><code>message.setText()</code>设置邮件的内容</li>
-<li><code>message.setTo()</code>设置收件人的地址</li>
-<li><code>message.setFrom()</code>设置发件人的地址</li>
-</ul>
-<ol start="3">
-<li>随机生成6位数的验证码</li>
-</ol>
-<p>使用SecureRandom生成随机数。</p>
-<blockquote>
-<p>Math.random生成的是一般随机数，采用的是类似于统计学的随机数生成规则，其输出结果很容易预测，因此可能导致被攻击者击中。而SecureRandom是真随机数，采用的是类似于密码学的随机数生成规则，其输出结果较难预测，若想要预防被攻击者攻击，最好做到使攻击者根本无法，或不可能鉴别生成的随机值和真正的随机值</p>
-</blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VerifyCode</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> SYMBOLS<span class="token operator">=</span><span class="token string">"0123456789"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Random</span> RANDOM <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SecureRandom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getVerifyCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> verifycode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">//生成一个长度为6的字符数组</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> verifycode<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">//SYMBOLS.charAt()：返回目标索引下的字符</span>
-            <span class="token comment">//RANDOM.nextInt(xx)：生成0~xx-1的随机数</span>
-            <span class="token comment">//每次随机生成一个数x，并将SYMBOLS中的第n+1个数字返回给verifycode</span>
-            verifycode<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>RANDOM<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>SYMBOLS<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>verifycode<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//将字符数组转成字符串</span>
-    <span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
