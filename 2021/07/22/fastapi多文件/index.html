@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"auto","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+  <meta name="description" content="文件结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fastapi多文件">
+<meta property="og:url" content="http://example.com/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="文件结构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//Users/彭天怡/AppData/Roaming/Typora/typora-user-images/image-20210721180819459.png">
+<meta property="article:published_time" content="2021-07-22T04:04:43.122Z">
+<meta property="article:modified_time" content="2021-07-22T04:04:22.113Z">
+<meta property="article:author" content="pty">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//Users/彭天怡/AppData/Roaming/Typora/typora-user-images/image-20210721180819459.png">
+
+<link rel="canonical" href="http://example.com/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>fastapi多文件 | Myblog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Myblog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年，你渴望力量吗</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="pty">
+      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          fastapi多文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-22 12:04:43 / 修改时间：12:04:22" itemprop="dateCreated datePublished" datetime="2021-07-22T12:04:43+08:00">2021-07-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><a id="more"></a>
+
+<pre class="line-numbers language-none"><code class="language-none">├── app
+│   ├── __init__.py
+│   ├── main.py
+│   ├── dependencies.py
+│   └── routers
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   └── users.py
+│   └── internal
+│       ├── __init__.py
+│       └── admin.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><code>app</code> 目录包含了所有内容。并且它有一个空文件 <code>app/__init__.py</code>，因此它是一个「Python 包」（「Python 模块」的集合）：<code>app</code>。</li>
+<li>它包含一个 <code>app/main.py</code> 文件。由于它位于一个 Python 包（一个包含 <code>__init__.py</code> 文件的目录）中，因此它是该包的一个「模块」：<code>app.main</code>。</li>
+<li>还有一个 <code>app/dependencies.py</code> 文件，就像 <code>app/main.py</code> 一样，它是一个「模块」：<code>app.dependencies</code>。</li>
+<li>有一个子目录 <code>app/routers/</code> 包含另一个 <code>__init__.py</code> 文件，因此它是一个「Python 子包」：<code>app.routers</code>。</li>
+<li>文件 <code>app/routers/items.py</code> 位于 <code>app/routers/</code> 包中，因此它是一个子模块：<code>app.routers.items</code>。</li>
+<li>同样适用于 <code>app/routers/users.py</code>，它是另一个子模块：<code>app.routers.users</code>。</li>
+<li>还有一个子目录 <code>app/internal/</code> 包含另一个 <code>__init__.py</code> 文件，因此它是又一个「Python 子包」：<code>app.internal</code>。</li>
+<li><code>app/internal/admin.py</code> 是另一个子模块：<code>app.internal.admin</code>。</li>
+</ul>
+<h2 id="APIRouter"><a href="#APIRouter" class="headerlink" title="APIRouter"></a>APIRouter</h2><p>可以使用<code>APIRouter</code>为模块创建路径操作，可以与<code>FastAPI</code>类相同的方式创建一个实例：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#导入APIRouter</span>
+<span class="token keyword">from</span> fastapi <span class="token keyword">import</span> APIRouter
+<span class="token comment">#创建一个实例</span>
+router <span class="token operator">=</span> APIRouter<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">#像FastAPI一样创建路径操作，相当于一个迷你的FastAPI类</span>
+<span class="token decorator annotation punctuation">@router<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/users/"</span><span class="token punctuation">,</span> tags<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"users"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">read_users</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">"username"</span><span class="token punctuation">:</span> <span class="token string">"Rick"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">"username"</span><span class="token punctuation">:</span> <span class="token string">"Morty"</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+
+
+<span class="token decorator annotation punctuation">@router<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/users/me"</span><span class="token punctuation">,</span> tags<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"users"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">read_user_me</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">"username"</span><span class="token punctuation">:</span> <span class="token string">"fakecurrentuser"</span><span class="token punctuation">&#125;</span>
+
+
+<span class="token decorator annotation punctuation">@router<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/users/&#123;username&#125;"</span><span class="token punctuation">,</span> tags<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"users"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">read_user</span><span class="token punctuation">(</span>username<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">"username"</span><span class="token punctuation">:</span> username<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="依赖项"><a href="#依赖项" class="headerlink" title="依赖项"></a>依赖项</h2><p><code>dependencies</code> 模块（<code>app/dependencies.py</code>）</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> fastapi <span class="token keyword">import</span> Header<span class="token punctuation">,</span> HTTPException
+
+
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">get_token_header</span><span class="token punctuation">(</span>x_token<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> Header<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">if</span> x_token <span class="token operator">!=</span> <span class="token string">"fake-super-secret-token"</span><span class="token punctuation">:</span>
+
+        <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span>status_code<span class="token operator">=</span><span class="token number">400</span><span class="token punctuation">,</span> detail<span class="token operator">=</span><span class="token string">"X-Token header invalid"</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">get_query_token</span><span class="token punctuation">(</span>token<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> token <span class="token operator">!=</span> <span class="token string">"jessica"</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span>status_code<span class="token operator">=</span><span class="token number">400</span><span class="token punctuation">,</span> detail<span class="token operator">=</span><span class="token string">"No Jessica token provided"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="其他使用APIRouter的模块"><a href="#其他使用APIRouter的模块" class="headerlink" title="其他使用APIRouter的模块"></a>其他使用APIRouter的模块</h2><p><code>app/routers/items.py</code></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> fastapi <span class="token keyword">import</span> APIRouter<span class="token punctuation">,</span> Depends<span class="token punctuation">,</span> HTTPException
+
+<span class="token keyword">from</span> <span class="token punctuation">.</span><span class="token punctuation">.</span>dependencies <span class="token keyword">import</span> get_token_header
+
+<span class="token comment">#给该模块下的所有路径操作进行统一的设置</span>
+router <span class="token operator">=</span> APIRouter<span class="token punctuation">(</span>
+    prefix<span class="token operator">=</span><span class="token string">"/items"</span><span class="token punctuation">,</span>  <span class="token comment">#设置了路径， 地址都变成了 /items/xxxx</span>
+    tags<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"items"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>   <span class="token comment">#设置了标签</span>
+    dependencies<span class="token operator">=</span><span class="token punctuation">[</span>Depends<span class="token punctuation">(</span>get_token_header<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token comment">#设置了依赖</span>
+    responses<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">400</span><span class="token punctuation">:</span><span class="token punctuation">&#123;</span><span class="token string">"description"</span><span class="token punctuation">:</span><span class="token string">"NOT found"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>  <span class="token comment">#设置了response</span>
+<span class="token punctuation">)</span>
+
+fake_items_db <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">"plumbus"</span><span class="token punctuation">:</span><span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token punctuation">:</span><span class="token string">"pty"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token string">"gun"</span><span class="token punctuation">:</span><span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token punctuation">:</span><span class="token string">"gun"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+
+
+<span class="token decorator annotation punctuation">@router<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">read_items</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> fake_items_db
+
+<span class="token decorator annotation punctuation">@router<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/&#123;item_id"</span><span class="token punctuation">)</span>  <span class="token comment">#路径变为：/items/&#123;item_id&#125;</span>
+<span class="token keyword">def</span> <span class="token function">read_item</span><span class="token punctuation">(</span>item_id<span class="token punctuation">:</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> item_id <span class="token keyword">not</span> <span class="token keyword">in</span> fake_items_db<span class="token punctuation">:</span>
+        <span class="token keyword">raise</span>  HTTPException<span class="token punctuation">(</span>status_code<span class="token operator">=</span><span class="token number">400</span><span class="token punctuation">,</span>detail<span class="token operator">=</span><span class="token string">"not found"</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token punctuation">:</span>fake_items_db<span class="token punctuation">[</span>item_id<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">"item_id"</span><span class="token punctuation">:</span>item_id<span class="token punctuation">&#125;</span>
+
+<span class="token comment">#还可以再为某个路径操作单独设置，这样会和之前统一设置的进行叠加</span>
+<span class="token decorator annotation punctuation">@router<span class="token punctuation">.</span>put</span><span class="token punctuation">(</span>
+    <span class="token string">"/&#123;item_id&#125;"</span><span class="token punctuation">,</span>
+    tags<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"custom"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token comment">#有两个tags，items和custom</span>
+    responses<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">403</span><span class="token punctuation">:</span><span class="token punctuation">&#123;</span><span class="token string">"description"</span><span class="token punctuation">:</span><span class="token string">"operation"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span> <span class="token comment">#有两个response：404和403</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">update_item</span><span class="token punctuation">(</span>item_id<span class="token punctuation">:</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> item_id<span class="token operator">!=</span><span class="token string">"plumbus"</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> HTTPException<span class="token punctuation">(</span>status_code<span class="token operator">=</span><span class="token number">403</span><span class="token punctuation">,</span>detail<span class="token operator">=</span><span class="token string">"you can only update plumbus"</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">"item_id"</span><span class="token punctuation">:</span>item_id<span class="token punctuation">,</span><span class="token string">"name"</span><span class="token punctuation">:</span><span class="token string">"the great"</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>需要设置<code>dependencies</code>的时候的格式，<code>dependencies=[Depends(get_token_header)]</code>      <code>Depends</code>要用[]括起来了，我之前没括起来，报错</strong></p>
+<h2 id="FastAPI主体"><a href="#FastAPI主体" class="headerlink" title="FastAPI主体"></a>FastAPI主体</h2><p>位于 <code>app/main.py</code> 的模块，在这里导入并使用<code>FastAPI</code>类，这将是你的应用程序中将所有内容联结在一起的主文件。</p>
+<p>由于大部分逻辑都存在于自己的特定模块中，所以主文件的内容将非常简单。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> fastapi <span class="token keyword">import</span> FastAPI<span class="token punctuation">,</span> Depends
+
+<span class="token keyword">from</span> <span class="token punctuation">.</span>dependencies <span class="token keyword">import</span> get_token_header<span class="token punctuation">,</span> get_query_token
+<span class="token keyword">from</span> <span class="token punctuation">.</span>internal <span class="token keyword">import</span> admin
+<span class="token keyword">from</span> <span class="token punctuation">.</span>routers <span class="token keyword">import</span> items<span class="token punctuation">,</span> users
+
+<span class="token comment">#需要注意这里的格式，Depends用[]括起来了，我之前没括起来，报错</span>
+app<span class="token operator">=</span>FastAPI<span class="token punctuation">(</span>dependencies<span class="token operator">=</span><span class="token punctuation">[</span>Depends<span class="token punctuation">(</span>get_query_token<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">#</span>
+app<span class="token punctuation">.</span>include_router<span class="token punctuation">(</span>items<span class="token punctuation">.</span>router<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>include_router<span class="token punctuation">(</span>users<span class="token punctuation">.</span>router<span class="token punctuation">)</span>
+
+<span class="token comment">#可以在主文件中对其他文件的router进行设置</span>
+<span class="token comment">#对interal/admin.py进行router设置</span>
+app<span class="token punctuation">.</span>include_router<span class="token punctuation">(</span>
+    admin<span class="token punctuation">.</span>router<span class="token punctuation">,</span>
+    prefix<span class="token operator">=</span><span class="token string">"/admin"</span><span class="token punctuation">,</span>
+    tags<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"admin"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    dependencies<span class="token operator">=</span><span class="token punctuation">[</span>Depends<span class="token punctuation">(</span>get_token_header<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    responses<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token number">418</span><span class="token punctuation">:</span><span class="token punctuation">&#123;</span><span class="token string">"description"</span><span class="token punctuation">:</span><span class="token string">"i'm a teapot"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">root</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">"message"</span><span class="token punctuation">:</span><span class="token string">"hello"</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="避免名称冲突"><a href="#避免名称冲突" class="headerlink" title="避免名称冲突"></a>避免名称冲突</h3><p>我们将直接导入 <code>items</code> 子模块，而不是仅导入其 <code>router</code> 变量。</p>
+<p>这是因为我们在 <code>users</code> 子模块中也有另一个名为 <code>router</code> 的变量。</p>
+<p>如果我们一个接一个地导入，例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">from .routers.items import router
+from .routers.users import router<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>来自 <code>users</code> 的 <code>router</code> 将覆盖来自 <code>items</code> 中的 <code>router</code>，我们将无法同时使用它们。</p>
+<h2 id="相对导入"><a href="#相对导入" class="headerlink" title="相对导入"></a>相对导入</h2><p>在上面我们会看到这样的代码，这些是从我们的文件中导入的模块，他们是怎么工作的呢？</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> <span class="token punctuation">.</span>dependencies <span class="token keyword">import</span> get_token_header<span class="token punctuation">,</span> get_query_token
+<span class="token keyword">from</span> <span class="token punctuation">.</span>internal <span class="token keyword">import</span> admin
+<span class="token keyword">from</span> <span class="token punctuation">.</span>routers <span class="token keyword">import</span> items<span class="token punctuation">,</span> users<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>一个单点 <code>.</code>，例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">from .dependencies import get_token_header<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>表示：</p>
+<ul>
+<li>从该模块（<code>app/routers/items.py</code> 文件）所在的同一个包（<code>app/routers/</code> 目录）开始…</li>
+<li>找到 <code>dependencies</code> 模块（一个位于 <code>app/routers/dependencies.py</code> 的虚构文件）…</li>
+<li>然后从中导入函数 <code>get_token_header</code>。</li>
+</ul>
+<p>两个点 <code>..</code>，例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">from ..dependencies import get_token_header<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>表示：</p>
+<ul>
+<li>从该模块（<code>app/routers/items.py</code> 文件）所在的同一个包（<code>app/routers/</code> 目录）开始…</li>
+<li>跳转到其父包（<code>app/</code> 目录）…</li>
+<li>在该父包中，找到 <code>dependencies</code> 模块（位于 <code>app/dependencies.py</code> 的文件）…</li>
+<li>然后从中导入函数 <code>get_token_header</code>。</li>
+</ul>
+<p>同样，如果我们使用了三个点 <code>...</code>，例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">from ...dependencies import get_token_header<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>那将意味着：</p>
+<ul>
+<li>从该模块（<code>app/routers/items.py</code> 文件）所在的同一个包（<code>app/routers/</code> 目录）开始…</li>
+<li>跳转到其父包（<code>app/</code> 目录）…</li>
+<li>然后跳转到该包的父包（该父包并不存在，<code>app</code> 已经是最顶层的包 😱）…</li>
+<li>在该父包中，找到 <code>dependencies</code> 模块（位于 <code>app/</code> 更上一级目录中的 <code>dependencies.py</code> 文件）…</li>
+<li>然后从中导入函数 <code>get_token_header</code>。</li>
+</ul>
+<p><code>from .routers import items, users</code></p>
+<p>表示：</p>
+<ul>
+<li>从该模块（<code>app/main.py</code> 文件）所在的同一个包（<code>app/</code> 目录）开始…</li>
+<li>寻找 <code>routers</code> 子包（位于 <code>app/routers/</code> 的目录）…</li>
+<li>从该包中，导入子模块 <code>items</code> (位于 <code>app/routers/items.py</code> 的文件) 以及 <code>users</code> (位于 <code>app/routers/users.py</code> 的文件)…</li>
+</ul>
+<p><code>items</code> 模块将具有一个 <code>router</code> 变量（<code>items.router</code>）。这与我们在 <code>app/routers/items.py</code> 文件中创建的变量相同，它是一个 <code>APIRouter</code> 对象。</p>
+<p>然后我们对 <code>users</code> 模块进行相同的操作。</p>
+<h3 id="绝对引入"><a href="#绝对引入" class="headerlink" title="绝对引入"></a>绝对引入</h3><p><code>from app.routers import items, users</code>    如果是这种样子的话，就是绝对引入</p>
+<h2 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h2><p><img src="/.com//Users\彭天怡\AppData\Roaming\Typora\typora-user-images\image-20210721180819459.png" alt="image-20210721180819459"></p>
+<p><strong>API文档界面如上，可以看到因为给每个模块设置了tags，所以分成了不同的类，而<code>/items/&#123;item_id&#125;</code>因为设置了两个tags(统一设置了一个items，自己单独设置了custom)，所以显示出了两个。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIRouter"><span class="nav-number">2.</span> <span class="nav-text">APIRouter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">依赖项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BD%BF%E7%94%A8APIRouter%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">其他使用APIRouter的模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FastAPI%E4%B8%BB%E4%BD%93"><span class="nav-number">5.</span> <span class="nav-text">FastAPI主体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%90%8D%E7%A7%B0%E5%86%B2%E7%AA%81"><span class="nav-number">5.1.</span> <span class="nav-text">避免名称冲突</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E5%AF%BC%E5%85%A5"><span class="nav-number">6.</span> <span class="nav-text">相对导入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E5%BC%95%E5%85%A5"><span class="nav-number">6.1.</span> <span class="nav-text">绝对引入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API%E6%96%87%E6%A1%A3"><span class="nav-number">7.</span> <span class="nav-text">API文档</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="pty"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">pty</p>
+  <div class="site-description" itemprop="description">努力最坏的结果不过是大器晚成</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/penty7710" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;penty7710" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1219002685@qq.com" title="E-Mail → mailto:1219002685@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pty</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script src="/js/prism/prism.js" async></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

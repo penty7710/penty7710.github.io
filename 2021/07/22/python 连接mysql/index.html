@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"auto","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+  <meta name="description" content="在看fastapi的官方文档，然后感觉sql部分挺难的，于是写下一篇博客来记录下。 安装工具首先要安装两个东西 pip install sqlalchemy pip install pymysql 前者是一个ORM框架，在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会转成表中的字段。 后者是用来连接数据库的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Myblog">
+<meta property="og:url" content="http://example.com/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="在看fastapi的官方文档，然后感觉sql部分挺难的，于是写下一篇博客来记录下。 安装工具首先要安装两个东西 pip install sqlalchemy pip install pymysql 前者是一个ORM框架，在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会转成表中的字段。 后者是用来连接数据库的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-22T04:04:40.972Z">
+<meta property="article:modified_time" content="2021-07-22T04:04:07.662Z">
+<meta property="article:author" content="pty">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Myblog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Myblog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年，你渴望力量吗</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="pty">
+      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-22 12:04:40 / 修改时间：12:04:07" itemprop="dateCreated datePublished" datetime="2021-07-22T12:04:40+08:00">2021-07-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在看fastapi的官方文档，然后感觉sql部分挺难的，于是写下一篇博客来记录下。</p>
+<h2 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h2><p>首先要安装两个东西</p>
+<p><code>pip install sqlalchemy</code></p>
+<p><code>pip install pymysql</code></p>
+<p>前者是一个ORM框架，在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会转成表中的字段。</p>
+<p>后者是用来连接数据库的</p>
+<a id="more"></a>
+
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><pre class="line-numbers language-none"><code class="language-none">
+└── sql_app
+    ├── __init__.py
+    ├── crud.py
+    ├── database.py
+    ├── main.py
+    ├── models.py
+    └── schemas.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>sql_app是包名，注意是创建一个包，而不是创建一个目录</li>
+<li><code>_init_.py</code>是一个空文件，创建sql_app会自动创建这个文件</li>
+<li><code>crud.py</code>是用来进行crud操作的文件</li>
+<li><code>database.py</code>是用来连接数据库的</li>
+<li><code>main.py</code>是用来接受前端请求，类似于controller层</li>
+<li><code>models.py</code>是用来创建SQLAlchemy模型的，也就是创建表</li>
+<li><code>schemas.py</code>是用来创建Pydentic模型的</li>
+</ul>
+<h2 id="database-py"><a href="#database-py" class="headerlink" title="database.py"></a>database.py</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> create_engine
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> sessionmaker<span class="token punctuation">,</span> declarative_base
+
+<span class="token comment">#连接数据库的url</span>
+SQLALCHEMY_DATABASES_URL <span class="token operator">=</span><span class="token string">"mysql+pymysql://root:123456@localhost:3306/python"</span>
+
+<span class="token comment">#echo=True表示引擎将用repr()函数记录所有语句及其参数列表到日志</span>
+engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span>SQLALCHEMY_DATABASES_URL<span class="token punctuation">,</span>encoding<span class="token operator">=</span><span class="token string">"utf8"</span><span class="token punctuation">,</span>echo<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+<span class="token comment">#SQLAlchemy中，CRUD是通会话进行管理的，所以需要先创建会话</span>
+<span class="token comment">#每一个SessionLocal实例就是一个数据库会话</span>
+<span class="token comment">#commit是指提交事务，将变更保存到数据库</span>
+<span class="token comment">#flush是指发送到数据库语句到数据库，但数据库不一定执行写入磁盘</span>
+<span class="token comment">#autocommit和autoflush是可以不写的</span>
+SessionLocal <span class="token operator">=</span> sessionmaker<span class="token punctuation">(</span>autocommit<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>autoflush<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>bind<span class="token operator">=</span>engine<span class="token punctuation">)</span>
+
+<span class="token comment">#创建基本映射类</span>
+Base <span class="token operator">=</span> declarative_base<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>在数据库相关的配置文件中，首先创建一个SQLAlchemy的”engine”，然后创建SessionLocal实例进行会话，最后创建模型类的基类。</strong></p>
+<h2 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Boolean<span class="token punctuation">,</span> ForeignKey
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+
+<span class="token keyword">from</span> <span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+
+<span class="token comment">#使用database.py创建的Base类创建SQLAlchemy模型</span>
+<span class="token comment">#可以理解为这个是与真正的数据库相关联的类</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#对应的是数据库中的表名</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"users"</span>
+
+    <span class="token comment">#设置表的属性名，使用Column设置，定义了属性的类型</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span>primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    email <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>unique<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    hashed_password <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span>default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+    <span class="token comment">#设置关系，通过relationship设置，这个不是属性，在数据库中不需要有这一个字段</span>
+    <span class="token comment">#当访问users.items时，会直接关联到Item表，可以直接获取到Item的字段数据</span>
+    <span class="token comment">#后面的back_populates是反向查询，有这个Item表可以通过items.owner访问到User表的字段数据</span>
+    <span class="token comment">#使用了back_populates,那么被关联的数据库也要显示的使用relationship</span>
+    <span class="token comment">#这个其实我也还不是太懂</span>
+    items <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Item"</span><span class="token punctuation">,</span>back_populates<span class="token operator">=</span><span class="token string">"owner"</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">Item</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"items"</span>
+
+    <span class="token builtin">id</span><span class="token operator">=</span>Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span>primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    title <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    description <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token comment">#设置了外键，使用ForeignKey参数设置，里面填写关联的表和具体的属性</span>
+    <span class="token comment">#注意这里是表名而不是上面的类名</span>
+    owner_id  <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span>ForeignKey<span class="token punctuation">(</span><span class="token string">"users.id"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    owner <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"User"</span><span class="token punctuation">,</span>back_populates<span class="token operator">=</span><span class="token string">"items"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>通过数据库配置文件中的基类来创建模型类。</strong></p>
+<h2 id="schemas-py"><a href="#schemas-py" class="headerlink" title="schemas.py"></a>schemas.py</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> typing <span class="token keyword">import</span> Optional<span class="token punctuation">,</span> List
+
+<span class="token keyword">from</span> pydantic <span class="token keyword">import</span> BaseModel
+
+
+<span class="token keyword">class</span> <span class="token class-name">ItemBase</span><span class="token punctuation">(</span>BaseModel<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    title<span class="token punctuation">:</span><span class="token builtin">str</span>
+    description<span class="token punctuation">:</span>Optional<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token boolean">None</span>
+
+
+<span class="token comment">#这个是用来创建Item的类，可以理解为前端传过来的要新增的数据</span>
+<span class="token keyword">class</span> <span class="token class-name">ItemCreate</span><span class="token punctuation">(</span>ItemBase<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+
+<span class="token comment">#继承自ItemBase</span>
+<span class="token comment">#Pydantic风格是声明类型，所以用的是:</span>
+<span class="token comment">#SQLAlchemy风格是定义属性，所以用的是=</span>
+<span class="token keyword">class</span> <span class="token class-name">Item</span><span class="token punctuation">(</span>ItemBase<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token builtin">id</span><span class="token punctuation">:</span> <span class="token builtin">int</span>
+    owner_id<span class="token punctuation">:</span> <span class="token builtin">int</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Config</span><span class="token punctuation">:</span>
+        orm_mode<span class="token operator">=</span><span class="token boolean">True</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">UserBase</span><span class="token punctuation">(</span>BaseModel<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    email<span class="token punctuation">:</span><span class="token builtin">str</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">UserCreate</span><span class="token punctuation">(</span>UserBase<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    password<span class="token punctuation">:</span><span class="token builtin">str</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">(</span>UserBase<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token builtin">id</span><span class="token punctuation">:</span> <span class="token builtin">int</span>
+    is_active<span class="token punctuation">:</span> <span class="token builtin">bool</span>
+    items<span class="token punctuation">:</span> List<span class="token punctuation">[</span>Item<span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token comment">#Config类用来给Pydantic提供配置信息</span>
+    <span class="token keyword">class</span> <span class="token class-name">Config</span><span class="token punctuation">:</span>
+        <span class="token comment">#orm_mode出了可以让Pydantic读取字典类型的数据，还支持Pydantic读取属性数据，比如SQLAlchemy模型的数据</span>
+        <span class="token comment">#这样我们就可以在路径操作函数中直接返回SQLAlchemy数据模型，没有这个配置项是不支持的</span>
+        orm_mode <span class="token operator">=</span> <span class="token boolean">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>定义请求参数模型验证与响应模型验证的Pydantic模型，其中响应模型中设置orm_mode=True参数，表示与ORM模型兼容，因为后续中返回的数据库查询是orm模型，通过设置这个参数可以将orm模型通过pydantic模型进行验证。</strong></p>
+<h2 id="crud-py"><a href="#crud-py" class="headerlink" title="crud.py"></a>crud.py</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> Session
+<span class="token keyword">from</span> <span class="token punctuation">.</span> <span class="token keyword">import</span> models<span class="token punctuation">,</span> schemas
+
+
+<span class="token comment">#通过id查询用户</span>
+<span class="token keyword">def</span> <span class="token function">get_user</span><span class="token punctuation">(</span>db<span class="token punctuation">:</span>Session<span class="token punctuation">,</span>user_id<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#返回的是models.User(其实就是users表)中的全部属性，并且条件是user_id = users中的id</span>
+    <span class="token keyword">return</span> db<span class="token punctuation">.</span>query<span class="token punctuation">(</span>models<span class="token punctuation">.</span>User<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>User<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token operator">==</span>user_id<span class="token punctuation">)</span><span class="token punctuation">.</span>first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">#通过email查询用户</span>
+<span class="token keyword">def</span> <span class="token function">get_user_by_email</span><span class="token punctuation">(</span>db<span class="token punctuation">:</span>Session<span class="token punctuation">,</span>email<span class="token punctuation">:</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#条件是邮箱相等</span>
+    <span class="token keyword">return</span>  db<span class="token punctuation">.</span>query<span class="token punctuation">(</span>models<span class="token punctuation">.</span>User<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>User<span class="token punctuation">.</span>email <span class="token operator">==</span> email<span class="token punctuation">)</span><span class="token punctuation">.</span>first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">#查询多个用户</span>
+<span class="token keyword">def</span> <span class="token function">get_users</span><span class="token punctuation">(</span>db<span class="token punctuation">:</span>Session<span class="token punctuation">,</span>skip<span class="token punctuation">:</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>limit<span class="token punctuation">:</span><span class="token builtin">int</span> <span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#offset表示偏移量，0表示不偏移,1表示偏移1条数据，即从第二条开始</span>
+    <span class="token comment">#limit表示表示限定数量</span>
+    <span class="token comment">#从第一条开始,查询100条数据，返回的是个列表</span>
+    <span class="token keyword">return</span> db<span class="token punctuation">.</span>query<span class="token punctuation">(</span>models<span class="token punctuation">.</span>User<span class="token punctuation">)</span><span class="token punctuation">.</span>offset<span class="token punctuation">(</span>skip<span class="token punctuation">)</span><span class="token punctuation">.</span>limit<span class="token punctuation">(</span>limit<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">#增加数据</span>
+<span class="token comment">#将前端传过来的数据保存到数据库</span>
+<span class="token comment">#传过来的数据是Pydantic模型，需要先转换为SQLAlchemy模型</span>
+<span class="token keyword">def</span> <span class="token function">create_user</span><span class="token punctuation">(</span>db<span class="token punctuation">:</span>Session<span class="token punctuation">,</span>user<span class="token punctuation">:</span>schemas<span class="token punctuation">.</span>UserCreate<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#密码哈希化(伪造)</span>
+    fake_hashed_password <span class="token operator">=</span> user<span class="token punctuation">.</span>password<span class="token operator">+</span><span class="token string">"pty123"</span>
+    <span class="token comment">#user是Pydantic模型的，重新创建db_user,db_user是SQLALchemy类型的</span>
+    db_user <span class="token operator">=</span> models<span class="token punctuation">.</span>User<span class="token punctuation">(</span>email<span class="token operator">=</span>user<span class="token punctuation">.</span>email<span class="token punctuation">,</span>hashed_password<span class="token operator">=</span>fake_hashed_password<span class="token punctuation">)</span>
+    <span class="token comment">#添加到数据库</span>
+    db<span class="token punctuation">.</span>add<span class="token punctuation">(</span>db_user<span class="token punctuation">)</span>
+    <span class="token comment">#提交</span>
+    db<span class="token punctuation">.</span>commit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">#刷新</span>
+    db<span class="token punctuation">.</span>refresh<span class="token punctuation">(</span>db_user<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> db_user
+
+<span class="token comment">#查询多个项目</span>
+<span class="token keyword">def</span> <span class="token function">get_items</span><span class="token punctuation">(</span>db<span class="token punctuation">:</span>Session<span class="token punctuation">,</span>skip<span class="token punctuation">:</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>limit <span class="token punctuation">:</span><span class="token builtin">int</span><span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> db<span class="token punctuation">.</span>query<span class="token punctuation">(</span>models<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">.</span>offset<span class="token punctuation">(</span>skip<span class="token punctuation">)</span><span class="token punctuation">.</span>limit<span class="token punctuation">(</span>limit<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">#增加数据</span>
+<span class="token keyword">def</span> <span class="token function">create_user_item</span><span class="token punctuation">(</span>db<span class="token punctuation">:</span>Session<span class="token punctuation">,</span>item<span class="token punctuation">:</span>schemas<span class="token punctuation">.</span>ItemCreate<span class="token punctuation">,</span>user_id<span class="token punctuation">:</span><span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    db_item <span class="token operator">=</span> models<span class="token punctuation">.</span>Item<span class="token punctuation">(</span><span class="token operator">**</span>item<span class="token punctuation">.</span><span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>owner_id <span class="token operator">=</span> user_id<span class="token punctuation">)</span>
+    db<span class="token punctuation">.</span>add<span class="token punctuation">(</span>db_item<span class="token punctuation">)</span>
+    db<span class="token punctuation">.</span>commit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    db<span class="token punctuation">.</span>refresh<span class="token punctuation">(</span>db_item<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> db_item<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><strong>通过传入数据库连接以及参数等进行数据库操作，包括创建用户、查询用户等，返回的是orm模型对象。</strong></p>
+<h2 id="main-py"><a href="#main-py" class="headerlink" title="main.py"></a>main.py</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> typing <span class="token keyword">import</span> List
+
+<span class="token keyword">from</span> fastapi <span class="token keyword">import</span> FastAPI<span class="token punctuation">,</span> Depends<span class="token punctuation">,</span>HTTPException
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> Session
+
+<span class="token keyword">from</span> <span class="token punctuation">.</span> <span class="token keyword">import</span> schemas<span class="token punctuation">,</span> crud<span class="token punctuation">,</span> models
+<span class="token keyword">from</span> <span class="token punctuation">.</span>database <span class="token keyword">import</span> SessionLocal<span class="token punctuation">,</span> engine
+
+<span class="token comment">#创建数据库，就算你没有自己创建表，orm会根据models中的类自动创建表</span>
+models<span class="token punctuation">.</span>Base<span class="token punctuation">.</span>metadata<span class="token punctuation">.</span>create_all<span class="token punctuation">(</span>bind<span class="token operator">=</span>engine<span class="token punctuation">)</span>
+
+app<span class="token operator">=</span>FastAPI<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">#Dependency</span>
+<span class="token comment">#每一个请求完毕后都需要关闭当前的数据库会话，不同请求使用不同的数据库会话</span>
+<span class="token keyword">def</span> <span class="token function">get_db</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    db<span class="token operator">=</span>SessionLocal<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">yield</span> db
+    <span class="token keyword">finally</span><span class="token punctuation">:</span>
+        db<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>post</span><span class="token punctuation">(</span><span class="token string">"/users/"</span><span class="token punctuation">,</span>response_model<span class="token operator">=</span>schemas<span class="token punctuation">.</span>User<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">create_user</span><span class="token punctuation">(</span>user<span class="token punctuation">:</span>schemas<span class="token punctuation">.</span>UserCreate<span class="token punctuation">,</span>db<span class="token punctuation">:</span>Session<span class="token operator">=</span>Depends<span class="token punctuation">(</span>get_db<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> crud<span class="token punctuation">.</span>create_user<span class="token punctuation">(</span>db<span class="token punctuation">,</span>user<span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/user/&#123;user_id&#125;"</span><span class="token punctuation">,</span>response_model<span class="token operator">=</span>schemas<span class="token punctuation">.</span>User<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">read_user</span><span class="token punctuation">(</span>user_id<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">,</span>db<span class="token punctuation">:</span> Session <span class="token operator">=</span> Depends<span class="token punctuation">(</span>get_db<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    db_user <span class="token operator">=</span>crud<span class="token punctuation">.</span>get_user<span class="token punctuation">(</span>db<span class="token punctuation">,</span>user_id<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> db_user <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span>  HTTPException<span class="token punctuation">(</span>status_code<span class="token operator">=</span><span class="token number">404</span><span class="token punctuation">,</span>detail<span class="token operator">=</span><span class="token string">"User not found"</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> db_user
+
+<span class="token comment">#这里返回多个对象，需要使用List，一开始没用，报错了</span>
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>get</span><span class="token punctuation">(</span><span class="token string">"/users/"</span><span class="token punctuation">,</span>response_model<span class="token operator">=</span>List<span class="token punctuation">[</span>schemas<span class="token punctuation">.</span>User<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">read_usres</span><span class="token punctuation">(</span>skip<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>limit <span class="token punctuation">:</span><span class="token builtin">int</span><span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span>db<span class="token punctuation">:</span>Session <span class="token operator">=</span> Depends<span class="token punctuation">(</span>get_db<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">return</span>  crud<span class="token punctuation">.</span>get_users<span class="token punctuation">(</span>db<span class="token punctuation">,</span>skip<span class="token punctuation">,</span>limit<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>主文件进行数据库初始化、FastAPI实例创建以及处理各种请求。</strong></p>
+<h2 id="SQLAlchemy的查询语句"><a href="#SQLAlchemy的查询语句" class="headerlink" title="SQLAlchemy的查询语句"></a>SQLAlchemy的查询语句</h2><h3 id="查询执行器"><a href="#查询执行器" class="headerlink" title="查询执行器"></a>查询执行器</h3><table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">all()</td>
+<td align="center">返回一个元素为查询结果的列表</td>
+</tr>
+<tr>
+<td align="center">count()</td>
+<td align="center">返回查询结果的数量</td>
+</tr>
+<tr>
+<td align="center">first()</td>
+<td align="center">返回第一个结果或None</td>
+</tr>
+<tr>
+<td align="center">first_or_404()</td>
+<td align="center">返回第一个结果或404</td>
+</tr>
+<tr>
+<td align="center">get(主键)</td>
+<td align="center">返回主键对应的对象或None</td>
+</tr>
+<tr>
+<td align="center">get_or_404(主键)</td>
+<td align="center">返回主键对应的对象或404</td>
+</tr>
+<tr>
+<td align="center">paginate(页码，每页条数)</td>
+<td align="center">返回一个分页查询结果</td>
+</tr>
+</tbody></table>
+<h3 id="查询过滤器"><a href="#查询过滤器" class="headerlink" title="查询过滤器"></a>查询过滤器</h3><table>
+<thead>
+<tr>
+<th align="center">过滤器</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">filter_by(字段名=值)</td>
+<td align="center">等值查询</td>
+</tr>
+<tr>
+<td align="center">filter(函数引用/比较运算)</td>
+<td align="center">函数或比较查询</td>
+</tr>
+<tr>
+<td align="center">limit(限定条数)</td>
+<td align="center">限定返回结果数量</td>
+</tr>
+<tr>
+<td align="center">offset(偏移条数)</td>
+<td align="center">偏移1即从第二条开始查询</td>
+</tr>
+<tr>
+<td align="center">order_by(排序字段)</td>
+<td align="center">对查询结果根据字段进行排序</td>
+</tr>
+<tr>
+<td align="center">options()</td>
+<td align="center">针对原查询限定查询的字段</td>
+</tr>
+</tbody></table>
+<h2 id="relationship"><a href="#relationship" class="headerlink" title="relationship"></a>relationship</h2><p>在构建SQLAlchemy模型的时候，relationship我觉得有点难，可以看一下这篇博客，感觉讲的比较详细。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/goldsunshine/p/9269880.html">sqlalchemy外键和relationship查询</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/22/redis/" rel="prev" title="redis">
+      <i class="fa fa-chevron-left"></i> redis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/" rel="next" title="fastapi多文件">
+      fastapi多文件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">安装工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#database-py"><span class="nav-number">3.</span> <span class="nav-text">database.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#models-py"><span class="nav-number">4.</span> <span class="nav-text">models.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#schemas-py"><span class="nav-number">5.</span> <span class="nav-text">schemas.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crud-py"><span class="nav-number">6.</span> <span class="nav-text">crud.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main-py"><span class="nav-number">7.</span> <span class="nav-text">main.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLAlchemy%E7%9A%84%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.</span> <span class="nav-text">SQLAlchemy的查询语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%89%A7%E8%A1%8C%E5%99%A8"><span class="nav-number">8.1.</span> <span class="nav-text">查询执行器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">8.2.</span> <span class="nav-text">查询过滤器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relationship"><span class="nav-number">9.</span> <span class="nav-text">relationship</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="pty"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">pty</p>
+  <div class="site-description" itemprop="description">努力最坏的结果不过是大器晚成</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/penty7710" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;penty7710" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1219002685@qq.com" title="E-Mail → mailto:1219002685@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pty</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script src="/js/prism/prism.js" async></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

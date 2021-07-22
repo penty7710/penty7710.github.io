@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"auto","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+  <meta name="description" content="写作背景我都是使用typora来记笔记，在写笔记的时候，难免会需要贴一些图片，而这些图片都是保存到本地的，如果你需要把这个文章分享给别人的话，就必须将图片也传给他，并且他还需要将图片保存到和你一样的位置，非常麻烦。在将文章部署到github上的博客时，图片的问题也是很麻烦。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="typore图床">
+<meta property="og:url" content="http://example.com/2021/07/22/typora%E5%9B%BE%E5%BA%8A/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="写作背景我都是使用typora来记笔记，在写笔记的时候，难免会需要贴一些图片，而这些图片都是保存到本地的，如果你需要把这个文章分享给别人的话，就必须将图片也传给他，并且他还需要将图片保存到和你一样的位置，非常麻烦。在将文章部署到github上的博客时，图片的问题也是很麻烦。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626004000242.png">
+<meta property="og:image" content="https://i.loli.net/2021/06/24/zPHtVyN5jYoIm2l.png">
+<meta property="og:image" content="https://i.loli.net/2021/06/24/2JglLwH3eQm5hCj.png">
+<meta property="og:image" content="https://i.loli.net/2021/06/24/3m2lcfU9MRdeWrB.png">
+<meta property="og:image" content="https://i.loli.net/2021/06/24/afcipPZCYyzwQ9O.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626000813980.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626000813980.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626001410912.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626001700913.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626001915803.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626002022599.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626002417044.png">
+<meta property="og:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626002446884.png">
+<meta property="article:published_time" content="2021-07-22T03:37:36.941Z">
+<meta property="article:modified_time" content="2021-07-22T03:37:31.100Z">
+<meta property="article:author" content="pty">
+<meta property="article:tag" content="杂七杂八">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626004000242.png">
+
+<link rel="canonical" href="http://example.com/2021/07/22/typora%E5%9B%BE%E5%BA%8A/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>typore图床 | Myblog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Myblog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">少年，你渴望力量吗</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/typora%E5%9B%BE%E5%BA%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="pty">
+      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          typore图床
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-22 11:37:36 / 修改时间：11:37:31" itemprop="dateCreated datePublished" datetime="2021-07-22T11:37:36+08:00">2021-07-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="写作背景"><a href="#写作背景" class="headerlink" title="写作背景"></a>写作背景</h3><p>我都是使用typora来记笔记，在写笔记的时候，难免会需要贴一些图片，而这些图片都是保存到本地的，如果你需要把这个文章分享给别人的话，就必须将图片也传给他，并且他还需要将图片保存到和你一样的位置，非常麻烦。在将文章部署到github上的博客时，图片的问题也是很麻烦。</p>
+<a id="more"></a>
+
+<p>因此这篇博客就是将图片上传到网上，这样图片就变成了网上的地址，分享给别人也同样能访问。</p>
+<h3 id="版本要求"><a href="#版本要求" class="headerlink" title="版本要求"></a>版本要求</h3><blockquote>
+<p>Typora的版本要求：0.9.86以上</p>
+</blockquote>
+<p>点击”帮助=》关于”可以查看现在使用的版本。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626004000242.png" alt="image-20210626004000242"></p>
+<blockquote>
+<p>这个版本是写这篇博客时的最新版，如果不想麻烦，直接打开软件后提示更新时就顺手更新了吧</p>
+</blockquote>
+<h3 id="安装Picgo"><a href="#安装Picgo" class="headerlink" title="安装Picgo"></a>安装Picgo</h3><p>地址  <code>https://github.com/Molunerfinn/PicGo/releases</code></p>
+<p>windows安装.exe文件，mac下载dmg。</p>
+<h3 id="修改Typora图片功能设置"><a href="#修改Typora图片功能设置" class="headerlink" title="修改Typora图片功能设置"></a>修改Typora图片功能设置</h3><p>点击“文件=》偏好设置=》图像”</p>
+<p>修改成如图所示的样子，然后点击<strong>下载更新</strong></p>
+<p><img src="https://i.loli.net/2021/06/24/zPHtVyN5jYoIm2l.png" alt="image-20210624192713102"></p>
+<h3 id="使用SMMS作为图床"><a href="#使用SMMS作为图床" class="headerlink" title="使用SMMS作为图床"></a>使用SMMS作为图床</h3><p>因为需要将图片上传到网上，所以我们需要使用一个可以存储图片的服务器，这里我们使用smms作为图床。</p>
+<p>打开网址，注册账号。</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">https://sm.ms/home/apitoken<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注册登录完以后，会自动跳转到一个页面。<img src="https://i.loli.net/2021/06/24/2JglLwH3eQm5hCj.png" alt="image-20210624193204516"></p>
+<p>不用管这个页面，再次请求之前的网址：<code>https://sm.ms/home/apitoken</code></p>
+<p><img src="https://i.loli.net/2021/06/24/3m2lcfU9MRdeWrB.png" alt="image-20210624193624367"></p>
+<p>复制这里的token，后面会用到。</p>
+<h3 id="配置Typora"><a href="#配置Typora" class="headerlink" title="配置Typora"></a>配置Typora</h3><p>进入偏好设置=》图像，点击打开配置文件。</p>
+<p><img src="https://i.loli.net/2021/06/24/afcipPZCYyzwQ9O.png" alt="image-20210624193813749"></p>
+<p>修改配置文件，复制下面的代码</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;picBed&quot;: &#123;
+    &quot;uploader&quot;: &quot;smms&quot;, &#x2F;&#x2F; 代表当前的默认上传图床为 SM.MS,
+    &quot;smms&quot;: &#123;
+      &quot;token&quot;: &quot;这里面的token换成你上个页面的申请的token&quot; &#x2F;&#x2F;一定要换
+    &#125;
+  &#125;,
+  &quot;picgoPlugins&quot;: &#123;&#125; &#x2F;&#x2F; 为插件预留
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>记得换token</strong>，保存配置文件，就可以了。</p>
+<h3 id="使用阿里云作为图床"><a href="#使用阿里云作为图床" class="headerlink" title="使用阿里云作为图床"></a>使用阿里云作为图床</h3><p>之前使用SMMS作为图床，但是太不稳定了，今天一直上传不上去，搞得我很心烦，就决定用阿里云作为图床了，虽然要钱，但是还好不是很贵。</p>
+<p>1.首先登陆阿里云，然后点击控制台。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626000813980.png" alt="image-20210626000813980"></p>
+<p>2.然后选择对象存储OSS，并开通服务。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626000813980.png" alt="image-20210626000813980"></p>
+<p>3.点击概况，创建Bucket</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626001410912.png" alt="image-20210626001410912"></p>
+<p>4.填写相关信息，<strong>注意读写权限一定要选公共读</strong></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626001700913.png" alt="image-20210626001700913"></p>
+<p>5.创建完成之后，可以购买一个资源包。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626001915803.png" alt="image-20210626001915803"></p>
+<p>6.购买40G，一年差不多了。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626002022599.png" alt="image-20210626002022599"></p>
+<p>7.获取个人ACCESSkey</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626002417044.png" alt="image-20210626002417044"></p>
+<p>8.创建AccessKey</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20210626002446884.png" alt="image-20210626002446884"></p>
+<p>9.打开typora的偏好设置，打开配置文件，修改文件如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;picBed&quot;: &#123;
+    &quot;uploader&quot;: &quot;aliyun&quot;,
+    &quot;aliyun&quot;: &#123;
+  	&quot;accessKeyId&quot;: &quot;LTAI5tMPmnRuSjU3wmEC13TH&quot;,   &#x2F;&#x2F;上述创建的AccessKey的id
+ 	&quot;accessKeySecret&quot;: &quot;60w1Stbt3qSUw6ABilXLeCvSWuFw10&quot;,  &#x2F;&#x2F;上述创建的密码
+  	&quot;bucket&quot;: &quot;pety&quot;, &#x2F;&#x2F; 存储空间名，即你创建的BUcket的名字
+  	&quot;area&quot;: &quot;oss-cn-shenzhen&quot;, &#x2F;&#x2F; 存储区域代号
+  	&quot;path&quot;: &quot;img&#x2F;&quot;, &#x2F;&#x2F; 自定义存储路径
+ 	 &quot;customUrl&quot;: &quot;&quot;, &#x2F;&#x2F; 自定义域名，注意要加 http:&#x2F;&#x2F;或者 https:&#x2F;&#x2F;
+ 	 &quot;options&quot;: &quot;&quot; &#x2F;&#x2F; 针对图片的一些后缀处理参数 PicGo 2.2.0+ PicGo-Core 1.4.0+
+	&#125;
+  &#125;,
+  &quot;picgoPlugins&quot;: &#123;&#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>大功完成！！！！！！！！！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" rel="tag"><i class="fa fa-tag"></i> 杂七杂八</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/22/%E8%B7%A8%E5%9F%9F/" rel="prev" title="跨域">
+      <i class="fa fa-chevron-left"></i> 跨域
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/22/redis-utils/" rel="next" title="Redis Util">
+      Redis Util <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E4%BD%9C%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">写作背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E8%A6%81%E6%B1%82"><span class="nav-number">2.</span> <span class="nav-text">版本要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Picgo"><span class="nav-number">3.</span> <span class="nav-text">安装Picgo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Typora%E5%9B%BE%E7%89%87%E5%8A%9F%E8%83%BD%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">修改Typora图片功能设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8SMMS%E4%BD%9C%E4%B8%BA%E5%9B%BE%E5%BA%8A"><span class="nav-number">5.</span> <span class="nav-text">使用SMMS作为图床</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AETypora"><span class="nav-number">6.</span> <span class="nav-text">配置Typora</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E4%BD%9C%E4%B8%BA%E5%9B%BE%E5%BA%8A"><span class="nav-number">7.</span> <span class="nav-text">使用阿里云作为图床</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="pty"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">pty</p>
+  <div class="site-description" itemprop="description">努力最坏的结果不过是大器晚成</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/penty7710" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;penty7710" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1219002685@qq.com" title="E-Mail → mailto:1219002685@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pty</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<script src="/js/prism/prism.js" async></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
