@@ -40,8 +40,8 @@
 <meta property="article:modified_time" content="2021-07-22T03:32:32.352Z">
 <meta property="article:author" content="pty">
 <meta property="article:tag" content="mybatis">
-<meta property="article:tag" content="springboot">
 <meta property="article:tag" content="mysql">
+<meta property="article:tag" content="springboot">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201104175754449.png">
 
@@ -485,7 +485,7 @@ private boolean hasNextPage;   &#x2F;&#x2F;当前页面是否有下一页
 
 <p>可以很明显的看见这里已经变成了in ,<strong>select CodeNo,<code>Describe</code>,typename,count from OptionCode where CodeNo in ( ? , ? , ? )</strong>  这样查询是可以查询到的。</p>
 <h3 id="打印sql语句"><a href="#打印sql语句" class="headerlink" title="打印sql语句"></a>打印sql语句</h3><p>在application.yml中修改配置文件</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">mybatis:  type-aliases-package: com.hut.jsj.pojo,;com.hut.jsj.vo  mapper-locations: classpath:mapper&#x2F;*  #加入下面这段代码  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">mybatis</span><span class="token punctuation">:</span>  <span class="token key atrule">type-aliases-package</span><span class="token punctuation">:</span> com.hut.jsj.pojo<span class="token punctuation">,</span>;com.hut.jsj.vo  mapper<span class="token punctuation">-</span><span class="token key atrule">locations</span><span class="token punctuation">:</span> classpath<span class="token punctuation">:</span>mapper/*  <span class="token comment">#加入下面这段代码  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
@@ -507,8 +507,8 @@ private boolean hasNextPage;   &#x2F;&#x2F;当前页面是否有下一页
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/mybatis/" rel="tag"><i class="fa fa-tag"></i> mybatis</a>
-              <a href="/tags/springboot/" rel="tag"><i class="fa fa-tag"></i> springboot</a>
               <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+              <a href="/tags/springboot/" rel="tag"><i class="fa fa-tag"></i> springboot</a>
           </div>
 
         
@@ -595,7 +595,7 @@ private boolean hasNextPage;   &#x2F;&#x2F;当前页面是否有下一页
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

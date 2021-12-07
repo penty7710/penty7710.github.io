@@ -22,30 +22,32 @@
 
 <link rel="stylesheet" href="/js/prism/prism.css">
 
-  <meta name="description" content="努力最坏的结果不过是大器晚成">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Myblog">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="题目：1、列举出四种及以上Java的容器类（即集合类）？Set、List、Queue、Map、ArrayList、HashSet、HashMap 2、简单说说Java事件处理由哪四部分组成？Java事件由四部分组成：事件源：产生事件的对象，例如：各个组件事件对象：事件类监听器：监听器接口(里面定义了响应事件的抽象方法)“注册”：产生事件的对象，通过调用一个方法，通知“监听器”。 3、Java网络编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础">
+<meta property="og:url" content="http://example.com/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="努力最坏的结果不过是大器晚成">
+<meta property="og:description" content="题目：1、列举出四种及以上Java的容器类（即集合类）？Set、List、Queue、Map、ArrayList、HashSet、HashMap 2、简单说说Java事件处理由哪四部分组成？Java事件由四部分组成：事件源：产生事件的对象，例如：各个组件事件对象：事件类监听器：监听器接口(里面定义了响应事件的抽象方法)“注册”：产生事件的对象，通过调用一个方法，通知“监听器”。 3、Java网络编">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-07T14:37:16.649Z">
+<meta property="article:modified_time" content="2021-12-07T14:36:26.651Z">
 <meta property="article:author" content="pty">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Myblog</title>
+  <title>Java基础 | Myblog</title>
   
 
 
@@ -188,9 +190,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -206,10 +209,9 @@
       <meta itemprop="name" content="Myblog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/" class="post-title-link" itemprop="url">Java基础</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Java基础
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -233,7 +235,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>题目：<br>1、列举出四种及以上Java的容器类（即集合类）？<br>Set、List、Queue、Map、ArrayList、HashSet、HashMap</p>
+        <p>题目：<br>1、列举出四种及以上Java的容器类（即集合类）？<br>Set、List、Queue、Map、ArrayList、HashSet、HashMap</p>
 <p>2、简单说说Java事件处理由哪四部分组成？<br>Java事件由四部分组成：<br>事件源：产生事件的对象，例如：各个组件<br>事件对象：事件类<br>监听器：监听器接口(里面定义了响应事件的抽象方法)<br>“注册”：产生事件的对象，通过调用一个方法，通知“监听器”。</p>
 <p>3、Java网络编程主要基于两个协议，是哪两个协议，其作用各是什么？（7分）<br>答：是TCP协议和UDP协议（1分）<br>    TCP协议：是面向连接的传输层协议。 进程（应用程序）在使用TCP协议之前，必须先建立连接，在数据传输完毕后要释放已建立的连接。（3分）<br>    UDP协议：是无连接的传输层协议。进程（应用程序）使用UDP无须建立连接，当然，数据传输结束时也没有连接需要释放。因此，用UDP能减少开销和发送数据之前的时延。（3分）</p>
 <p>4、X公司承接了一个软件项目，目前正在做可行性分析。项目经理偏向于采用Java语言开发此项目，但有少数员工提出也可以用其他语言开发如C++或C#等，为统一思想。项目经理委托小张收集数据，并给大家分析下Java的特点或优势。（请列举Java的特点至少6点，并简单进行分析说明）<br>答：简单、面向对象、支持分布式(即网络功能)、健壮性（少出低级错误）、安全（被破解的可能性）、体系结构中立（跨平台）、可移植性、解释执行、高性能、多线程、动态</p>
@@ -378,229 +380,31 @@ public static void main(String args[])&#123;
 <p>50、下面2个文件位于相同目录下，编译运行后会出现的情况是（      ）。<br>//File P1.java<br>package MyPackage;<br>class P1{<br>void afancymethod(){<br>        System.out.println(“What a fancy method”);<br>        }<br>}<br>//File P2.java<br>public class P2 extends P1{<br>    public static void main(String argv[]){<br>    P2 p2 = new P2();<br>    p2.afancymethod();<br>    }<br>}<br>A、2个文件都可以编译，P2运行输出“What a fancy method”<br>B、2个文件都不能编译<br>C、2个文件都可以编译，P2运行时报错误<br>D、P1编译成功，P2编译时报错误<br>解答：D</p>
 <p>51、编译和运行下面代码时显示的结果是（     ）。<br>public class MyClass{<br> static int i;<br> public static void main(String argv[]){<br>     System.out.println(i);<br> }<br>}<br>A、Error Variable i may not have been initializenull<br>C、1<br>D、0<br>解答：D<br>分析：本题能正常运行，static int i;中定义的i是静态成员变量，Java中成员变量默认给了初值，整型的初值是0，故此题正确</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="pty">
-      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Myblog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">fastapi多文件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-07-22 12:04:43 / 修改时间：12:04:22" itemprop="dateCreated datePublished" datetime="2021-07-22T12:04:43+08:00">2021-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="pty">
-      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Myblog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/" class="post-title-link" itemprop="url">python连接mysql</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-07-22 12:04:40 / 修改时间：14:36:30" itemprop="dateCreated datePublished" datetime="2021-07-22T12:04:40+08:00">2021-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在看fastapi的官方文档，然后感觉sql部分挺难的，于是写下一篇博客来记录下。</p>
-<h2 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h2><p>首先要安装两个东西</p>
-<p><code>pip install sqlalchemy</code></p>
-<p><code>pip install pymysql</code></p>
-<p>前者是一个ORM框架，在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会转成表中的字段。</p>
-<p>后者是用来连接数据库的</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/" rel="prev" title="fastapi多文件">
+      <i class="fa fa-chevron-left"></i> fastapi多文件
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/springboot%E6%95%B4%E5%90%88mybatis%20generator%20/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="pty">
-      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Myblog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/22/springboot%E6%95%B4%E5%90%88mybatis%20generator%20/" class="post-title-link" itemprop="url">Springboot 整合 mybatis generator 逆向生成工程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-07-22 11:53:38 / 修改时间：15:03:16" itemprop="dateCreated datePublished" datetime="2021-07-22T11:53:38+08:00">2021-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Springboot-整合-mybatis-generator-逆向生成工程"><a href="#Springboot-整合-mybatis-generator-逆向生成工程" class="headerlink" title="Springboot 整合 mybatis generator 逆向生成工程"></a>Springboot 整合 mybatis generator 逆向生成工程</h3><h4 id="1-先新创建一个springboot项目，引入相关的骨架"><a href="#1-先新创建一个springboot项目，引入相关的骨架" class="headerlink" title="1.先新创建一个springboot项目，引入相关的骨架"></a>1.先新创建一个springboot项目，引入相关的骨架</h4><h4 id="2-在pom-xml文件中引入相关依赖"><a href="#2-在pom-xml文件中引入相关依赖" class="headerlink" title="2.在pom.xml文件中引入相关依赖"></a>2.在pom.xml文件中引入相关依赖</h4><ol>
-<li><p>引入sqlserver的依赖</p></li></ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/22/springboot%E6%95%B4%E5%90%88mybatis%20generator%20/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
