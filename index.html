@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/29/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/29/Jemeter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.jpg">
@@ -208,7 +208,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/05/29/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/05/29/Jemeter/" class="post-title-link" itemprop="url">JMeter压力测试</a>
         </h2>
 
         <div class="post-meta">
@@ -217,16 +217,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-05-29 21:17:45" itemprop="dateCreated datePublished" datetime="2022-05-29T21:17:45+08:00">2022-05-29</time>
+              <time title="创建时间：2022-05-29 22:06:13 / 修改时间：22:06:10" itemprop="dateCreated datePublished" datetime="2022-05-29T22:06:13+08:00">2022-05-29</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-24 22:08:57" itemprop="dateModified" datetime="2022-05-24T22:08:57+08:00">2022-05-24</time>
-              </span>
 
           
 
@@ -239,1447 +233,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="vi和vim编辑器"><a href="#vi和vim编辑器" class="headerlink" title="vi和vim编辑器"></a>vi和vim编辑器</h2><h3 id="三种常见模式："><a href="#三种常见模式：" class="headerlink" title="三种常见模式："></a>三种常见模式：</h3><ul>
-<li><p>正常模式</p>
-<p>在正常模式下，我们可以使用快捷键。</p>
-</li>
-<li><p>插入模式/编辑模式</p>
-<p>在这个模式下，程序猿可以输入内容。</p>
-</li>
-<li><p>命令行模式</p>
-<p>在这个模式中，可以提供相关指令。</p>
-</li>
-</ul>
-<h3 id="快捷键使用练习："><a href="#快捷键使用练习：" class="headerlink" title="快捷键使用练习："></a>快捷键使用练习：</h3><ul>
-<li>yy：拷贝当前行</li>
-<li>5yy：拷贝当前5行</li>
-<li>dd：删除当前行</li>
-<li>5dd：删除当前行向下的5行</li>
-<li>在文件中查找某个单词：命令行输入 /（查找内容），按n查找下一个,N向上查找</li>
-<li>设置文件行号：set nu，取消文件行号：set nonu</li>
-<li>编辑文件，正常模式下使用快捷键到达文档最末行：G，最首行：gg</li>
-<li>撤销输入：在正常模式下输入u</li>
-<li>编辑文件，光标移动到某行：shift+g<ul>
-<li>显示行号：set nu</li>
-<li>输入行号这个数</li>
-<li>输入shift+g</li>
-</ul>
-</li>
-</ul>
-<h2 id="关机、重启和用户登录注销"><a href="#关机、重启和用户登录注销" class="headerlink" title="关机、重启和用户登录注销"></a>关机、重启和用户登录注销</h2><ul>
-<li>shutdown -h now：表示立即关机</li>
-<li>shutdown -h 1：表示1分钟后关机</li>
-<li>shutdown -r now：立即重启</li>
-<li>halt：直接使用，关机</li>
-<li>reboot：重启</li>
-<li>sync：把内存的数据同步到磁盘上，<strong>当我们关机或者重启时，都应该先执行一下sync，防止数据丢失</strong>。</li>
-<li>logout：注销用户，<strong>在图形运行级别无效，在运行级别3有效</strong>。</li>
-</ul>
-<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><p>用户，组，家目录。</p>
-<ol>
-<li>Linux系统是一个多用户多任务的操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。</li>
-<li>Linux的用户需要至少要属于一个组。</li>
-</ol>
-<ul>
-<li>添加用户：useradd [选项] 用户名。</li>
-<li>cd：表示change directory，切换目录。</li>
-<li>当创建用户成功后，会自动的创建和用户同名的家目录。</li>
-<li>也可以通过useradd -d 指定目录 新的用户名。</li>
-<li>指定/修改密码：passwd 用户名</li>
-<li>删除用户，保留家目录：userdel 用户名，<strong>一般保留家目录，因为干过的活要留着</strong>。</li>
-<li>删除用户以及家目录：userdel -r 用户名</li>
-<li>查询用户信息：id 用户名</li>
-<li>切换用户：su - 切换用户名，<strong>从权限高切换到权限低的用户不需要输密码</strong>。</li>
-<li>返回切换前的用户：exit</li>
-<li>查看当前用户/登录用户：who am i</li>
-<li>用户组：类似于角色，系统可以对有共性的多个用户进行统一的管理。</li>
-<li>增加组：groupadd 组名</li>
-<li>删除组：groupdel 组名</li>
-<li>增加用户时直接加上组：useradd -g 用户组 用户名</li>
-<li>修改用户组：usermod -g 用户组 用户名</li>
-</ul>
-<ol start="3">
-<li>/etc/passwd 文件</li>
-</ol>
-<ul>
-<li>用户（user）的配置文件，记录用户的各种信息。</li>
-<li>每行的含义：用户名：口令：用户标识号：注释性描述：主目录：登录shell</li>
-</ul>
-<ol start="4">
-<li>/etc/shadow 文件</li>
-</ol>
-<ul>
-<li>口令配置文件</li>
-<li>每行的含义：登录名：加密口令：最后一次修改时间：最小时间间隔：最大时间间隔：警告时间：不活动时间：失效时间：标志</li>
-</ul>
-<ol start="5">
-<li>/etc/group 文件</li>
-</ol>
-<ul>
-<li>组（group）的配置文件，记录Linux包含的组的信息。</li>
-<li>每行含义：组名：口令：组标识号：组内用户列表</li>
-</ul>
-<h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><ul>
-<li><p>pwd：Print Working Directory，显示当前工作目录的绝对路径。</p>
-</li>
-<li><p>ls：-a：显示当前目录所有的文件和目录，包括隐藏的；-l：以列表的方式显示信息。</p>
-</li>
-<li><p>cd：cd ~：回到自己的家目录；cd ..：回到当前目录的上一级目录。</p>
-</li>
-<li><p>mkdir：创建目录；-p：创建多级目录。</p>
-</li>
-<li><p>rmdir：删除空目录。rmdir不能删除非空的目录。如果需要删除非空的目录，需要使用rm -rf。</p>
-</li>
-<li><p>touch：创建空文件。可以一次性创建多个文件</p>
-</li>
-<li><p>cp：拷贝文件到指定目录；-r：递归复制整个文件夹。强制覆盖不提示的方法：cp命令改为\cp</p>
-</li>
-<li><p>rm：移除文件或目录；-r：递归删除整个文件夹；-f：强制删除不提示。</p>
-</li>
-<li><p>mv：移动文件与目录或重命名，两种功能！</p>
-</li>
-<li><p>cat：查看文件内容。只能浏览文件，而不能修改文件。-n：显示行号。结尾加上 | more：分页显示，不会全部一下显示完。</p>
-</li>
-<li><p>more：是一个基于VI编辑器的文本过滤器，它以全屏幕的方式按页显示文本文件的内容。more还内置了很多快捷键：</p>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>功能说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>空白键（Space）</td>
-<td>向下翻一页</td>
-</tr>
-<tr>
-<td>Enter</td>
-<td>向下翻一行</td>
-</tr>
-<tr>
-<td>q</td>
-<td>立刻离开more，不再显示该文件内容</td>
-</tr>
-<tr>
-<td>Ctrl + F</td>
-<td>向下滚动一屏</td>
-</tr>
-<tr>
-<td>Ctrl + B</td>
-<td>返回上一屏</td>
-</tr>
-<tr>
-<td>=</td>
-<td>输出当前行的行号</td>
-</tr>
-<tr>
-<td>：f</td>
-<td>输出文件名和当前行的行号</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>less：用来分屏查看文件内容，与more相似，但是更强大，支持各种显示终端。less指令在显示文件内容时，并不是一次将整个文件加载之后才显示，而是根据显示需要加载内容。<strong>对于显示大型文件具有较高的效率。</strong></p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>功能说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>空白键（Space）</td>
-<td>向下翻一页</td>
-</tr>
-<tr>
-<td>[pagedown]</td>
-<td>向下翻一行</td>
-</tr>
-<tr>
-<td>[pageup]</td>
-<td>向上翻动一页</td>
-</tr>
-<tr>
-<td>/字串</td>
-<td>向下搜寻字串的功能；n向下找，N向上找</td>
-</tr>
-<tr>
-<td>？子串</td>
-<td>向上搜寻字串的功能；n向上找，N向下找   （n正向）</td>
-</tr>
-<tr>
-<td>q</td>
-<td>离开less这个程序</td>
-</tr>
-</tbody></table>
-<ul>
-<li><code>&gt;</code>指令：输出重定向。如果不存在会创建文件，否则会将原来的文件内容覆盖。</li>
-<li><code>&gt;&gt;</code>指令：追加。如果不存在会创建文件，否则不会覆盖原来的文件内容，而是追加到文件的尾部。</li>
-<li>cat是查看，echo是写入，echo （内容） &gt;&gt; 文件</li>
-<li>cal：显示当前月日历。</li>
-<li>echo：输出内容到控制台。</li>
-<li>head：显示文件的开头部分。-n 5：看前面5行内容。</li>
-<li>tail：输出文件中尾部的内容。-n 5：看后面5行内容。-f：时事追踪该文档的所有更新</li>
-<li>ln -s :建立软连接 </li>
-<li>history: 查看历史指令</li>
-</ul>
-<h2 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h2><ul>
-<li>date：显示当前日期和时间</li>
-<li>date “+%Y”：显示当前年份</li>
-<li>date “+%d”：显示当前月份</li>
-<li>date “+%Y-%m-%d %H:%M:%S”：显示年-月-日 时：分：秒</li>
-<li>设置日期：date -s 字符串时间</li>
-<li>cal：查看日历指令；cal 年份：显示某一年一整年的日历</li>
-</ul>
-<h2 id="搜索查找"><a href="#搜索查找" class="headerlink" title="搜索查找"></a>搜索查找</h2><ul>
-<li>find：从指定目录向下递归的遍历其各个子目录，将满足条件的文件或者目录显示在终端。<ul>
-<li>find (搜索范围) -name (文件名)：按照指定的文件名查找模式查找文件。</li>
-<li>find (搜索范围) -user (用户名)：按照指定的用户名查找模式查找文件。</li>
-<li>find (搜索范围) -size (+多少/-多少/多少)：按照指定的文件大小查找模式查找文件（大于多少/小于多少/等于多少）</li>
-<li><strong>查询 /目录下所有.txt的文件</strong>：find / -name *.txt</li>
-<li>根据文件名删除文件：<code>find . -name 文件名 | xargs rm -rf</code></li>
-</ul>
-</li>
-<li>locate： locate (搜索文件)<ul>
-<li>可以快速定位文件路径。locate指令利用事先建立的系统中所有文件名称及路径的locate数据库实现快速定位给定的文件。locate指令无需遍历整个文件系统，查询速度较快。为了保证查询结果的准确度，管理员必须定期更新locate时刻。</li>
-<li>在第一次运行之前，<strong>必须使用updatedb指令创建locate数据库</strong>。</li>
-</ul>
-</li>
-<li>grep：过滤查找，表示将前一个命令的处理结果输出传递给后面的命令处理。经常跟管道一起使用。<ul>
-<li>grep [选项] 查找内容 源文件</li>
-<li>-n：显示匹配行及行号。</li>
-<li>-i：忽略大小写字母。</li>
-<li><code>cat hello.txt | grep &quot;yes&quot;</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="压缩和解压"><a href="#压缩和解压" class="headerlink" title="压缩和解压"></a>压缩和解压</h2><ul>
-<li>gzip/gunzip：压缩文件/解压<ul>
-<li>gzip (文件)：压缩为.gz文件，原来文件不保留。</li>
-<li>gunzip (文件)：解压缩，同样也不保留源文件。</li>
-</ul>
-</li>
-<li>zip/unzip：压缩文件/解压<ul>
-<li>zip [选项] (压缩后文件xxx.zip) (将要压缩的文件)</li>
-<li>unzip [选项] (要解压的文件xxx.zip)</li>
-<li>zip -r：递归压缩，即压缩目录</li>
-<li>unzip -d (目录)：指定解压后的文件的存放目录</li>
-</ul>
-</li>
-<li>tar：打包指令，最后打包后的文件是.tar.gz的文件<ul>
-<li>tar [选项] xxx.tar.gz (打包的内容)</li>
-<li>-c：产生.tar打包文件</li>
-<li>-v：显示详细信息</li>
-<li>-f：指定压缩后的文件名</li>
-<li>-z：打包同时压缩</li>
-<li>-x：解压.tar文件</li>
-<li>压缩：tar -zcvf (压缩后文件名) (要压缩的文件)</li>
-<li>解压：tar -zxvf (要解压的文件)</li>
-<li>解压到指定目录：tar -zxvf (要解压的文件) -C (指定目录)，指定解压到的目录要存在。</li>
-</ul>
-</li>
-</ul>
-<h2 id="组"><a href="#组" class="headerlink" title="组"></a>组</h2><p>在Linux中每个用户必须属于一个组，不能独立于组外。每个文件有所有者、所在组、其他组概念</p>
-<ol>
-<li>所有者</li>
-<li>所在组</li>
-<li>其他组</li>
-<li>改变用户所在组</li>
-</ol>
-<ul>
-<li>文件/目录所有者：<ul>
-<li>一般为文件的创建者，谁创建了该文件，就自然的称为该文件的所有者。</li>
-<li>查看文件所有者：ls -ahl</li>
-<li>修改文件所有者：chown (用户名) (文件名)</li>
-<li>文件所在组不一定是文件所有者。</li>
-</ul>
-</li>
-<li>组的创建<ul>
-<li>groupadd (组名)</li>
-</ul>
-</li>
-<li>文件/目录所在组<ul>
-<li>修改文件所在组：chgrp (组名) (文件名)</li>
-</ul>
-</li>
-<li>其他组<ul>
-<li>除文件的所有者和所在组的用户外，系统的其他用户都是文件的其他组</li>
-</ul>
-</li>
-<li>改变用户所在组<ul>
-<li>在添加用户时，可以指定将该用户添加到哪个组中，同样的用root的管理权限可以改变某个用户所在的组</li>
-<li>改变用户所在组：usermod -g 组名 用户名</li>
-<li>改变用户登录的初始目录：usermod -d 目录名 用户名</li>
-</ul>
-</li>
-</ul>
-<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">-rw-r--r--.  1 zwj  root       0 4月   5 18:20 apple.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>第0位是符号类型</p>
-<ul>
-<li><p>文件类型：</p>
-<ul>
-<li>-：普通类型</li>
-<li>d：目录</li>
-<li>l：软连接  相当于快捷方式</li>
-<li>c：字符设备【键盘、鼠标等】</li>
-<li>b：块文件【硬盘】</li>
-</ul>
-</li>
-<li><p>rw-：表示文件所有者权限（rw，读写）(第1-3位)</p>
-</li>
-<li><p>r–：表示文件所在组的用户的权限（r，只有读的权限）（第4-6位）</p>
-</li>
-<li><p>r–：表示文件其他组的用户的权限（r，只有读的权限）（第7-9位）</p>
-</li>
-<li><p>1：如果是文件，表示硬连接的数；如果是目录则表示该目录的子目录个数</p>
-</li>
-<li><p>zwj：文件所有者</p>
-</li>
-<li><p>root：文件所在组</p>
-</li>
-<li><p>0：文件的大小，0个字节；如果是目录，则统一为4096</p>
-</li>
-<li><p>July 1 13：40：文件最后的修改时间</p>
-</li>
-<li><p>apple.txt：文件名</p>
-</li>
-</ul>
-<ul>
-<li><p>rwx作用到文件：</p>
-<ul>
-<li>r：read，可读。读取查看。</li>
-<li>w：write，可以修改。但不代表可以删除该文件。删除一个文件的前提条件是对该文件所在的目录有写权限，才能删除该文件。</li>
-<li>x：execute，可执行。可以被执行。</li>
-</ul>
-</li>
-<li><p>rwx作用到目录：</p>
-<ul>
-<li>r：可以读取，ls查看目录内容。</li>
-<li>w：可以修改，目录内创建+删除+重命名目录。</li>
-<li>x：可执行，可以进入该目录。</li>
-</ul>
-</li>
-<li><p>修改权限 chmod</p>
-<ul>
-<li>修改文件或者目录的权限</li>
-<li>u：所有者；g：所在组；o：其他人；a：所有人（u、g、o的总和）</li>
-<li>chmod u=rwx，g=rx，o=x 文件目录名：分别权限</li>
-<li>chmod o+w 文件目录名：给其他人都增加写的权限</li>
-<li>chmod a-x 文件目录名：给所有的用户都减掉执行权限</li>
-</ul>
-</li>
-<li><p>通过数字变更权限</p>
-<ul>
-<li>规则：r=4 w=2 x=1 rwx=4+2+1=7</li>
-<li>chmod u=rwx，g=rx，o=x 文件目录名 <strong>等价于</strong> chmod 751 文件目录名</li>
-</ul>
-</li>
-<li><p>修改文件所有者 chown</p>
-<ul>
-<li>chown newowner file：改变文件的所有者</li>
-<li>chown newowner：newgroup file：改变文件的所有者和所在组</li>
-<li>-R：如果是目录，则使其下所有子文件或目录递归生效</li>
-</ul>
-</li>
-<li><p>修改文件所在组 chgrp</p>
-<ul>
-<li>chgrp newgroup file：改变文件的所有组</li>
-<li>-R：如果是目录，则使其下所</li>
-</ul>
-</li>
-</ul>
-<h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><ul>
-<li><p>rond任务调度：crontab进行定时任务调度</p>
-<ul>
-<li>crontab [选项]</li>
-<li>-e：编辑crontab定时任务</li>
-<li>-l：查询crontab任务</li>
-<li>-r：删除当前用户所有的crontab任务</li>
-<li>service crond restart：重启任务调度</li>
-<li>当保存退出后就生效了</li>
-</ul>
-<p><strong>快速入门</strong></p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"># 设置任务调度文件： 
-/etc/crontab
-
-#设置个人任务调度,执行crontab -e命令，接着输入任务到调度文件，如：
-*/1 * * * * ls -l /etc/ > /tmp/to.txt     #每个* 之前有空格
-意思是每小时的每分钟执行 ls -l /etc/ > /tmp/to.txt 命令<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>含义</th>
-<th>范围</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第一个“*”</td>
-<td>一小时当中的第几分钟</td>
-<td>0-59</td>
-</tr>
-<tr>
-<td>第二个“*”</td>
-<td>一天当中的第几小时</td>
-<td>0-23</td>
-</tr>
-<tr>
-<td>第三个“*”</td>
-<td>一个月当中的第几天</td>
-<td>1-31</td>
-</tr>
-<tr>
-<td>第四个“*”</td>
-<td>一年当中的第几月</td>
-<td>1-12</td>
-</tr>
-<tr>
-<td>第五个“*”</td>
-<td>一周当中的星期几</td>
-<td>0-7（0和7都代表星期日）</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>特殊符号说明</p>
-<ul>
-<li><code>*</code>：代表任何时间。比如第一个<code>*</code>就代表一小时中每分钟都执行一次的意思。</li>
-<li><code>,</code>：代表不连续的时间。比如“0 8,12,16 * * *命令”，就代表在每天的8点0分，12点0分，16点0分都执行一次命令。</li>
-<li><code>-</code>：代表连续的时间范围。比如“0 5 * * 1-6命令”，代表在周一到周六的凌晨5点0分执行命令。</li>
-<li><code>*/n</code>：代表每隔多久执行一次。比如“*/10 * * * * 命令”，代表每隔10分钟就执行一遍命令。</li>
-</ul>
-<p>** 特定时间执行任务案例</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>时间</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>45 22 * * * 命令</td>
-<td>22点45分执行命令</td>
-</tr>
-<tr>
-<td>0 17 * * 1 命令</td>
-<td>每周一的17点执行</td>
-</tr>
-<tr>
-<td>0 5 1,15 * * 命令</td>
-<td>每月的1号和15号的5点执行</td>
-</tr>
-<tr>
-<td>40 4 * * 1-5 命令</td>
-<td>每周一到周五的4点40执行</td>
-</tr>
-<tr>
-<td>*/10 4 * * * 命令</td>
-<td>每天的4点每隔10分钟执行</td>
-</tr>
-<tr>
-<td>0 0 1,15 * 1 命令</td>
-<td>每月1号和15号、周一的零点执行，星期和几号最好不要同时出现</td>
-</tr>
-</tbody></table>
-<h3 id="at定时任务"><a href="#at定时任务" class="headerlink" title="at定时任务"></a>at定时任务</h3><blockquote>
-<ol>
-<li>at命令是一次性定时计划任务，at的守护进程atd会以后台模式运行，检查作业队列来运行。</li>
-<li>默认情况下，atd守护进程每60秒检查作业队列，有作业时，会检查作业运行时间，如果时间与当前时间匹配，则运行此作业。</li>
-<li>at命令是一次性定时计划任务，执行完一个任务后不再执行此任务了</li>
-<li>在使用at命令的时候，一定要保证atd进程的启动，可以使用相关指令来查看</li>
-<li>ps -ef | grep atd //可以检测atd是否在运行    ps - ef 可以查看所有运行的进程</li>
-</ol>
-</blockquote>
-<ul>
-<li>atq：查看当前任务</li>
-<li>atrm: 删除已经设置的任务，atrm 任务编号</li>
-</ul>
-<p><strong>案例</strong></p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"># 两分钟后把时间写到xx.log
-at now + 2 minutes  回车
-at> date > /home/xx.log   输入完按两次 Ctrl+D
-
-#两天后的下午5点执行 /bin/li/home
-at 5pm + 2 days   回车
-at> /bin/ls/home  输入完按两次 Ctrl+D<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h2><blockquote>
-<p>Linux来说无论有几个分区，分给哪一个目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构，Linux中每个分区都是用来组成整个文件系统的一部分。</p>
-<p>Linux采用了一种叫做“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录，且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。</p>
-</blockquote>
-<ul>
-<li><p>硬盘说明</p>
-<ul>
-<li>Linux硬盘分IDE硬盘和SCSI硬盘，目前基本上是SCSI硬盘</li>
-<li>lsblk -f：查看当前系统的分区和挂载情况。（list block）</li>
-<li>lsblk: 查看系统分区情况</li>
-</ul>
-</li>
-<li><p>新增硬盘的操作</p>
-<ul>
-<li>虚拟机添加硬盘</li>
-<li>分区：fdsk  /dev/sdb（sdb是新增加的硬盘的名字)</li>
-<li>格式化：mkfs -t ext4 /dev/sdb1  (sdb1是刚才分区的名字)</li>
-<li>挂载：新建目录：mkdir /home/newdisk；挂载：mount /dev/sdb1 /home/newdisk , ==将sdb1挂载到 /home/newdisk目录下，这样保存到 /home/newdisk目录下的文件就保存到 sdb1硬盘中==</li>
-<li>设置可以自动挂载（永久挂载）：重启系统后，仍然可以挂载。vim etc/fstab 增加挂载信息。mount -a：生效</li>
-<li>取消挂载：unmount /dev/sdb1</li>
-</ul>
-</li>
-<li><p>磁盘情况查询：</p>
-<ul>
-<li>查询系统整体磁盘使用情况：df -h 、  df -l</li>
-<li>查询指定目录的磁盘占用情况：du -h /目录，默认为当前目录<ul>
-<li>-s：指定目录占用大小汇总</li>
-<li>-h：带计量单位</li>
-<li>-a：含文件</li>
-<li>–max-depth=1：子目录深度</li>
-<li>-c：列出明细的同时，增加汇总值</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>磁盘情况-工作实用指令</p>
-<ol>
-<li>统计/home文件夹下文件的个数：<code>ls -l /home | grep &quot;^-&quot; | wc -l</code>  <strong>wc的功能是进行统计，“^-” 是正则表达式，以-开头的</strong></li>
-<li>统计/home文件夹下目录的个数：<code>ls -l /home | grep &quot;^d&quot; | wc -l</code></li>
-<li>统计/home文件夹下文件的个数，包括子文件夹里的：<code>ls -lR /home | grep &quot;^-&quot; | wc -l</code></li>
-<li>统计文件夹下目录的个数，包括子文件夹里的：<code>ls -lR /home | grep &quot;^d&quot; | wc -l</code></li>
-<li>以树状显示目录结构：首先安装tree指令：yum install tree，tree</li>
-</ol>
-</li>
-</ul>
-<h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><ul>
-<li>指定固定IP：直接修改配置文件来指定IP，并可以连接到外网，编辑：vim /etc/sysconfig/network-scripts/ifcfg-eth33。修改如下只<ul>
-<li>BOOTPROTO=static  <em>静态分配</em></li>
-<li>IPADDR= 192.168.200.139  <em>ip地址</em></li>
-<li>GETWAY=192.168.200.2<em>网关</em></li>
-<li>DNS1=192.168.200.2 <em>域名解析器</em></li>
-<li>重启网络服务 （service network restart)  或重启系统生效(reboot)</li>
-</ul>
-</li>
-<li>设置主机名 : vim/etc/hostname</li>
-<li>查看主机名:hostname</li>
-<li>设置ip和主机名的映射关系<ul>
-<li>windows:  C:\windows\System2\drivers\etc\hosts，添加映射关系</li>
-<li>linux：在etc/hosts 文件中添加</li>
-</ul>
-</li>
-</ul>
-<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><ul>
-<li><p>在Linux中，每个执行的<strong>程序（代码）</strong>都称为一个进程。每个进程都分配一个ID号</p>
-</li>
-<li><p>每一个进程，都会对应一个父进程，而这个父进程可以复制多个子进程。例如www服务器。</p>
-</li>
-<li><p>每个进程都可能以两种方式存在：前台和后台</p>
-<ul>
-<li>前台进程：用户目前的屏幕上可以进行操作的。</li>
-<li>后台进程：实际在操作，但由于屏幕上无法看到的进程，通常使用后台方式执行。</li>
-</ul>
-</li>
-<li><p>一般系统的服务都是以后台进程的方式存在，而且都会常驻在系统中，直到关机才结束。</p>
-</li>
-<li><p>显示系统执行的进程</p>
-<ul>
-<li>ps：查看目前系统中，有哪些正在执行，以及它们执行的状况。可以不加任何参数。PID：进程识别号；TTY：终端机号；TIME：此进程所消耗的CPU时间；CMD：正在执行的命令或进程名</li>
-<li>ps -a：显示当前终端的所有进程信息。</li>
-<li>ps -u：以用户的格式显示进程信息。</li>
-<li>ps -x：显示后台进程运行的参数。</li>
-<li>ps -axu | grep xxx：过滤得到xxx的信息。</li>
-</ul>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">System V展示风格
-
-USER:用户名称
-
-PID:进程号
-
-%CPU:进程占用CPU的百分比
-
-%MEM:进程占用物理内存的百分比
-
-VSZ:进程占用的虚拟内存大小（单位:KB)
-
-RSS:进程占用的物理内存大小(单位:KB)
-
-TT:终端名称,缩写
-
-STAT:进程状态，其中S-睡眠,s-表示该进程是会话的先导进程，N-表示进程拥有比普通优先级更低的优先级，R-正在运行，D-短期等待，Z-僵死进程，T-被跟踪或者被停止等等
-
-STARTED:进程的启动时间
-
-TIME:CPU时间，即进程使用CPU的总时间
-
-COMMAND:启动进程所用的命令和参数，如果过长会被截断显示<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>ps -ef：以全格式显示当前所有的进程，查看进程的父进程。</li>
-<li>-e：显示所有进程。</li>
-<li>-f：全格式。</li>
-</ul>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">UID:用户ID
-
-PID:进程ID
-
-PPID:父进程ID
-
-C: CPU用于计算执行优先级的因子。数值越大，表明进程是CPU密集型运算，执行优先级会降低;数值越小，表明进程是IO密集型运算，执行优先级会提高
-
-STIME:进程启动的时间
-
-TTY:完整的终端名称
-
-TIME:CPU时间
-
-CMD:启动进程所用的命令和参数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>终止进程</p>
-<ul>
-<li>kill [选项] 进程号：通过进程号杀死进程</li>
-<li>killall 进程名称：通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变得很慢时很有用</li>
-<li>-9：表示强迫进程立刻停止</li>
-<li>案例1：踢掉非法用户：kill 进程号</li>
-<li>案例2：终止远程登录服务sshd，在适当时候再次重启sshd服务  :kill sshd对应的进程号， 重启： /bin/systemctl start sshd.service</li>
-<li>案例3：终止多个gedit编辑器：killall 进程名称</li>
-<li>案例4：强制杀掉一个终端：kill -9 进程号</li>
-</ul>
-</li>
-<li><p>查看进程树：pstree [选项]</p>
-<ul>
-<li>-p：显示进程的PID</li>
-<li>-u：显示进程的所属用户</li>
-</ul>
-</li>
-</ul>
-<h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><ul>
-<li><p>service管理指令：service 服务名 [start | stop | restart | reload | status]</p>
-</li>
-<li><p>在CentOS7.0之后，不再使用service，而是systemctl</p>
-</li>
-<li><p>查看防火墙情况：</p>
-<ul>
-<li>service iptables status</li>
-<li>systemctl status firewalld（7.0之后的版本）</li>
-</ul>
-</li>
-<li><p>运行级别：通常使用3和5，3是无图形界面，5有图形化界面</p>
-<ul>
-<li>查看或修改默认级别：vim /etc/inittab</li>
-<li>systemctl get-default 查看当前的运行级别</li>
-<li>systemctl set-default TARGENT.target 设置当前运行级别为3</li>
-</ul>
-</li>
-<li><p>chkconfig：可以给每个服务的各个运行级别设置自启动/关闭</p>
-<ul>
-<li>查看xxx服务：chkconfig –list | grep xxx</li>
-<li>查看服务的状态：chkconfig 服务名 –list</li>
-<li>给服务的运行级别设置自启动：chkconfig –level 5 服务名 on/off</li>
-<li>要所有运行级别关闭或开启：chkconfig 服务名 on/off</li>
-</ul>
-</li>
-<li><p>systemctl管理指令</p>
-<ul>
-<li>基本语法:systemctl [start | stop | restart | status]服务名</li>
-<li>systemctl指令管理的服务在/usr/lib/systemd/system查看</li>
-<li>systemctl设置服务的自启动状态</li>
-<li>systemctl list-unit-files [l grep 服务名](查看服务开机启动状态, grep可以进行过滤)</li>
-<li>systemctl enable服务名(设置服务开机启动)</li>
-<li>systemctl disable 服务名(关闭服务开机启动)</li>
-<li>systemctl is-enabled服务名(查询某个服务是否是自启动的)</li>
-</ul>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">systemctl status firewalld   #查看firewalld的状况
-systemctl stop firewalld   #关闭防火墙
-systemctl start firewalld #重启防火墙
-
-#以上命令指示临时生效，当系统重启后还是回归以前的配置
-#如果需要永久生效，使用systemctl [enable|disable] 服务名   进行修改 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>windows 在 cmd下使用 telnet ip  端口号 可以连接端口</li>
-</ul>
-</li>
-<li><p>端口设置</p>
-<ul>
-<li>打开端口：<code>firewall-cmd --permanent --add-port=端口号/协议</code>  如：<code>firewall-cmd --permanent --add-port=111/tcp</code></li>
-<li>关闭端口：<code>firewall-cmd --permanent --remove-port-端口号/协议</code>   如：<code>frewall-cmd --permanent --remove-port=111/tcp</code></li>
-<li>重新载入之后上面的操作才能够生效：<code>firewall-cmd --reload</code></li>
-<li>查询端口是否开放： <code>firewall-cmd --query-port=端口号/协议</code></li>
-<li>查看开放的所有端口：<code>firewall-cmd --zone=public --list-ports</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="动态监控进程"><a href="#动态监控进程" class="headerlink" title="动态监控进程"></a>动态监控进程</h2><blockquote>
-<p>top和ps命令很相似。它们都用来显示正在执行的进程。top和ps最大的不同之处在于top在执行一段时间可以更新正在运行的进程。</p>
-</blockquote>
-<ul>
-<li>top [选项]<ul>
-<li>-d 秒数：指定top命令每隔几秒更新。默认是3秒。</li>
-<li>-i：使top不显示任何闲置或者僵死进程。</li>
-<li>-p：通过指定监控进程ID来仅仅监控某个进程的状态。</li>
-</ul>
-</li>
-</ul>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">PID：进程号 
-
-USER：进程所有者的用户名 ( 该 process 所属的使用者 )
-
-PR：进程的优先级别 ( Priority 的简写，程序的优先执行顺序，越小越早被执行 )
-
-NI：进程的优先级别数值 ( Nice 的简写，与 Priority 有关，也是越小越早被执行 )
-
-VIRT：进程占用的虚拟内存值。
-
-RES：进程占用的物理内存值。
-
-SHR：进程使用的共享内存值。
-
-S：进程的状态，其中S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值是负数。
-
-%CPU：该进程占用的CPU使用率。
-
-%MEM：该进程占用的物理内存和总内存的百分比。
-
-TIME＋：该进程启动后占用的总的CPU时间 ( CPU 使用时间的累加 )
-
-Command：进程启动的启动命令名称，如果这一行显示不下，进程会有一个完整的命令行。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>交互操作说明：(在top界面按下对应的选型)<ul>
-<li>P：以CPU使用率排序，默认就是此项</li>
-<li>M：以内存的使用率排序</li>
-<li>N：以PID排序</li>
-<li>q：退出top</li>
-</ul>
-</li>
-<li>案例1：监控特定用户：==top查看进程；u输入用户名。==</li>
-<li>案例2：终止指定的进程：==top查看进程；k输入要结束的进程号。==</li>
-<li>案例3：指定系统状态更新的时间（每隔10秒自动更新，默认是3秒）：top -d 10</li>
-</ul>
-<h2 id="监控网络状态"><a href="#监控网络状态" class="headerlink" title="监控网络状态"></a>监控网络状态</h2><ul>
-<li>netstat [选项]<ul>
-<li>-an：按一定顺序排列输出</li>
-<li>-p：显示哪个进程在调用</li>
-</ul>
-</li>
-</ul>
-<h2 id="rpm"><a href="#rpm" class="headerlink" title="rpm"></a>rpm</h2><blockquote>
-<p>rpm用于互联网下载包的打包及安装工具，它包含在某些Linux分发版中。它生成只有.RPM扩展名的文件。RPM是RedHat Package Manager( RedHat软件包管理工具)的缩写，类似windows的setup.exe，这一文件格式名称虽然打上了RedHat的标志，但理念是通用的。</p>
-<p>Linux的分发版本都有采用(suse,redhat, centos等等），可以算是公认的行业标准了.</p>
-</blockquote>
-<ul>
-<li>rpm包的查询指令：<ul>
-<li>rpm -qa：查询所安装的所有rpm软件包</li>
-<li>rpm -qa | more</li>
-<li>rpm -qa | grep xx</li>
-<li>rpm -q xx：查询xx软件包是否安装</li>
-<li>rpm -qi xx：查询软件包信息</li>
-<li>rpm -ql xx：查询软件包中的文件</li>
-<li>rpm -qf 文件全路径名：查询文件所属的软件包</li>
-</ul>
-</li>
-<li>卸载rpm包：rpm -e 软件包名称<ul>
-<li>删除时可能会发生依赖错误，忽视依赖强制删除的方法：rpm -e –nodeps 软件包名称</li>
-</ul>
-</li>
-<li>安装rpm包：rpm -ivh 软件包全路径名称<ul>
-<li>i=install：安装</li>
-<li>v=verbose：提示</li>
-<li>h=hash：进度条</li>
-</ul>
-</li>
-</ul>
-<h2 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h2><blockquote>
-<p>Yum是一个Shell前端软件包管理器。基于RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包。</p>
-</blockquote>
-<ul>
-<li>yum list | grep xx：查询yum服务器是否有需要安装的软件</li>
-<li>yum install xx：安装指定的yum包</li>
-<li>yum -y remove xx：卸载指定的yum包</li>
-</ul>
-<h2 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h2><ol>
-<li><p>使用windows下载jdk1.8的压缩包，使用xftp传输给linux  <em>通常保存到/opt/xxx下</em></p>
-</li>
-<li><p>使用 <code>tar -zxvf xxx</code>解压文件</p>
-</li>
-<li><p>将压缩文件移动到<code>/usr/local/xxx</code>文件夹下,<em>最好先在usr/local下创建文件夹，再使用mv移动文件夹</em></p>
-</li>
-<li><p>配置环境变量 ：<code>vim /etc/profile</code>,添加如下命令:</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">export JAVA_HOME=/usr/local/java/jdk1.8.0_321    #jdk1.8.0_321为你自己的文件夹名字
-export PATH=$JAVA_HOME/bin:$PATH<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>使用<code>source /etc/profile</code>让刚才配置的环境变量生效</p>
-</li>
-<li><p>使用<code>echo $PATH</code>可以查看配置的环境变量是否生效</p>
-</li>
-</ol>
-<h2 id="shell编程"><a href="#shell编程" class="headerlink" title="shell编程"></a>shell编程</h2><blockquote>
-<p>Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便裕兴程序的界面系统级程序，用户可以用Shell来启动、挂起、停止甚至是编写一些程序。</p>
-</blockquote>
-<h3 id="Shell脚本的执行方式："><a href="#Shell脚本的执行方式：" class="headerlink" title="Shell脚本的执行方式："></a>Shell脚本的执行方式：</h3><ul>
-<li>脚本格式要求：<ul>
-<li>脚本以#!/bin/bash 开头</li>
-<li>脚本需要有可执行权限</li>
-</ul>
-</li>
-<li>脚本的常用执行方式：<ul>
-<li>方式1（输入脚本的绝对路径或相对路径）<ul>
-<li>首先要赋予xx.sh脚本的+x权限：chmod 744 myShell.sh</li>
-<li>执行脚本：./myShell.sh</li>
-</ul>
-</li>
-<li>方式2（sh+脚本）：<ul>
-<li>说明：不用赋予+x权限，直接执行即可</li>
-<li>sh ./myShell.sh</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="shell的变量"><a href="#shell的变量" class="headerlink" title="shell的变量"></a>shell的变量</h3><ul>
-<li><p>shell变量的介绍</p>
-<ul>
-<li>Linux Shell的变量分为，系统变量和用户自定义变量</li>
-<li>系统变量：<code>$HOME</code>、<code>$PWD</code>、<code>$SHELL</code>、<code>$USER</code>等等</li>
-<li>显示当前shell中所有变量：set</li>
-</ul>
-</li>
-<li><p>shell变量的定义</p>
-<ul>
-<li><p>基本语法</p>
-<p>定义变量：变量名=值，**=两边不能有空格**</p>
-<p>撤销变量：unset 变量名</p>
-<p>声明静态变量：readonly 变量，注意：不能unset</p>
-<p>输出变量： $变量名</p>
-</li>
-</ul>
-</li>
-<li><p>定义变量的规则</p>
-<ul>
-<li>变量名称可以由字母、数字和下划线组成，但是不能以数字开头</li>
-<li>等号两侧不能有空格</li>
-<li>变量名称一般习惯为大写</li>
-</ul>
-</li>
-<li><p>将命令的返回值赋给变量</p>
-<ul>
-<li>A=`date`，使用反引号，运行里面的命令，并把结果返回给变量A</li>
-<li>A=$(date)等价于上面</li>
-</ul>
-</li>
-</ul>
-<h3 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h3><ul>
-<li><p>基本语法</p>
-<ul>
-<li><p>export 变量名=变量值：将shell变量输出为环境变量/全局变量</p>
-</li>
-<li><p>source 配置文件：让修改后的配置文件信息立即生效</p>
-</li>
-<li><p>echo $变量名：查询环境变量的值</p>
-</li>
-<li><p>多行注释：</p>
-<pre class="line-numbers language-none"><code class="language-none">:&lt;&lt;!
-需要注释的内容
-!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="位置参数变量"><a href="#位置参数变量" class="headerlink" title="位置参数变量"></a>位置参数变量</h3><blockquote>
-<p>当我们执行一个shell脚本时，如果希望获取到命令行的参数信息就可以使用到位置参数变量。比如： ./myshell.sh 100 200，这个就是一个执行shell的命令行，可以在myshell脚本中传参100，200。</p>
-</blockquote>
-<ul>
-<li>基本语法：<ul>
-<li><code>$n</code>：n为数字，<code>$0</code>代表命令本身，<code>$1-$9</code>代表第一到第九个参数，10以上的参数需要用大括号包含，如<code>$&#123;10&#125;</code></li>
-<li><code>$*</code>：这个变量代表命令行中所有的参数，<code>$*</code>把所有的参数看成一个整体</li>
-<li><code>$@</code>：这个变量也代表命令行中所有的参数，不过<code>$@</code>把每个参数区分对待</li>
-<li><code>$#</code>：这个变量代表命令行中所有参数的个数</li>
-</ul>
-</li>
-</ul>
-<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><ul>
-<li>shell设计者事先已经定义好的变量，可以直接在shell脚本中使用</li>
-<li>基本语法：<ul>
-<li><code>$$</code>：当前进程的进程号（PID）</li>
-<li><code>$!</code>：后台运行的最后一个进程的进程号（PID）</li>
-<li><code>$?</code>：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确。</li>
-<li>后台运行：./myShell.sh &amp;</li>
-</ul>
-</li>
-</ul>
-<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
-<li>在Shell中进行各种运算操作</li>
-<li>“<code>$</code>((运算式))”或“<code>$</code>[运算时]”</li>
-<li>expr m + n，注意expr运算符间要有空格</li>
-<li>expr m - n</li>
-<li>expr <code>\*</code> / %，乘，除，取余</li>
-</ul>
-<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><ul>
-<li>基本语法：[ condition ]，<strong>注意condition前后有空格！</strong></li>
-<li>非空返回true，可使用$?验证（0为true，&gt;1为false）</li>
-<li>两个整数比较<ul>
-<li>=：字符串比较</li>
-<li>-lt：小于</li>
-<li>-le：小于等于</li>
-<li>-eq：等于</li>
-<li>-gt：大于</li>
-<li>-ge：大于等于</li>
-<li>-ne：不等于</li>
-</ul>
-</li>
-<li>按照文件权限进行判断<ul>
-<li>-r：有读的权限</li>
-<li>-w：有写的权限</li>
-<li>-x：有执行的权限</li>
-</ul>
-</li>
-<li>按照文件类型进行判断<ul>
-<li>-f：文件存在并且是一个常规的文件</li>
-<li>-e：文件存在</li>
-<li>-d：文件存在并且是一个目录</li>
-</ul>
-</li>
-</ul>
-<h3 id="流程控制if语句"><a href="#流程控制if语句" class="headerlink" title="流程控制if语句"></a>流程控制if语句</h3><ul>
-<li><p>if判断基本语法：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">if [ 条件判断式 ]
-then
-	代码
-fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>或者：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">if [ 条件判断式 ]
-
- then
-	程序
-elif [ 条件判断式 ]
-then
-	程序
-fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-</li>
-</ul>
-<h3 id="流程控制case语句"><a href="#流程控制case语句" class="headerlink" title="流程控制case语句"></a>流程控制case语句</h3><ul>
-<li><p>case语句基本语法：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">case $变量名 in
-
-“值1”)
-
-	如果变量的值等于值1，则执行程序1
-
-;;
-
-“值2”)
-
-	如果变量的值等于值2，则执行程序2
-
-;;
-
-…省略其他分支…
-
-*)
-
-如果变量的值都不是以上的值，则执行此程序
-
-;;
-
-esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-</li>
-</ul>
-<h3 id="流程控制for循环"><a href="#流程控制for循环" class="headerlink" title="流程控制for循环"></a>流程控制for循环</h3><ul>
-<li><p>for循环基本语法1：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">for 变量 in 值1 值2 值3…
-
- do
-
- 程序
-
- done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p>for循环基本语法2</p>
-<pre class="line-numbers language-shel" data-language="shel"><code class="language-shel">for ((初始值;循环控制条件;变量变化))
-
- do
-
- 程序
-
- done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-</li>
-</ul>
-<h3 id="流程控制while循环"><a href="#流程控制while循环" class="headerlink" title="流程控制while循环"></a>流程控制while循环</h3><ul>
-<li><p>while循环基本语法1：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">while [ 条件判断式 ]     #条件判断和括号之间有空格
-
- do
-
- 程序
-
- done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-</li>
-</ul>
-<h3 id="read读取控制台的输入"><a href="#read读取控制台的输入" class="headerlink" title="read读取控制台的输入"></a>read读取控制台的输入</h3><ul>
-<li>read [选项] (参数)</li>
-<li>-p：指定读取值时的提示符</li>
-<li>-t：指定读取值时等待的时间（秒），如果没有在指定的时间内输入，就不再等待了。</li>
-<li>参数：变量：指定读取值的变量名</li>
-</ul>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
-<li><p>系统函数</p>
-<ul>
-<li>basename：<strong>返回完整路径最后/的部分，常用于获取文件名</strong><ul>
-<li>basename [pathname] [suffix]</li>
-<li>basename [string] [suffix]</li>
-<li>basename命令会删掉所有的前缀包括最后一个/</li>
-<li>选项：suffix为后缀，如果suffix被指定了，basename会将pathname或string中的suffix去掉</li>
-</ul>
-</li>
-<li>dirname：返回完整路径最后/的前面的部分，常用于返回路径部分<ul>
-<li>dirname 文件绝对路径：从给定的包含绝对路径的文件名中出去文件名（非目录部分），然后返回剩下的路径（目录部分）</li>
-</ul>
-</li>
-<li><strong>反正两个系统函数都不要最后一个/</strong></li>
-</ul>
-</li>
-<li><p>自定义函数</p>
-<ul>
-<li><p>基本语法：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">function funname()
-
-&#123;
-
- Action;
-
- [return int;]
-
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>调用直接写函数名：funname（不用写括号），然后在后面写参数</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h1><blockquote>
-<p>日志文件是重要的系统信息文件，其中记录了许多重要的系统事件，包括用户的登录信息、系统的启动信息、系统的安全信息、邮件相关信息、各种服务相关信息等。这些信息有些非常敏感，所以在 Linux 中这些日志文件只有 root 用户可以读取。<br>日志对于安全来说也很重要，它记录了系统每天发生的各种事情，通过日志来检查错误发生的原因，或者受到攻击时攻击者留下的痕迹。<br>可以这样理解日志是用来记录重大事件的工具。</p>
-</blockquote>
-<ul>
-<li><blockquote>
-<ul>
-<li>基本介绍<br>日志文件是重要的系统信息文件，其中记录了许多重要的系统事件，包括用户的登录信息、系统的启动信息、系统的安全信息、邮件相关信息、各种服务相关信息等。这些信息有些非常敏感，所以在 Linux 中这些日志文件只有 root 用户可以读取。<br>日志对于安全来说也很重要，它记录了系统每天发生的各种事情，通过日志来检查错误发生的原因，或者受到攻击时攻击者留下的痕迹。<br>可以这样理解日志是用来记录重大事件的工具。</li>
-<li>系统常用的日志<br>/var/log/ 目录就是系统日志文件的保存位置</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">日志文件</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">/var/log/boot.log</td>
-<td align="center">系统启动日志</td>
-</tr>
-<tr>
-<td align="center">/var/log/cron</td>
-<td align="center">记录与系统定时任务相关的日志</td>
-</tr>
-<tr>
-<td align="center">/var/log/cups/</td>
-<td align="center">记录打印信息的曰志</td>
-</tr>
-<tr>
-<td align="center">/var/log/dmesg</td>
-<td align="center">记录了系统在开机时内核自检的信总。也可以使用 dmesg 命令直接查看内核自检信息</td>
-</tr>
-<tr>
-<td align="center">/var/log/btmp</td>
-<td align="center">记录错误登陆的日志。这个文件是二进制文件，不能直接用Vi查看，而要使用 lastb 命令查看</td>
-</tr>
-<tr>
-<td align="center">/var/log/lasllog</td>
-<td align="center">记录系统中所有用户最后一次的登录时间的曰志。这个文件也是二进制文件。不能直接用Vi查看，而要使用lastlog命令查看</td>
-</tr>
-<tr>
-<td align="center">/var/log/mailog</td>
-<td align="center">记录邮件信息的日志</td>
-</tr>
-<tr>
-<td align="center">/var/log/message</td>
-<td align="center">记录系统里要佶息的日志.这个日志文件中会记录 Linux 系统的绝大多数重要信息。如果系统出现问题，首先要检查的应该就是这个日志文件</td>
-</tr>
-<tr>
-<td align="center">/var/log/secure</td>
-<td align="center">记录验证和授权方面的倍息，只要涉及账户和密码的程序都会记录，比如系统的登录、ssh 的登录、su 切换用户，sudo 授权，甚至添加用户和修改用户密码都会记录在这个日志文件中</td>
-</tr>
-<tr>
-<td align="center">/var/log/wtmp</td>
-<td align="center">永久记录所有用户的登陆、注销信息，同时记录系统的后动、重启、关机事件。同样，这个文件也是二进制文件.不能直接用Vi查看，而要使用 last 命令查看</td>
-</tr>
-<tr>
-<td align="center">/var/tun/ulmp</td>
-<td align="center">记录当前已经登录的用户的信息。这个文件会随着用户的登录和注销而不断变化，只记录当前登录用户的信息。同样，这个文件不能直接用Vi查看，而要使用 w、who、users 等命令查看</td>
-</tr>
-<tr>
-<td align="center">除系统默认的日志之外，采用 RPM 包方式安装的系统服务也会默认把日志记录在 /var/log/ 目录中（源码包安装的服务日志存放在源码包指定的目录中）。不过这些日志不是由 rsyslogd 服务来记录和管理的，而是各个服务使用自己的日志管理文档来记录自身的日志。以下介绍的日志目录在你的 Linux 上不一定存在，只有安装了相应的服务，日志才会出现。</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th align="center">日志文件</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">/var/log/httpd/</td>
-<td align="center">RPM 包安装的apache取务的默认日志目录</td>
-</tr>
-<tr>
-<td align="center">/var/log/mail/</td>
-<td align="center">RPM 包安装的邮件服务的额外日志因录</td>
-</tr>
-<tr>
-<td align="center">/var/log/samba/</td>
-<td align="center">RPM色安装的Samba服务的日志目录</td>
-</tr>
-<tr>
-<td align="center">/var/log/sssd/</td>
-<td align="center">守护进程安全服务目录</td>
-</tr>
-</tbody></table>
-</blockquote>
-<ul>
-<li><strong>日志管理服务 rsyslogd</strong></li>
-</ul>
-<blockquote>
-<p>CentOS 7.6日志服务是 rsyslogd，CentOS 6.x 日志服务是 syslogd，rsyslogd 功能更强大。rsyslogd 的使用、日志文件的格式，和 syslogd 服务兼容的。</p>
-<ul>
-<li>查询 Linux 中的 rsyslogd 服务是否启动<ul>
-<li>ps aux | grep “rsyslog” | grep -v “grep”</li>
-</ul>
-</li>
-<li>查询 rsyslogd 服务的自启动状态<ul>
-<li>systemctl list-unit-files | grep rsyslog</li>
-</ul>
-</li>
-<li>配置文件：/etc/rsyslog.conf<ul>
-<li>编辑文件时的格式：*.*，其中第一个 * 代表日志类型，第二个 * 代表日志类别</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<table>
-<thead>
-<tr>
-<th align="center">日志类型</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">auth</td>
-<td align="center">安全和认证相关消息，pam 产生的日志（不推荐使用 authpriv 替代）</td>
-</tr>
-<tr>
-<td align="center">authpirv</td>
-<td align="center">安全和认证相关信息，ssh、ftp 等登录信息的验证信息（私有的）</td>
-</tr>
-<tr>
-<td align="center">cron</td>
-<td align="center">系统定时任务 crond 和 at 产生的日志</td>
-</tr>
-<tr>
-<td align="center">daemon</td>
-<td align="center">和各个守护进程相关的日志</td>
-</tr>
-<tr>
-<td align="center">ftp</td>
-<td align="center">ftp 守护进程产生的日志</td>
-</tr>
-<tr>
-<td align="center">kern</td>
-<td align="center">内核产生的日志（不是用户进程产生的）</td>
-</tr>
-<tr>
-<td align="center">lpr</td>
-<td align="center">打印产生的日志</td>
-</tr>
-<tr>
-<td align="center">mail</td>
-<td align="center">邮件收发信息</td>
-</tr>
-<tr>
-<td align="center">news</td>
-<td align="center">与新闻服务器相关的日志</td>
-</tr>
-<tr>
-<td align="center">syslog</td>
-<td align="center">有syslogd服务产生的日志信息（虽然服务名称已经改了 rsyslogd 服务，但是很多配置都还是沿用了 syslogd 的，这里并没有修改服务名）</td>
-</tr>
-<tr>
-<td align="center">user</td>
-<td align="center">用户等级类别的日志信息</td>
-</tr>
-<tr>
-<td align="center">uucp</td>
-<td align="center">uucp 子系统的日志信息，uucp 时早期 Linux 系统进行数据传递的协议，后来也经常用在新闻组服务中</td>
-</tr>
-<tr>
-<td align="center">local0-local7</td>
-<td align="center">为本地使用预留的服务</td>
-</tr>
-</tbody></table>
-</blockquote>
-</blockquote>
-<blockquote>
-<blockquote>
-<table>
-<thead>
-<tr>
-<th align="center">日志级别</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">debug</td>
-<td align="center">一般的调试信息说明，日志通信最多</td>
-</tr>
-<tr>
-<td align="center">info</td>
-<td align="center">基本的通知信息</td>
-</tr>
-<tr>
-<td align="center">notice</td>
-<td align="center">普通信息，但是有一定的重要性</td>
-</tr>
-<tr>
-<td align="center">warning</td>
-<td align="center">警告信息，但是还不会影响到服务或系统的运行</td>
-</tr>
-<tr>
-<td align="center">err</td>
-<td align="center">错误信息，一般达到 err 等级的信息已经可以影响到服务或系统的运行了</td>
-</tr>
-<tr>
-<td align="center">crit</td>
-<td align="center">严重错误信息，比 err 等级还要严重，系统或整个软件不能正常工作</td>
-</tr>
-<tr>
-<td align="center">alert</td>
-<td align="center">需要立刻修改的信息，比 crit 还要严重，必须立即采取行动</td>
-</tr>
-<tr>
-<td align="center">emerg</td>
-<td align="center">内核崩溃等重要信息，系统已经无法使用了</td>
-</tr>
-<tr>
-<td align="center">none</td>
-<td align="center">什么都不记录</td>
-</tr>
-<tr>
-<td align="center">注意：日志级别从上到下，级别从低到高，记录信息越来越少，优先处理的等级就越高，危害就越大。</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-</blockquote>
-</blockquote>
-<ul>
-<li><p>由日志服务 rsyslogd 记录的日志文件，日志文件的格式包含以下4列：</p>
-<ul>
-<li>事件产生的时间</li>
-<li>发生事件的服务器的主机名</li>
-<li>产生事件的服务名或程序名</li>
-<li>事件的具体信息</li>
-</ul>
-</li>
-<li><p>日志管理服务应用实例</p>
-<p>在 /etc/rsyslog.conf 中添加一个日志文件 /var/log/hsp.log，当有事件发送时，该文件会接收到信息并保存。</p>
-<ul>
-<li>在 /etc/rsyslog.conf 文件中增加如下命令</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span>                         <span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>log<span class="token operator">/</span>hsp<span class="token punctuation">.</span>log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</blockquote>
-</blockquote>
-<ul>
-<li>新建 /var/log/hsp.log 文件，重启系统，再查看该文件内容。</li>
-</ul>
-</blockquote>
-<ul>
-<li><strong>日志轮替</strong></li>
-</ul>
-<blockquote>
-<ul>
-<li><p>基本介绍</p>
-<ul>
-<li>日志是重要的系统文件，记录和保存了系统中所有的重要事件。但是日志文件也需要进行定期的维护，因为日志文件是不断增长的，如果完全不进行日志维护，而任由其随意递增，那么用不了多久，我们的硬盘就会被写满。</li>
-<li>日志维护的最主要的工作就是把旧的日志文件删除，从而腾出空间保存新的日志文件。这项工作如果靠管理员手工来完成，那其实是非常烦琐的，而且也容易忘记。那么 Linux 系统是否可以自动完成日志的轮替工作呢？</li>
-<li>logrotate 就是用来进行日志轮替（也叫日志转储）的，也就是把旧的日志文件移动并改名，同时创建一个新的空日志文件用来记录新日志，当旧日志文件超出保存的范围时就删除。</li>
-</ul>
-</li>
-<li><p>日志轮替文件的命名规则</p>
-<ul>
-<li>日志轮替最主要的作用就是把旧的日志文件移动并改名，同时建立新的空日志文件，当旧日志文件超出保存的范围时就删除。那么，旧的日志文件改名之后，如何命名呢？主要依靠 /etc/logrotate.conf 配置文件中的“dateext”参数。</li>
-<li>如果配置文件中有“dateext”参数，那么日志会用日期来作为日志文件的后缀，如“secure-20130605”。这样日志文件名不会重叠，也就不需要对日志文件进行改名，只需要保存指定的日志个数，删除多余的日志文件即可。</li>
-<li>如果配置文件中没有“dateext”参数，那么日志文件就需要进行改名了。当第一次进行日志轮替时，当前的“secure”日志会自动改名为“secure.1”，然后新建“secure”日志，用来保存新的日志；当第二次进行日志轮替时，“secure.1”会自动改名为“secure.2”，当前的“secure”日志会自动改名为“secure.1”，然后也会新建“secure”日志，用来保存新的日志；以此类推。</li>
-</ul>
-</li>
-<li><p>配置文件：/etc/logrotate.conf</p>
-<p>可以设置全局的日志轮替规则，当然也可以单独给某个日志文件指定策略。</p>
-<p>在这个配置文件中，主要分为三部分：</p>
-<ul>
-<li>第一部分是默认设置，如果需要转储的日志文件没有特殊配置，则遵循默认设置的参数；</li>
-<li>第二部分是读取 /etc/logrotate.d/ 目录中的日志轮替的子配置文件，也就是说，在 /etc/logrotate.d/ 目录中的所有符合语法规则的子配置文件也会进行日志轮替；</li>
-<li>第三部分是对 wtmp 和 btmp 日志文件的轮替进行设定，如果此设定和默认参数冲突，则当前设定生效（如 wtmp 的当前参数设定的轮替时间是每月，而默认参数的轮替时间是每周，则对 wtmp 这个日志文件来说，轮替时间是每月，当前的设定参数生效）。</li>
-</ul>
-</li>
-<li><p>logrotate 配置文件的主要参数</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="center">参数说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">daily</td>
-<td align="center">日志的轮替周期是毎天</td>
-</tr>
-<tr>
-<td align="center">weekly</td>
-<td align="center">日志的轮替周期是每周</td>
-</tr>
-<tr>
-<td align="center">monthly</td>
-<td align="center">日志的轮控周期是每月</td>
-</tr>
-<tr>
-<td align="center">rotate 数宇</td>
-<td align="center">保留的日志文件的个数。0指没有备份</td>
-</tr>
-<tr>
-<td align="center">compress</td>
-<td align="center">当进行日志轮替时，对旧的日志进行压缩</td>
-</tr>
-<tr>
-<td align="center">create mode owner group</td>
-<td align="center">建立新日志，同时指定新日志的权限与所有者和所属组。如 create 0600 root utmp</td>
-</tr>
-<tr>
-<td align="center">mail address</td>
-<td align="center">当进行日志轮替时.输出内存通过邮件发送到指定的邮件地址</td>
-</tr>
-<tr>
-<td align="center">missingok</td>
-<td align="center">如果日志不存在，则忽略该日志的警告信息</td>
-</tr>
-<tr>
-<td align="center">nolifempty</td>
-<td align="center">如果曰志为空文件，則不进行日志轮替</td>
-</tr>
-<tr>
-<td align="center">minsize 大小</td>
-<td align="center">日志轮替的最小值。也就是日志一定要达到这个最小值才会进行轮持，否则就算时间达到也不进行轮替</td>
-</tr>
-<tr>
-<td align="center">size 大小</td>
-<td align="center">日志只有大于指定大小才进行日志轮替，而不是按照时间轮替，如 size 100k</td>
-</tr>
-<tr>
-<td align="center">dateext</td>
-<td align="center">使用日期作为日志轮替文件的后缀，如 secure-20130605</td>
-</tr>
-<tr>
-<td align="center">sharedscripts</td>
-<td align="center">在此关键宇之后的脚本只执行一次</td>
-</tr>
-<tr>
-<td align="center">prerotate/cndscript</td>
-<td align="center">在日志轮替之前执行脚本命令。endscript 标识 prerotate 脚本结束</td>
-</tr>
-<tr>
-<td align="center">postrolaie/endscripl</td>
-<td align="center">在日志轮替之后执行脚本命令。endscripi 标识 postrotate 脚本结束</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>把自己的日志加入日志轮替</p>
-<p>如果有些日志默认没有加入日志轮替（比如源码包安装的服务的日志，或者自己添加的日志），那么这些日志默认是不会进行日志轮替的，这样当然不符合我们对日志的管理要求。如果需要把这些日志也加入日志轮替，那该如何操作呢？</p>
-<p>这里有两种方法：</p>
-<ul>
-<li>第一种方法是直接在 /etc/logrotate.conf 配置文件中写入该日志的轮替策略，从而把日志加入轮替；</li>
-<li>第二种方法是在 /etc/logrotate.d/ 目录中新建立该日志的轮替文件，在该轮替文件中写入正确的轮替策略，因为该目录中的文件都会被包含到主配置文件中，所以也可以把日志加入轮替。<br>推荐第二种方法，因为系统中需要轮替的日志非常多，如果全部直接写入 /etc/logrotate.conf 配置文件，那么这个文件的可管理性就会非常差，不利于此文件的维护。</li>
-</ul>
-</li>
-<li><p>日志轮替服务应用实例</p>
-<p>对于自己设置的 /var/log/hsp.log 日志，不是系统默认日志，而是通过 /etc/rsyslog.conf 配置文件自己生成的日志，所以默认这个日志是不会进行轮替的。如果需要把这个日志加入。就采用第二种方法，在 /etc/logrotate.d/ 目录中建立此日志的轮替文件。</p>
-<ul>
-<li>先创建 /etc/logrotate.d/hsplog 轮替文件</li>
-<li>在文件中写入命令，即事先约定好的日志轮替规则</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<blockquote>
-<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>hsp<span class="token punctuation">.</span><span class="token function">log</span> <span class="token punctuation">&#123;</span>
-     missingok
-     daily
-     copytruncate
-     rotate <span class="token number">7</span>
-     nolifempty
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</blockquote>
-</blockquote>
-<ul>
-<li>日志轮替机制原理<ul>
-<li>logrotate 在很多 Linux 发行版上都是默认安装的。系统会定时运行 logrotate，一般是每天一次。系统是这么实现按天执行的。crond 会每天定时执行 /etc/cron.daily 目录下的脚本，而这个目录下有个文件叫 logrotate。logrotate 通过这个文件依赖定时任务执行的。</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<ul>
-<li><strong>查看内存日志</strong></li>
-</ul>
-<blockquote>
-<ul>
-<li>基本介绍<br>日志管理工具 journalctl 是CentOS 7上专有的日志管理工具，该工具是从 message 这个文件里读取信息。Systemd 统一管理所有 Unit 的启动日志。带来的好处就是，可以只用 journalctl 一个命令，查看所有日志（内核日志和应用日志）。日志的配置文件是 /etc/systemd/journald.conf</li>
-<li>journalctl 用法<ul>
-<li>查看所有日志（默认情况下 ，只保存本次启动的日志）：journalctl</li>
-<li>查看内核日志（不显示应用日志）：journalctl -k</li>
-<li>查看系统本次启动的日志：journalctl -b</li>
-<li>实时滚动显示最新日志：journalctl -f</li>
-<li>显示尾部的最新10行日志：journalctl -n </li>
-</ul>
-</li>
-</ul>
-</blockquote>
-</li>
-</ul>
+          <a id="more"></a>
+
+<h2 id="安装启动"><a href="#安装启动" class="headerlink" title="安装启动"></a>安装启动</h2><p>JMeter 依赖于JDK，所以必须确保当前计算机上已经安装了 JDK，并且配置了环境变量。</p>
+<p>Apache Jmeter官网下载，地址：<a target="_blank" rel="noopener" href="http://jmeter.apache.org/download_jmeter.cgi">http://jmeter.apache.org/download_jmeter.cgi</a></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182402429.png" alt="image-20220520182402429"></p>
+<p>解压缩即可使用，目录结构如下</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182426302.png" alt="image-20220520182426302"></p>
+<p>其中的 bin 目录就是执行的脚本，其中包含启动脚本</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182445106.png" alt="image-20220520182445106"></p>
+<p>双击即可运行，但是有两点注意</p>
+<ul>
+<li>启动时速度比较慢，要耐心等待。</li>
+<li>启动后终端（黑窗口）不能关闭，否则 JMeter 也跟着关闭。</li>
+</ul>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182502234.png" alt="image-20220520182502234"></p>
+<h2 id="修改中文"><a href="#修改中文" class="headerlink" title="修改中文"></a>修改中文</h2><p>默认 JMeter 的语言是英文，需要设置</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182516753.png" alt="image-20220520182516753"></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182538054.png" alt="image-20220520182538054"></p>
+<p>上面的配置只能保证本次运行是中文，如果要永久中文，需要修改 JMeter 的配置文件。</p>
+<p>打开 JMeter 文件夹，在 bin 目录中找到 <strong>jmeter.properties</strong>，添加下面配置：</p>
+<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token attr-name">language</span><span class="token punctuation">=</span><span class="token attr-value">zh_CN</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182555036.png" alt="image-20220520182555036"></p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>在测试计划上点鼠标右键，选择「添加 &gt; 线程（用户） &gt; 线程组」</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182612199.png" alt="image-20220520182612199"></p>
+<p>在新增的线程组中，填写线程信息</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182622262.png" alt="image-20220520182622262"></p>
+<p>在线程组这里点鼠标右键，添加 http 请求</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182635810.png" alt="image-20220520182635810"></p>
+<p>编写取样器内容</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182646501.png" alt="image-20220520182646501"></p>
+<p>添加监听报告</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182658504.png" alt="image-20220520182658504"></p>
+<p>汇总报告结果</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182716297.png" alt="image-20220520182716297"></p>
+<p>添加监听结果树</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182815816.png" alt="image-20220520182815816"></p>
+<p>察看结果树</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220520182731253.png" alt="image-20220520182731253"></p>
 
       
     </div>
@@ -1699,7 +291,7 @@ esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/29/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%AF%B9hashmap%E7%9A%84%E6%8E%92%E5%BA%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.jpg">
@@ -1713,7 +305,7 @@ esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/" class="post-title-link" itemprop="url">Java基础</a>
+            <a href="/2022/05/29/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%AF%B9hashmap%E7%9A%84%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -1724,7 +316,7 @@ esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-07 22:37:16 / 修改时间：22:36:26" itemprop="dateCreated datePublished" datetime="2021-12-07T22:37:16+08:00">2021-12-07</time>
+              <time title="创建时间：2022-05-29 22:05:56 / 修改时间：22:05:54" itemprop="dateCreated datePublished" datetime="2022-05-29T22:05:56+08:00">2022-05-29</time>
             </span>
 
           
@@ -1738,212 +330,11 @@ esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>题目：<br>1、列举出四种及以上Java的容器类（即集合类）？<br>Set、List、Queue、Map、ArrayList、HashSet、HashMap</p>
-<p>2、简单说说Java事件处理由哪四部分组成？<br>Java事件由四部分组成：<br>事件源：产生事件的对象，例如：各个组件<br>事件对象：事件类<br>监听器：监听器接口(里面定义了响应事件的抽象方法)<br>“注册”：产生事件的对象，通过调用一个方法，通知“监听器”。</p>
-<p>3、Java网络编程主要基于两个协议，是哪两个协议，其作用各是什么？（7分）<br>答：是TCP协议和UDP协议（1分）<br>    TCP协议：是面向连接的传输层协议。 进程（应用程序）在使用TCP协议之前，必须先建立连接，在数据传输完毕后要释放已建立的连接。（3分）<br>    UDP协议：是无连接的传输层协议。进程（应用程序）使用UDP无须建立连接，当然，数据传输结束时也没有连接需要释放。因此，用UDP能减少开销和发送数据之前的时延。（3分）</p>
-<p>4、X公司承接了一个软件项目，目前正在做可行性分析。项目经理偏向于采用Java语言开发此项目，但有少数员工提出也可以用其他语言开发如C++或C#等，为统一思想。项目经理委托小张收集数据，并给大家分析下Java的特点或优势。（请列举Java的特点至少6点，并简单进行分析说明）<br>答：简单、面向对象、支持分布式(即网络功能)、健壮性（少出低级错误）、安全（被破解的可能性）、体系结构中立（跨平台）、可移植性、解释执行、高性能、多线程、动态</p>
-<p>5、Java相对于C、C++语言，更适合应用型软件的开发，这主要是Java语言本身就相对C++语言作出了一些变化，请分析出至少Java相对C++语言在语法上6个及更多的不同点。<br>答：1）全局变量：Java中没有全局变量。2）指针：Java不支持指针，但对象变量实际上都是指针。3）数据类型的支持：Java在不同平台上数据类型都统一。4）类型转换：Java有类型相容性检查。5）结构和联合：Java只支持类。6）多重继承：Java用接口实现类似多重继承的功能。7）内存管理：Java自动回收无用内存。8）头文件：Java支持包引入import。9）宏定义和预处理：Java不支持宏定义。</p>
-<p>6、什么是JDBC，在什么时候会用到它？<br>答、JDBC的全称是Java DataBase Connection，也就是Java数据库连接，我们可以用它来操作关系型数据库。JDBC接口及相关类在java.sql包和javax.sql包里。我们可以用它来连接数据库，执行SQL查询，存储过程，并处理返回的结果。JDBC接口让Java程序和JDBC驱动实现了松耦合，使得切换不同的数据库变得更加简单。</p>
-<p>7、列举出任意四个JDBC连接数据库相关的Java类？<br>答：DriverManager、Connection、Statement、ResultSet、PreparedStatement、SQLException、Types、ClassNotFoundException等</p>
-<p>8、JDBC操作数据库的步骤？<br>答：注册数据库驱动。<br>建立数据库连接。<br>操作数据库：包括创建一个Statement，执行SQL语句，处理结果集等。<br>关闭数据库连接</p>
-<p>9、有哪些不同类型的JDBC驱动，每种驱动的特点是什么？<br>答：有四类JDBC驱动。<br>1） JDBC-ODBC Bridge plus ODBC Driver（类型1）：它使用ODBC驱动连接数据库。需要安装ODBC以便连接数据库，正因为这样，这种方式现在已经基本淘汰了。<br>2） Native API partly Java technology-enabled driver（类型2）：这种驱动把JDBC调用适配成数据库的本地接口的调用。<br>3） Pure Java Driver for Database Middleware（类型3）：这个驱动把JDBC调用转发给中间件服务器，由它去和不同的数据库进行连接。用这种类型的驱动需要部署中间件服务器。这种方式增加了额外的网络调用，导致性能变差，因此很少使用。<br>4） Direct-to-Database Pure Java Driver（类型4）：这个驱动把JDBC转化成数据库使用的网络协议。这种方案最简单，也适合通过网络连接数据库。不过使用这种方式的话，需要根据不同数据库选用特定的驱动程序，比如OJDBC是Oracle开发的Oracle数据库的驱动，而MySQL Connector/J是MySQL数据库的驱动。</p>
-<p>10、JDBC是如何实现Java程序和JDBC驱动的松耦合的？<br>答：JDBC API使用Java的反射机制来实现Java程序和JDBC驱动的松耦合。随便看一个简单的JDBC示例，你会发现所有操作都是通过JDBC接口完成的，而驱动只有在通过Class.forName反射机制来加载的时候才会出现，它使得应用程序和驱动程序之间进行了隔离，让迁移数据库的工作变得更简单。在这里可以看到更多JDBC的使用示例。</p>
-<p>11、JDBC的DriverManager是用来做什么的？<br>答：JDBC的DriverManager是一个工厂类，我们通过它来创建数据库连接。当JDBC的Driver类被加载进来时，它会自己注册到DriverManager类里面，然后我们会把数据库配置信息传成DriverManager.getConnection()方法，DriverManager会使用注册到它里面的驱动来获取数据库连接，并返回给调用的程序。</p>
-<p>=======================================================<br>论述题：</p>
-<p>对Java中JDBC的分析和理解？<br>   （1、可以从JDBC的含义；JDBC连接数据库相关的常用Java类；当前主要使用哪种类型的JDBC驱动；JDBC是如何实现Java程序和JDBC驱动的松耦合的；JDBC的DriverManager是用来做什么的；JDBC的DriverManager的理解等等角度进行分析（但不限于这些角度）<br>     2、能正确答出3个及以上点，且字数超过200字，则得满分<br>    ）。<br>答：<br>  1、JDBC的含义<br>  JDBC的全称是Java DataBase Connection，也就是Java数据库连接，我们可以用它来操作关系型数据库。JDBC接口及相关类在java.sql包和javax.sql包里。我们可以用它来连接数据库，执行SQL查询，存储过程，并处理返回的结果。JDBC接口让Java程序和JDBC驱动实现了松耦合，使得切换不同的数据库变得更加简单。</p>
-<p>  2、JDBC连接数据库相关的常用Java类包括（列举4个及以上，并可以简单说说列举的类的作用或含义）：<br>  DriverManager、Connection、Statement、ResultSet、PreparedStatement、SQLException、Types、ClassNotFoundException等  </p>
-<p>  3、主要使用的JDBC驱动类型<br>  Direct-to-Database Pure Java Driver：这个驱动把JDBC转化成数据库使用的网络协议。这种方案最简单，也适合通过网络连接数据库。需要根据不同数据库选用特定的驱动程序，比如OJDBC是Oracle开发的Oracle数据库的驱动，而MySQLConnector/J是MySQL数据库的驱动。</p>
-<p>  4、JDBC如何实现Java程序和JDBC驱动的松耦合的<br>JDBC API使用Java的反射机制来实现Java程序和JDBC驱动的松耦合。随便看一个简单的JDBC示例，你会发现所有操作都是通过JDBC接口完成的，而驱动只有在通过Class.forName反射机制来加载的时候才会出现，它使得应用程序和驱动程序之间进行了隔离，让迁移数据库的工作变得更简单。</p>
-<p>  5、JDBC的DriverManager<br>JDBC的DriverManager是一个工厂类，我们通过它来创建数据库连接。当JDBC的Driver类被加载进来时，它会自己注册到DriverManager类里面，然后我们会把数据库配置信息传成DriverManager. getConnection()方法，DriverManager会使用注册到它里面的驱动来获取数据库连接，并返回给调用的程序。</p>
-<p>=======================================================</p>
-<p>12、在Java程序中，如何获取数据库服务器的相关信息？<br>答：使用DatabaseMetaData可以获取到服务器的信息。当和数据库的连接成功建立了之后，可以通过调用getMetaData()方法来获取数据库的元信息。DatabaseMetaData里面有很多方法，通过它们可以获取到数据库的产品名称，版本号，配置信息等。相关代码为：<br>DatabaseMetaData metaData = con.getMetaData();<br>String dbProduct = metaData.getDatabaseProductName();</p>
-<p>13、JDBC的Statement是什么？<br>答：Statement是JDBC中用来执行数据库SQL查询语句的接口。通过调用连接对象的getStatement()方法我们可以生成一个Statement对象。我们可以通过调用它的execute()，executeQuery()，executeUpdate()方法来执行静态SQL查询。由于SQL语句是程序中传入的，如果没有对用户输入进行校验的话可能会引起SQL注入的问题。<br>另外，默认情况下，一个Statement同时只能打开一个ResultSet。如果想操作多个ResultSet对象的话，需要创建多个Statement。Statement接口的所有execute方法开始执行时都默认会关闭当前打开的ResultSet。</p>
-<p>14、execute，executeQuery，executeUpdate的区别是什么？<br>答：1）execute方法用来执行任意的SQL查询，如果查询的结果是一个ResultSet，这个方法就返回true。如果结果不是ResultSet，比如insert或者update查询，它就会返回false。我们可以通过它的getResultSet方法来获取ResultSet，或者通过getUpdateCount()方法来获取更新的记录条数。<br>2）executeQuery方法用来执行查询(select)，并且返回ResultSet。即使查询不到记录返回的ResultSet也不会为null。我们通常使用executeQuery来执行查询语句，这样的话如果传进来的是insert或者update语句的话，它会抛出错误信息为 “executeQuery method can not be used for update”的java.util.SQLException。<br>3）executeUpdate方法用来执行添删改操作，即insert或者update/delete（DML）语句，或者 什么也不返回DDL语句。返回值是int类型，如果是DML语句的话，它就是更新的条数，如果是DDL的话，就返回0。<br>4）只有当你不确定是什么语句的时候才应该使用execute()方法，否则应该使用executeQuery或者executeUpdate方法。</p>
-<p>15、JDBC的PreparedStatement是什么？<br>答：PreparedStatement对象代表的是一个预编译的SQL语句。用它提供的setter方法可以传入查询的变量。<br>由于PreparedStatement是预编译的，通过它可以将对应的SQL语句高效的执行多次。由于PreparedStatement自动对特殊字符转义，避免了SQL注入攻击，因此应当尽量的使用它。</p>
-<p>16、PreparedStatement中如何注入NULL值？<br>答：可以使用它的setNull方法来把null值绑定到指定的变量上。setNull方法需要传入参数的索引以及SQL字段的类型，像这样：<br>ps.setNull(10, java.sql.Types.INTEGER);.</p>
-<p>17、Statement中的getGeneratedKeys方法有什么用？<br>答：有的时候表会生成主键，这时候就可以用Statement的getGeneratedKeys()方法来获取这个自动生成的主键的值了。</p>
-<p>18、相对于Statement，PreparedStatement的优点是什么？<br>答：它和Statement相比优点在于：<br>1）PreparedStatement有助于防止SQL注入，因为它会自动对特殊字符转义。<br>2）PreparedStatement可以用来进行动态查询。<br>3）PreparedStatement执行更快。尤其当你重用它或者使用它的拼量查询接口执行多条语句时。<br>4）使用PreparedStatement的setter方法更容易写出面向对象的代码，而Statement的话，我们得拼接字符串来生成查询语句。如果参数太多了，字符串拼接看起来会非常难看并且容易出错。</p>
-<p>19、JDBC中大数据量的分页解决方法?<br>答：最好的办法是利用sql语句进行分页，这样每次查询出的结果集中就只包含某页的数据内容。<br>mysql语法：<br>    SELECT *<br>    FROM 表名<br>    LIMIT [START], length;<br>oracle语法：<br>    SELECT *FROM (<br>        SELECT 列名,列名,ROWNUM rn<br>        FROM 表名<br>        WHERE ROWNUM&lt;=(currentPage*lineSize)) temp<br>    WHERE temp.rn&gt;(currentPage-1)*lineSize;</p>
-<p>简答和分析题集</p>
-<p>20 java中有几种类型的流?JDK为每种类型的流提供了一些抽象类以提供继承，请说出他们分别是哪些类？<br>答：<br>（1）字节流，字符流。<br>（2）字节流继承于InputStream，OutputStream。<br>（3）字符流继承于Reader Writer。</p>
-<p>21 使用处理流的优势有哪些？如何识别所使用的流是处理流还是节点流？<br>答：<br>优势：对开发人员来说，使用处理流进行输入/输出操作更简单。使用处理流的执行效率更高。<br>识别：处理流的构造器的参数不是一个物理节点，而是已经存在的流。而节点流都是直接以物理 IO 及节点作为构造器参数的。</p>
-<p>22 什么是标准的IO流？<br>答：在java语言中用stdin表示键盘，用stdout表示监视器。它们被封装在System类的类变量 in 和 out 中，对应系统调用System,in 和 System,out。这样的两个流加上System.err统称为标准流。<br>System类中声明的3个类变量：<br>（1）public static InputStream in;<br>（2）public static PrinStream out;<br>（3）public static PriStram err;</p>
-<p>23  什么能被序列化？什么不能被序列化？<br>答：<br>能被序列化：<br>（1）属性<br>（2）类型；<br>不能被序列化：<br>（1）static的属性；<br>（2）方法，<br>（3）加了transient修饰符的属性。</p>
-<p>24 什么是java序列化，如何实现java序列化？<br>答：<br>（1）序列化而就是一种处理对象流的机制，所谓对象流也就是对象的内容进行流化。<br>（2）实现：将需要被序列化的类实现Serializable接口，该接口没有需要实现的方法，implements Serializable只是为了标注该对象是可被序列化的，然后使用一个输出流（如：FileOutputStream）来构造一个ObjectOutputSream对象，接着使用ObjectOutputSream对象的writeObject方法就可以将参数obj对象写出，要恢复的话则使用输入流。</p>
-<p>1.抽象：<br>　答：<br>  抽象就是忽略一个主题中与当前目标无关的那些方面，以便更充分地注意与当前目标有关的方面。抽象并不打算了解全部问题，而只是选择其中的一部分，暂时不用部分细节。抽象包括两个方面，一是过程抽象，二是数据抽象。</p>
-<p>2.继承：<br>　答：<br>  继承是一种联结类的层次模型，并且允许和鼓励类的重用，它提供了一种明确表述共性的方法。对象的一个新类可以从现有的类中派生，这个过程称为类继承。新类继承了原始类的特性，新类称为原始类的派生类（子类），而原始类称为新类的基类（父类）。派生类可以从它的基类那里继承方法和实例变量，并且类可以修改或增加新的方法使之更适合特殊的需要。</p>
-<p>3.封装：<br>　答：<br>   封装是把过程和数据包围起来，对数据的访问只能通过已定义的界面。面向对象计算始于这个基本概念，即现实世界可以被描绘成一系列完全自治、封装的对象，这些对象通过一个受保护的接口访问其他对象。</p>
-<ol start="4">
-<li>多态性：<br> 答：<br> 　多态性是指允许不同类的对象对同一消息作出响应。多态性包括参数化多态性和包含多态性。多态性语言具有灵活、抽象、行为共享、代码共享的优势，很好的解决了应用程序函数同名问题。</li>
-</ol>
-<p>5、String是最基本的数据类型吗?<br>　答：<br>  基本数据类型有8个，包括byte、short、int、long、char、float、double和boolean。<br>　java.lang.String是类，不属于基本数据类型。</p>
-<p>6、int 和 Integer 有什么区别<br>　Java 提供两种不同的类型：引用类型和原始类型（或内置类型）。Int是java的原始数据类型，Integer是java为int提供的封装类。</p>
-<p>小张到X软件公司实习，第一天程序员老李为摸底，问了他一个问题：Java中的有8个基本数据类型，这破坏了面向对象的思想，为此Java提供了封装类，那么这些封装类具体有哪些？请代小张回答（至少回答出其中六个即可得满分）</p>
-<p>Java为每个原始类型提供了封装类。<br>原始类型       封装类<br>boolean      Boolean<br>char          Character<br>byte          Byte<br>short          Short<br>int          Integer<br>long          Long<br>float          Float<br>double      Double<br>　引用类型和原始类型的行为完全不同，并且它们具有不同的语义。引用类型和原始类型具有不同的特征和用法，它们包括：大小和速度问题，这种类型以哪种类型的数据结构存储，当引用类型和原始类型用作某个类的实例数据时所指定的缺省值。对象引用实例变量的缺省值为 null，而原始类型实例变量的缺省值与它们的类型有关。</p>
-<p>7、实习程序员小张，接到X项目组经理命令完成某模块代码开发。在设计中，该模块算法中特别提到将有大量字符串的拼接。编码过程中，小张准备使用自己熟悉的String对象类完成这段代码，并向程序员老王征求意见，谁知老王否定了小张用String类型的方案，并建议他此处使用StringBuffer对象更合适，这令小张有些困惑。请帮小张分析下为何此处要用StringBuffer？<br>  即回答：String 和StringBuffer的区别<br>　答：<br>  JAVA平台提供了两个类：String和StringBuffer。<br>  String不是简单类型，而是一个类，它被用来表示字符序列。String的特点是一旦赋值，便不能更改其指向的字符对象，如果更改，则会生成一个新的字符串对象。<br>  StringBuffer是一个具有对象引用传递特点的字符串对象。StringBuffer对象可以调用其方法动态的进行增加、插入、修改和删除操作，从而实现多次插入字符，而不用担心像String类那样不断产生新对象而消耗内存，因而在字符串变化较多的操作中，效率更高。</p>
-<p>9、&amp;和&amp;&amp;的区别。<br>   答： &amp;是位运算符，表示按位与运算，&amp;&amp;是逻辑运算符，表示逻辑与（and）。</p>
-<p>10、final, finally的区别。<br>　　答：final—修饰符（关键字）如果一个类被声明为final，意味着它不能再派生出新的子类，不能作为父类被继承。因此一个类不能既被声明为 abstract的，又被声明为final的。将变量或方法声明为final，可以保证它们在使用中不被改变。被声明为final的变量必须在声明时给定初值，而在以后的引用中只能读取，不可修改（相当于常量）。被声明为final的方法也同样只能使用，不能覆盖。<br>    finally是异常处理语句结构的一部分，表示总是执行。一般在异常处理时提供 finally 块来执行任何清除操作。</p>
-<p>11、Overload和Override的区别。Overloaded的方法是否可以改变返回值的类型?<br>　  答：方法的重写Overriding和重载Overloading是Java多态性的不同表现。重写Overriding是父类与子类之间多态性的一种表现，重载Overloading是一个类中多态性的一种表现。如果在子类中定义某方法与其父类有相同的名称和参数，我们说该方法被重写 (Overriding)。子类的对象使用这个方法时，将调用子类中的定义，对它而言，父类中的定义如同被”屏蔽”了。如果在一个类中定义了多个同名的方法，它们或有不同的参数个数或有不同的参数类型，则称为方法的重载(Overloading)。Overloaded的方法是可以改变返回值的类型。</p>
-<p>12、error和exception有什么区别?<br>　 答：error 表示恢复不是不可能但很困难的情况下的一种严重问题，是一种系统性的错误，程序本身不能处理这样的情况，比如说内存溢出。<br>      exception 表示一种设计或实现问题。也就是说，它表示如果程序运行正常，是不会发生这种错误的。</p>
-<p>13、abstract class和interface有什么区别?<br>　  答：声明方法的存在而不去实现它的类被叫做抽象类（abstract class），它用于要创建一个体现某些基本行为的类，并为该类声明方法，但不能在该类中实现该类的情况。不能创建abstract 类的实例。然而可以创建一个变量，其类型是一个抽象类，并让它指向具体子类的一个实例。不能有抽象构造函数或抽象静态方法。     Abstract 类的子类为它们父类中的所有抽象方法提供实现，否则它们也是抽象类为。取而代之，在子类中实现该方法。知道其行为的其它类可以在类中实现这些方法。<br>　   接口（interface）是抽象类的变体。在接口中，所有方法都是抽象的。多继承性可通过实现这样的接口而获得。接口中的所有方法都是抽象的，没有一个有程序体。接口只可以定义static final成员变量。接口的实现与子类相似，除了该实现类不能从接口定义中继承行为。当类实现特殊接口时，它定义（即将程序体给予）所有这种接口的方法。然后，它可以在实现了该接口的类的任何对象上调用接口的方法。由于有抽象类，它允许使用接口名作为引用变量的类型。通常的动态联编将生效。引用可以转换到接口类型或从接口类型转换，instanceof 运算符可以用来决定某对象的类是否实现了接口。</p>
-<p>14、GC是什么? 为什么要有GC?<br>　　答：1）GC是垃圾收集的意思（Gabage Collection）,内存处理是编程人员容易出现问题的地方，忘记或错误的内存回收会导致程序或系统的不稳定，甚至崩溃；2）Java提供的垃圾回收机制（GC）可以自动监测对象是否超过作用域从而达到自动回收内存的目的；3）Java不提供显示释放已分配内存的操作方法。</p>
-<p>15、分析题<br>    1）short s1 = 1; s1 = s1 + 1;有什么错?<br>    答：short s1 = 1; s1 = s1 + 1; （s1+1运算结果是int型，int数据1给short型变量s1，需要强制转换类型）<br>    2）short s1 = 1; s1 += 1;有什么错?<br>    答：本题无措short s1 = 1; s1 += 1;（可以正确编译）</p>
-<p>16、分析题：Math.round(11.5)等於多少? Math.round(-11.5)等於多少?<br>    答：Math.round(11.5)==12<br>        Math.round(-11.5)==-11<br>        round方法返回与参数最接近的长整数，参数加1/2后求其floor.</p>
-<p>17、String s = new String(“xyz”);创建了几个String Object?<br>    答：两个对象，一个是在字符串池中的对象“xyx”,引用对象s指向的堆空间的对象“xyx”。其中，堆空间的对象“xyz”是字符串池中字符串“xyz”的副本。    </p>
-<p>18、接口是否可继承接口? 抽象类是否可实现(implements)接口? 抽象类是否可继承实体类(concrete class)?<br>　  答：接口可以继承接口。抽象类可以实现(implements)接口，抽象类是否可继承实体类，但前提是实体类必须有明确的构造函数。</p>
-<p>19、数组有没有length()这个方法? String有没有length()这个方法？<br>　  答：数组没有length()这个方法，只有length的属性，用来得到数组元素个数。<br>        String有length()这个方法，用来得到字符串长度。</p>
-<p>20、构造器Constructor是否可被override?<br>　  答：构造器Constructor不能被继承，因此不能重写Overriding，但可以被重载Overloading。</p>
-<p>21、是否可以继承String类?<br>　  答：String类是final类，故不可以继承。</p>
-<p>22、swtich是否能作用在byte上，是否能作用在long上，是否能作用在String上?<br>　  答：switch（expr1）中，expr1是一个整数表达式。因此传递给 switch 和 case 语句的参数应该是 int、 short、 char 或者 byte。<br>       long,string 都不能作用于swtich。</p>
-<p>23、try {}里有一个return语句，那么紧跟在这个try后的finally {}里的code会不会被执行，什么时候被执行，在return前还是后?<br>　  答：会执行，在return前执行。</p>
-<p>24、编程题: 用最有效率的方法算出2乘以8等於几?<br>    答：用位运算符“&lt;&lt;”，语句写为：2 &lt;&lt; 3;</p>
-<p>25、当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递?<br>　  答：<br>    是值传递。Java 编程语言只有值传递参数。当一个对象实例作为一个参数被传递到方法中时，参数的值就是对该对象的引用。对象的内容可以在被调用的方法中改变，但对象的引用是永远不会改变的。</p>
-<p>26、Java中的异常处理机制的简单原理和应用。<br>　   答：<br>     当JAVA 程序违反了JAVA的语义规则时，JAVA虚拟机就会将发生的错误表示为一个异常。违反语义规则包括2种情况。一种是JAVA类库内置的语义检查。例如数组下标越界,会引发IndexOutOfBoundsException;访问null的对象时会引发NullPointerException。另一种情况就是JAVA允许程序员扩展这种语义检查，程序员可以创建自己的异常，并自由选择在何时用throw关键字引发异常。所有的异常都是 java.lang.Thowable的子类。</p>
-<p>27、描述一下JVM加载class文件的原理机制?<br>　  答：JVM中类的装载是由ClassLoader和它的子类来实现的,Java ClassLoader 是一个重要的Java运行时系统组件。它负责在运行时查找和装入类文件的类。</p>
-<p>28、char型变量中能不能存贮一个中文汉字?为什么?<br>　  答：能够定义成为一个中文的，因为java中以unicode编码，一个char占16个字节，所以放一个中文是没问题的</p>
-<p>29、多线程有几种实现方法,都是什么?同步有几种实现方法,都是什么?<br>    答：多线程有两种实现方法，分别是继承Thread类与实现Runnable接口<br>    同步的实现方面有两种，分别是synchronized,wait与notify</p>
-<p>30、线程的基本概念、线程的基本状态以及状态之间的关系<br>　 答：<br>   线程指在程序执行过程中，能够执行程序代码的一个执行单位，每个程序至少都有一个线程，也就是程序本身。<br>   Java中的线程有四种状态分别是：运行、就绪、挂起、结束。 </p>
-<p>=============================================<br>论述题<br>31、谈谈对Java语言中异常处理的理解？（<br>    1）可以从异常处理包含哪些关键字；每个关键字的含义或作用；引用异常处理后对开发有哪些帮助；异常处理机制的类体系结构；异常处理实现的底层机制等角度进行分析（但不限于这些角度）；<br>    2）能正确答出3个及以上点，且字数超过200字，则得满分。答案仅供参考，不唯一<br>   ）<br>    答：<br>    1、基本概念<br>    Java的异常处理是通过5个关键词来实现的：try、catch、throw、throws和finally。一般情况下是用try来执行一段程序，如果出现异常，系统会抛出（throws）一个异常，这时候你可以通过它的类型来捕捉（catch）它，或最后（finally）由缺省处理器来处理。</p>
-<pre><code>2、5个主要关键字的作用
-用try来指定一块预防所有&quot;异常&quot;的程序。紧跟在try程序后面，应包含一个catch子句来指定你想要捕捉的&quot;异常&quot;的类型。
-finally为确保一段代码不管发生什么&quot;异常&quot;都被执行一段代码。
-throw语句用来明确地抛出一个&quot;异常&quot;。
-throws用来标明一个成员函数可能抛出的各种&quot;异常&quot;。
-
-3、实现的机制
-Java 通过面向对象的方法进行异常处理，把各种不同的异常进行分类，并提供了良好的接口。在Java中，每个异常都是一个对象，它是Throwable类或其它子类的实例。当一个方法出现异常后便抛出一个异常对象，该对象中包含有异常信息，调用这个对象的方法可以捕获到这个异常并进行处理。
-4、采用异常处理机制的好处
-可以提高Java语言的处理错误能力；可以帮助程序员调试程序，发现开发中的问题，提高开发效率；可以让Java程序有健壮性，程序不容易崩溃；</code></pre>
-<p>===========================================================</p>
-<p>32、一个”.java”源文件中是否可以包括多个类（不是内部类）？有什么限制？<br>   答：1）可以。<br>       2）只有一个类的类名能与Java程序的该源文件名相同。</p>
-<p>33、java中实现多态的机制是什么（Java借助什么实现多态性）？<br>　 答：方法的重写Overriding和重载Overloading是Java多态性的不同表现。<br>      重写Overriding是父类与子类之间多态性的一种表现，重载Overloading是一个类中多态性的一种表现。</p>
-<p>34、在JAVA中，如何跳出当前的多重嵌套循环？<br>    答：用break; return 方法。</p>
-<p>35、Java是从（  B  ）语言改进重新设计而发展来的？<br>A. Ada    B. C++    C.Pascal  D.BASIC<br>分析：Java是从C、C++发展过来的</p>
-<p>36、研究下面Java代码<br>public class TestException{<br>    public static void main(String args[]){<br>        try{<br>            System.out.println(“hello,jr”);<br>            System.exit(0);<br>        }finally{<br>            System.out.println(“88”);<br>        }<br>    }<br>}<br>输出结果为：（  A  ）<br>A. hello,jr<br>B. 88<br>C. hello,jr后是88<br>D. 不能编译<br>分析：System.exit(0);会中断程序，即使是finally都无法被执行</p>
-<p>37、下面说法正确的有（  C   ）<br>A. class中的contructor不可省略<br>B. contructor必须与class同名，但方法不能与class同名<br>C. contructor在一个对象被new时执行<br>D. 一个class只能定义一个contructor</p>
-<p>分析：contructor就是指的构造方法，普通方法也可以和类同名</p>
-<p>38、在java中，已定义两个接口B和C，要定义一个实现这两个接口的类，以下语句正确的是（  C  ）<br>A. interface A extends B,C<br>B. interface A implements B,C<br>C. class A implements B,C<br>D. class A implements B,implements C</p>
-<p>分析：类实现接口的基本语法</p>
-<p>39、当编译并允许下面程序时，会发生什么结果？（   D   ）<br>public class Demo{<br>    protected Demo(){<br>        for(int i=0;i&lt;10;i++){<br>            System.out.println(i);<br>        }<br>    }</p>
-<pre><code>public static void main(String args[])&#123;
-    Demo d=new Demo();
-&#125;</code></pre>
-<p>}<br>A. 编译错误，构造方法不能被声明为protected<br>B. 允许错误，构造方法不能被声明为protected<br>C. 编译并运行输出0到10<br>D. 编译并运行输出0到9</p>
-<p>分析：本题程序无错误可正常运行，构造方法是可以定义为protected的。</p>
-<p>40、当编译和运行下面程序时，哪项描述可以最准确的表达发生了什么事情（   B    ）<br>public class MyAr{</p>
-<pre><code>public void amethod()&#123;
-    int i;
-    System.out.println(i);    
-&#125;
-
-public static void main(String args[])&#123;
-    MyAr m=new MyAr();
-    m.amethod();
-&#125;</code></pre>
-<p>}<br>A. 编译并输出0<br>B. 编译错误<br>C. 编译并输出null<br>D. 运行错误</p>
-<p>分析： 方法amethod()中定义的变量：int i; 是一个方法级别的变量，必须手动赋予初值，否则编译错误。<br>       注意：成员变量系统给默认值，如果不显示手动赋值，依然是正确的。</p>
-<p>41、给定java代码如下，关于super的用法，以下描述正确的是（    C   ）<br>class C extends B{<br>    public C(){<br>        super();<br>    }<br>}<br>A. 用来调用类B中定义的super()方法<br>B. 用来调用类C中定义的super()方法<br>C. 用来调用类B中的无参构造方法<br>D. 用来调用类B中第一个出现的构造方法</p>
-<p>分析：super()的含义是用来调用父类（B）中不带参数的构造方法。super()的用法，一般出现在子类构造方法中第一行。</p>
-<p>42、下列语句正确的是（   A  ）<br>A) 形式参数可被视为local variable<br>B) 形式参数可被字段修饰符修饰<br>C) 形式参数为方法被调用时，真正被传递的参数<br>D) 形式参数不可以是对象</p>
-<p>分析：B项无此说法，C中被真正传递的是实参，D中形参可以使对象</p>
-<p>43、以下代码输出结果为（  C    ）<br>public class Test{<br>    public static String output=””;</p>
-<pre><code>public static void foo(int i)&#123;
-    try&#123;
-        if(i==1)
-            throw new Exception();
-
-        output+=&quot;1&quot;;            
-    &#125;catch(Exception e)&#123;
-        output+=&quot;2&quot;;
-        return ;
-    &#125;finally&#123;
-        output+=&quot;3&quot;;
-        output+=&quot;4&quot;;
-    &#125;
-&#125;
-
-public static void main(String args[])&#123;
-    foo(0);
-    foo(1);
-    System.out.println(output);
-&#125;</code></pre>
-<p>}<br>A. 1342        B. 123        C. 134234    D. 13423</p>
-<p>分析：本题中，foo(0)时，if语句if(i==1)throw new Exception();不满足条件，不会抛出异常，因此此时output值为“134”；<br>      紧接着执行foo(1)时，if语句if(i==1)throw new Exception();满足条件，抛出异常，执行catch语句，output值变成“1342”；<br>      最难点在于此时碰到了return，是否还会执行finally语句，答案是会执行，因此最后output值变成“134234”；答案为C。</p>
-<p>44、在Java中，下列（  D    ）类不能派生出子类？<br>A) public class MyClass{ … }<br>B) class MyClass{ … }<br>C) abstract class MyClass{ … }<br>D) final class MyClass{    … }</p>
-<p>分析：类前面可以有public和默认两种权限，一般都能被子类继承，因此A、B答案可以派生子类<br>      C答案是抽象类，也可以被继承<br>      D答案是final修饰的类，是最终类，不允许被继承。</p>
-<p>45、编译和运行下面代码时显示结果是（     ）<br>public class Conv{<br>    public static void main(String argv[]){<br>            Conv c=new Conv();<br>            String s=new String(“ello”);<br>            c.amethod(s);<br>    }<br>    public void amethod(String s){<br>            char c=’H’;<br>            c+=s;<br>            System.out.println(c);<br>    }<br>}<br>A、Hello<br>B、ello<br>C、elloH<br>D、编译错误<br>解答：D<br>分析：c是字符类型，s是字符串类型，字符型无法自动转换成字符串类型，因此语句c+=s;类型不兼容，有语法错误，故答案是D<br>修改方案：将char c=’H’;语句变为String c=”H”;</p>
-<p>46、当下列程序执行时，其输出结果是（     ）。<br>int i=9;<br>switch (i) {<br> default:<br> System.out.println(“default”);<br> case 0:<br> System.out.println(“zero”);<br> break;<br> case 1:<br> System.out.println(“one”);<br> case 2:<br> System.out.println(“two”);<br>}<br>A、default<br>B、default, zero<br>C、错误： default 子句没有定义<br>D、没有输出结果<br>解答：Ｂ<br>原因：程序开始遇到default关键字，会执行其语句块中语句，输出“default”；<br>由于default语句块中没有结束switch语句的关键字break;<br>所以程序会继续执行其他case块中语句，并且无需验证case的值匹配；运行到case 0语句块时，首先输出“zero”，最后碰到break语句，结束整个switch语句块。<br>故最后输出结果：<br>default<br>zero</p>
-<p>47、阅读下列代码，其正确的结果是（     ）。<br>publicclass Test2 {<br>    static boolean foo(char c) {<br>       System.out.print(c);<br>       return true;<br>    }<br>    Public static void main(String[] argv) {<br>       int i = 0;<br>       //for(65;88&amp;&amp;(i&lt;2);67)<br>       for (foo(‘A’); foo(‘B’) &amp;&amp; (i &lt; 2); foo(‘C’)) {<br>           i++;<br>           foo(‘D’);<br>       }<br>    }<br>}<br>A. ABDCBDCB<br>B. ABCDABCD<br>C. Compilation fails.<br>D. An exception is thrown at runtimeB、1<br>解答：A</p>
-<p>48、有以下程序段：<br>class MyThread extends Thread {<br>    public static void main(String args[]) {<br>        MyThread t = new MyThread();<br>        MyThread s = new MyThread();<br>        t.start();<br>        System.out.print(“one.”);<br>        s.start();<br>        System.out.print(“two.”);<br>    }<br>    public void run() {<br>        System.out.print(“Thread”);<br>    }<br>}<br>则下列选项说法正确的是（     ）。<br>A、编译失败<br>B、程序运行结果为：one.Threadtwo.Thread<br>C、程序运行结果是：one.two.ThreaThread<br>D、程序运行结果不确定<br>解答：D<br>分析：线程是并行运行，故结果输出顺序是不确定。<br>部分同学计算机运行几次时，可能会发现结果确定，<br>是因计算机速度太快导致，可以多次运行十几次或几十次，可以发现结果有变化</p>
-<p>49、仔细分析下面程序，其正确的输出结果是（     ）。<br>publicclass Test1 {<br>    public static void changeStr(String str){   //②str<br>        str=”welcome”;<br>    }<br>    public staticvoid main(String[] args) {<br>        String str=”1234”;               //①str<br>        changeStr(str);<br>        System.out.println(str);<br>    }<br>}<br>A、welcome<br>B、welcome1234<br>C、1234<br>D、1234welcome<br>解答：C</p>
-<p>分析：<br>1）主方法中的①号变量str是实际参数，changeStr(String str)中的②号str是形式参数，虽然是两个同名字变量，但实际是两个变量。</p>
-<p>2）Java字符串基于字符串池实现，虽然①号str传值给了②号str，并且传的是引用，<br>   但②号str中执行语句str=”welcome”;后，并没有修改”1234”这个值本身，而是在字符串池中，新增加了一个字符串常量”welcome”，<br>   ②号str的引用指向了新的”welcome”值，但①号str指向的值”1234”没有被修改，因此主方法中打印输出的①号str的值还是1234</p>
-<p>3）这里要注意，正常情况下，给方法的参数传值，当值是对象类型时，是引用传递。（若是基本数据类型，则是值传递）<br>   引用传递的确是可以利用方法来修改引用指向对的成员变量值的，字符串类（String）因其实现的机制是基于字符串池，故情况特殊<br>   参见下面代码对比：</p>
-<p>class Stu{<br>    int stuAge;<br>}<br>public class Test1 {<br>    public static void changeStu(Stu stu){<br>        stu.stuAge=100;<br>    }<br>    public static void changeStr(String str){<br>        str=”welcome”;<br>    }<br>    public static void main(String[] args) {<br>        String str=”1234”;<br>        changeStr(str);               //Java字符串基于字符串池实现，因此不是简单的传递引用<br>        System.out.println(str);<br>//        Stu s=new Stu();<br>//        s.stuAge=20;<br>//        changeStu(s);                //对象类型传的是引用<br>//        System.out.println(s.stuAge);//输出100<br>    }<br>}  </p>
-<p>50、下面2个文件位于相同目录下，编译运行后会出现的情况是（      ）。<br>//File P1.java<br>package MyPackage;<br>class P1{<br>void afancymethod(){<br>        System.out.println(“What a fancy method”);<br>        }<br>}<br>//File P2.java<br>public class P2 extends P1{<br>    public static void main(String argv[]){<br>    P2 p2 = new P2();<br>    p2.afancymethod();<br>    }<br>}<br>A、2个文件都可以编译，P2运行输出“What a fancy method”<br>B、2个文件都不能编译<br>C、2个文件都可以编译，P2运行时报错误<br>D、P1编译成功，P2编译时报错误<br>解答：D</p>
-<p>51、编译和运行下面代码时显示的结果是（     ）。<br>public class MyClass{<br> static int i;<br> public static void main(String argv[]){<br>     System.out.println(i);<br> }<br>}<br>A、Error Variable i may not have been initializenull<br>C、1<br>D、0<br>解答：D<br>分析：本题能正常运行，static int i;中定义的i是静态成员变量，Java中成员变量默认给了初值，整型的初值是0，故此题正确</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="pty">
-      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Myblog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">fastapi多文件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-07-22 12:04:43 / 修改时间：12:04:22" itemprop="dateCreated datePublished" datetime="2021-07-22T12:04:43+08:00">2021-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2>
+          <hr>
+<h2 id="title：使用优先队列实现对hashmap的排序"><a href="#title：使用优先队列实现对hashmap的排序" class="headerlink" title="title：使用优先队列实现对hashmap的排序"></a>title：使用优先队列实现对hashmap的排序</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/#more" rel="contents">
+              <a class="btn" href="/2022/05/29/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%AF%B9hashmap%E7%9A%84%E6%8E%92%E5%BA%8F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1967,7 +358,7 @@ public static void main(String args[])&#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/29/EasyExcel%E5%A4%84%E7%90%86Excel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.jpg">
@@ -1981,7 +372,7 @@ public static void main(String args[])&#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/" class="post-title-link" itemprop="url">python连接mysql</a>
+            <a href="/2022/05/29/EasyExcel%E5%A4%84%E7%90%86Excel/" class="post-title-link" itemprop="url">EasyExcel处理Excel</a>
         </h2>
 
         <div class="post-meta">
@@ -1992,7 +383,7 @@ public static void main(String args[])&#123;
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-22 12:04:40 / 修改时间：14:36:30" itemprop="dateCreated datePublished" datetime="2021-07-22T12:04:40+08:00">2021-07-22</time>
+              <time title="创建时间：2022-05-29 22:05:41 / 修改时间：22:05:39" itemprop="dateCreated datePublished" datetime="2022-05-29T22:05:41+08:00">2022-05-29</time>
             </span>
 
           
@@ -2006,20 +397,220 @@ public static void main(String args[])&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在看fastapi的官方文档，然后感觉sql部分挺难的，于是写下一篇博客来记录下。</p>
-<h2 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h2><p>首先要安装两个东西</p>
-<p><code>pip install sqlalchemy</code></p>
-<p><code>pip install pymysql</code></p>
-<p>前者是一个ORM框架，在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会转成表中的字段。</p>
-<p>后者是用来连接数据库的</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <a id="more"></a>
+
+<h1 id="实现写操作"><a href="#实现写操作" class="headerlink" title="实现写操作"></a>实现写操作</h1><h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>easyexcel<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.1.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>由于easyexcel是对poi的一个封装，因此低版本的还需要引入poi的依赖</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.poi<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>poi<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="创建实体类"><a href="#创建实体类" class="headerlink" title="创建实体类"></a>创建实体类</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>excel<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">ExcelProperty</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">Data</span><span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Data</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DemoData</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">//设置exccel表头名称，使用@ExcelProperty注解</span>
+
+    <span class="token annotation punctuation">@ExcelProperty</span><span class="token punctuation">(</span><span class="token string">"学生编号"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> sno<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@ExcelProperty</span><span class="token punctuation">(</span><span class="token string">"学生姓名"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> sname<span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="实现写操作-1"><a href="#实现写操作-1" class="headerlink" title="实现写操作"></a>实现写操作</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>excel<span class="token punctuation">.</span></span><span class="token class-name">EasyExcel</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ArrayList</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestEasyExcel</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//实现excel写操作</span>
+
+        <span class="token comment">//1.设置写入文件地址和名称</span>
+        <span class="token class-name">String</span> filename <span class="token operator">=</span> <span class="token string">"F:\\write.xlsx"</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//2.调用easyexcal</span>
+        <span class="token comment">//write方法中两个参数：第一个参数文件路径名称，第二个参数文件实体类class</span>
+        <span class="token comment">//sheet是excel表格底下的分类</span>
+        <span class="token comment">//dowrite需要传入一个列表</span>
+        <span class="token class-name">EasyExcel</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span><span class="token class-name">DemoData</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sheet</span><span class="token punctuation">(</span><span class="token string">"学生列表1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">doWrite</span><span class="token punctuation">(</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DemoData</span><span class="token punctuation">></span></span> <span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DemoData</span><span class="token punctuation">></span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token class-name">DemoData</span> data <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DemoData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            data<span class="token punctuation">.</span><span class="token function">setSno</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            data<span class="token punctuation">.</span><span class="token function">setSname</span><span class="token punctuation">(</span><span class="token string">"lucy"</span><span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span>  list<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>sheet就是这个</strong></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220422141638360.png" alt="image-20220422141638360"></p>
+<h1 id="实现读操作"><a href="#实现读操作" class="headerlink" title="实现读操作"></a>实现读操作</h1><h3 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>excel<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">ExcelProperty</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">Data</span><span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Data</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DemoData1</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">//表示sno对应的是excel表格中的第一列</span>
+    <span class="token annotation punctuation">@ExcelProperty</span><span class="token punctuation">(</span>index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> sno<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@ExcelProperty</span><span class="token punctuation">(</span>index <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> sname<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="监听器"><a href="#监听器" class="headerlink" title="监听器"></a>监听器</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>excel<span class="token punctuation">.</span>context<span class="token punctuation">.</span></span><span class="token class-name">AnalysisContext</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>excel<span class="token punctuation">.</span>event<span class="token punctuation">.</span></span><span class="token class-name">AnalysisEventListener</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Map</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * 监听器
+ */</span>
+<span class="token comment">//继承AnalysisEventListener类</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ExcelListener</span> <span class="token keyword">extends</span> <span class="token class-name">AnalysisEventListener</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DemoData1</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">//一行一行的读取excel的内容</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">DemoData1</span> demoData1<span class="token punctuation">,</span> <span class="token class-name">AnalysisContext</span> analysisContext<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"内容"</span><span class="token operator">+</span>demoData1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">//读取表头</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeHeadMap</span><span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> headMap<span class="token punctuation">,</span> <span class="token class-name">AnalysisContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"表头"</span><span class="token operator">+</span>headMap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">//读取完成之后执行的操作</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doAfterAllAnalysed</span><span class="token punctuation">(</span><span class="token class-name">AnalysisContext</span> analysisContext<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>alibaba<span class="token punctuation">.</span>excel<span class="token punctuation">.</span></span><span class="token class-name">EasyExcel</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestEasyExcel1</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token comment">//定义读取的文件的路径</span>
+        <span class="token class-name">String</span> filename <span class="token operator">=</span> <span class="token string">"F:\\write.xlsx"</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//第一个参数是文件路径名</span>
+        <span class="token comment">//第二个是实体类的类信息</span>
+        <span class="token comment">//第三个是监听器</span>
+        <span class="token class-name">EasyExcel</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span><span class="token class-name">DemoData1</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">ExcelListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sheet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">doRead</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/29/mapperLocations%E5%B1%9E%E6%80%A7%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="pty">
+      <meta itemprop="description" content="努力最坏的结果不过是大器晚成">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/29/mapperLocations%E5%B1%9E%E6%80%A7%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">mapperLocations属性通配符的使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-29 22:05:06 / 修改时间：22:05:03" itemprop="dateCreated datePublished" datetime="2022-05-29T22:05:06+08:00">2022-05-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+
+<p><strong>示例：</strong></p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>*<em>注意：在classpath后面的</em>必不可少，缺少型号的话后面的通配符不起作用。**</p>
+<p>** 可以表示任意多级目录，如上述文件可以查到 ：[com/pty/mall/tiny/mapper/PmsBrandMapper.xml]</p>
+<p>*表示多个任意字符</p>
+<p>缺少classpath后面的*会报一下错误</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>spring<span class="token punctuation">.</span><span class="token class-name">MyBatisSystemException</span><span class="token operator">:</span> nested exception is org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span><span class="token class-name">PersistenceException</span><span class="token operator">:</span> 
+### <span class="token class-name">Error</span> querying database<span class="token punctuation">.</span>  <span class="token class-name">Cause</span><span class="token operator">:</span> java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">IllegalArgumentException</span><span class="token operator">:</span> <span class="token class-name">Mapped</span> <span class="token class-name">Statements</span> collection does not contain value <span class="token keyword">for</span> framework<span class="token punctuation">.</span>system<span class="token punctuation">.</span>dao<span class="token punctuation">.</span><span class="token class-name">UserDao</span><span class="token punctuation">.</span>getNextUserId_MySQL
+### <span class="token class-name">Cause</span><span class="token operator">:</span> java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">IllegalArgumentException</span><span class="token operator">:</span> <span class="token class-name">Mapped</span> <span class="token class-name">Statements</span> collection does not contain value <span class="token keyword">for</span> framework<span class="token punctuation">.</span>system<span class="token punctuation">.</span>dao<span class="token punctuation">.</span><span class="token class-name">UserDao</span><span class="token punctuation">.</span>getNextUserId_MySQL
+	at org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>spring<span class="token punctuation">.</span><span class="token class-name">MyBatisExceptionTranslator</span><span class="token punctuation">.</span><span class="token function">translateExceptionIfPossible</span><span class="token punctuation">(</span><span class="token class-name">MyBatisExceptionTranslator</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">75</span><span class="token punctuation">)</span>
+	at org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>spring<span class="token punctuation">.</span><span class="token class-name">SqlSessionTemplate</span>$<span class="token class-name">SqlSessionInterceptor</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">SqlSessionTemplate</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">371</span><span class="token punctuation">)</span>
+	at com<span class="token punctuation">.</span>sun<span class="token punctuation">.</span>proxy<span class="token punctuation">.</span>$<span class="token class-name">Proxy18</span><span class="token punctuation">.</span><span class="token function">selectOne</span><span class="token punctuation">(</span><span class="token class-name">Unknown</span> <span class="token class-name">Source</span><span class="token punctuation">)</span>
+	at org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>spring<span class="token punctuation">.</span><span class="token class-name">SqlSessionTemplate</span><span class="token punctuation">.</span><span class="token function">selectOne</span><span class="token punctuation">(</span><span class="token class-name">SqlSessionTemplate</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">163</span><span class="token punctuation">)</span>
+	at com<span class="token punctuation">.</span>huaxin<span class="token punctuation">.</span>framework<span class="token punctuation">.</span>core<span class="token punctuation">.</span>dao<span class="token punctuation">.</span>impl<span class="token punctuation">.</span><span class="token class-name">BaseDaoImpl</span><span class="token punctuation">.</span><span class="token function">selectOne</span><span class="token punctuation">(</span><span class="token class-name">BaseDaoImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">298</span><span class="token punctuation">)</span>
+	at com<span class="token punctuation">.</span>huaxin<span class="token punctuation">.</span>framework<span class="token punctuation">.</span>system<span class="token punctuation">.</span>dao<span class="token punctuation">.</span>impl<span class="token punctuation">.</span><span class="token class-name">UserDaoImpl</span><span class="token punctuation">.</span><span class="token function">getNextUserId</span><span class="token punctuation">(</span><span class="token class-name">UserDaoImpl</span><span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">41</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
       
     </div>
 
@@ -2037,7 +628,7 @@ public static void main(String args[])&#123;
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2105,7 +696,7 @@ public static void main(String args[])&#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
