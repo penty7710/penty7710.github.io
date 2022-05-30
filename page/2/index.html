@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-30 09:08:38" itemprop="dateModified" datetime="2022-05-30T09:08:38+08:00">2022-05-30</time>
+                <time title="修改时间：2022-05-30 09:16:37" itemprop="dateModified" datetime="2022-05-30T09:16:37+08:00">2022-05-30</time>
               </span>
 
           
@@ -239,121 +239,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-<h2 id="基础数据类型"><a href="#基础数据类型" class="headerlink" title="基础数据类型"></a>基础数据类型</h2><!--more-->
-
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><h4 id="String命名方式"><a href="#String命名方式" class="headerlink" title="String命名方式"></a>String命名方式</h4><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305145240506.png" alt="image-20220305145240506"></p>
-<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305145458174.png" alt="image-20220305145458174"></p>
-<p><img src="/.com//blog\java复习\image-20220305150210040.png" alt="image-20220305150210040"></p>
-<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305153327413.png" alt="image-20220305153327413"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305154418649.png" alt="image-20220305154418649"></p>
-<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305155510456.png" alt="image-20220305155510456"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305160246063.png" alt=" "></p>
-<p><strong>==用于随机推送==</strong></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305160742714.png" alt="image-20220305160742714"></p>
-<h3 id="sorted-set-zset"><a href="#sorted-set-zset" class="headerlink" title="sorted_set(zset)"></a>sorted_set(zset)</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305162453500.png" alt="image-20220305162453500"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305162845435.png" alt="image-20220305162845435"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305163730760.png" alt="image-20220305163730760"></p>
-<p><strong>做排行榜</strong></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305170913560.png" alt="image-20220305170913560"></p>
-<h2 id="高级数据类型"><a href="#高级数据类型" class="headerlink" title="高级数据类型"></a>高级数据类型</h2><h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305215551318.png" alt="image-20220305215551318"></p>
-<h3 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h3><p><strong>应用场景：在统计访问量的时候，一个人多次访问一个网站，还是算作一个人。这个时候就需要统计基数。</strong></p>
-<p>==占用的内存是固定的，2^64个不同元素的基数，只需要12kb的内存。==</p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306102643155.png" alt="image-20220306102643155"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306102839532.png" alt="image-20220306102839532"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306103049254.png" alt="image-20220306103049254"></p>
-<h3 id="GEO"><a href="#GEO" class="headerlink" title="GEO"></a>GEO</h3><p><strong>只能计算水平，不能计算垂直距离，如果你在山下，他在山上，可能距离只有几百米。</strong></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306103528145.png" alt="image-20220306103528145"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306103748591.png" alt="image-20220306103748591"></p>
-<h2 id="服务器的配置"><a href="#服务器的配置" class="headerlink" title="服务器的配置"></a>服务器的配置</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305214048604.png" alt="image-20220305214048604"></p>
-<p><strong>日志级别开发期设置为verbose即可，生产环境中配置为notice，简化日志输出量，降低写日志IO的频率</strong></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305214235538.png" alt="image-20220305214235538"></p>
-<p>单位是秒</p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305214350250.png" alt="image-20220305214350250"></p>
-<h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305174451622.png" alt="image-20220305174451622"></p>
-<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><h4 id="save指令"><a href="#save指令" class="headerlink" title="save指令"></a>save指令</h4><p>使用<code>save</code>命令手动执行保存操作，会生成一个叫<code>dump.rdb</code>的文件来保存快照信息</p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305174849937.png" alt="image-20220305174849937"></p>
-<p><strong><code>save</code>指令的执行会阻塞当前redis服务器，知道当前rdb过程完成为止，有可能会造成上时间阻塞，线上环境不建议使用</strong></p>
-<h4 id="bgsave指令"><a href="#bgsave指令" class="headerlink" title="bgsave指令"></a>bgsave指令</h4><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305175814214.png" alt="image-20220305175814214"></p>
-<p>提交保存命令，有服务器后台决定什么时候保存，不是马上保存</p>
-<h4 id="自动保存"><a href="#自动保存" class="headerlink" title="自动保存"></a>自动保存</h4><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305180017057.png" alt="image-20220305180017057"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305180026755.png" alt="image-20220305180026755"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305180600421.png" alt="image-20220305180600421"></p>
-<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305180951059.png" alt="image-20220305180951059"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305181055702.png" alt="image-20220305181055702"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305181326611.png" alt="image-20220305181326611"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305181842686.png" alt="image-20220305181842686"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305181941904.png" alt="image-20220305181941904"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305182455183.png" alt="image-20220305182455183"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305182937777.png" alt="image-20220305182937777"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305183043020.png" alt="image-20220305183043020"></p>
-<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305183124698.png" alt="image-20220305183124698"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305183517150.png" alt="image-20220305183517150"></p>
-<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305203544777.png" alt="image-20220305203544777"></p>
-<p><strong>加入事务的命令暂时进入到任务队列中，并没有立即执行，只有执行exec命令才开始执行</strong></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305203944796.png" alt="image-20220305203944796"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305204337363.png" alt="image-20220305204337363"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305204549831.png" alt="image-20220305204549831"></p>
-<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305204811840.png" alt="image-20220305204811840"></p>
-<p><strong>在事务之前添加watch，不能在开启事务之后再添加watch</strong></p>
-<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305205411064.png" alt="image-20220305205411064"></p>
-<p><strong>必须锁同一个对象</strong></p>
-<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305205943153.png" alt="image-20220305205943153"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305210015123.png" alt="image-20220305210015123"></p>
-<h2 id="删除策略"><a href="#删除策略" class="headerlink" title="删除策略"></a>删除策略</h2><p><strong>过期数据：</strong>设置了有效期但是已经超时的数据</p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305211027639.png" alt="image-20220305211027639"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305211205516.png" alt="image-20220305211205516"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305212158883.png" alt="image-20220305212158883"></p>
-<p><img src="/.com//blog\java复习\image-20220305212252768.png" alt="image-20220305212252768"></p>
-<p><strong>redis内部使用了惰性删除和定期删除</strong></p>
-<h3 id="逐出算法"><a href="#逐出算法" class="headerlink" title="逐出算法"></a>逐出算法</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305212527850.png" alt="image-20220305212527850"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305212626026.png" alt="image-20220305212626026"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305212931160.png" alt="image-20220305212931160"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220305213138141.png" alt=" "></p>
-<h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306104858862.png" alt="image-20220306104858862"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306105058615.png" alt="image-20220306105058615"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306105153719.png" alt="image-20220306105153719"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306105912646.png" alt="image-20220306105912646"></p>
-<h3 id="主从复制的工作流程"><a href="#主从复制的工作流程" class="headerlink" title="主从复制的工作流程"></a>主从复制的工作流程</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306110202558.png" alt="image-20220306110202558"></p>
-<h4 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h4><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306110504327.png" alt="image-20220306110504327"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306111313162.png" alt="image-20220306111313162"></p>
-<h4 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h4><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306111841231.png" alt="image-20220306111841231"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306112310778.png" alt="image-20220306112310778"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306112547878.png" alt="image-20220306112547878"></p>
-<h4 id="命令传播阶段"><a href="#命令传播阶段" class="headerlink" title="命令传播阶段"></a>命令传播阶段</h4><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306112817915.png" alt="image-20220306112817915"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306113039939.png" alt="image-20220306113039939"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306113445015.png" alt="image-20220306113445015"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306113621935.png" alt="image-20220306113621935"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306113656411.png" alt="image-20220306113656411"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306114227118.png" alt="image-20220306114227118"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306114520969.png" alt="image-20220306114520969"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306114806850.png" alt="image-20220306114806850"></p>
-<h2 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306120410301.png" alt="image-20220306120410301"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306120502893.png" alt="image-20220306120502893"></p>
-<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306153648226.png" alt="image-20220306153648226"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306154156940.png" alt="image-20220306154156940"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306154218457.png" alt="image-20220306154218457"></p>
-<h2 id="缓存预热"><a href="#缓存预热" class="headerlink" title="缓存预热"></a>缓存预热</h2><ul>
-<li>请求数量较高</li>
-<li>主从之间数据吞吐量较大，数据同步操作频度较高</li>
-</ul>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306155730705.png" alt="image-20220306155730705"></p>
-<p><strong>缓存预热就是系统启动前，提前将相关的缓存数据直接加载到缓存系统，避免在用户请求的时候，先查询数据库，然后再将数据缓存的问题，用户直接查询事先被预热的缓存数据。</strong></p>
-<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160005562.png" alt="image-20220306160005562"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160056409.png" alt="image-20220306160056409"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160221880.png" alt="image-20220306160221880"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160330647.png" alt="image-20220306160330466"></p>
-<h2 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160852994.png" alt="image-20220306160852994"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160922045.png" alt="image-20220306160922045"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306160958459.png" alt="image-20220306160958459"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306161158132.png" alt="image-20220306161158132"></p>
-<h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306161223740.png" alt="image-20220306161223740"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306161306116.png" alt="image-20220306161306116"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306161347227.png" alt="image-20220306161347227"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306161425855.png" alt="image-20220306161425855"></p>
-<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220306161809827.png" alt="image-20220306161809827"></p>
-
+          <h2 id="基础数据类型"><a href="#基础数据类型" class="headerlink" title="基础数据类型"></a>基础数据类型</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/29/redis%20%E9%BB%91%E9%A9%AC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -403,7 +297,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-30 09:09:01" itemprop="dateModified" datetime="2022-05-30T09:09:01+08:00">2022-05-30</time>
+                <time title="修改时间：2022-05-30 09:16:20" itemprop="dateModified" datetime="2022-05-30T09:16:20+08:00">2022-05-30</time>
               </span>
 
           
@@ -417,7 +311,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1>
+          <h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><h2 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/29/redis%E9%85%8D%E7%BD%AE/#more" rel="contents">
