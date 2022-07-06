@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="springboot集成mybatis后，开始事务管理
+启用全局事务管理：在springboot的启动类上面，添加@**EnableTransactionManagement(proxyTargetClass = true)**注解
+在service层中，在要添加的方法上面添加@Transactional注解，代表这个方法里面的操作是在同一个事务里面的，只要有一个事务有异常，就会回滚。
+">
+  <meta name="author" content="pty">
+  <meta name="keywords" content="">
+  
+  <title>开发中遇到的问题 - Pety&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"follow_dnt":true}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Pety's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Pety</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/message.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="开发中遇到的问题">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-08 00:15" pubdate>
+        September 8, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      62
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">开发中遇到的问题</h1>
+            
+            <div class="markdown-body">
+              <h3 id="springboot集成mybatis后，开始事务管理"><a href="#springboot集成mybatis后，开始事务管理" class="headerlink" title="springboot集成mybatis后，开始事务管理"></a>springboot集成mybatis后，开始事务管理</h3><ol>
+<li>启用全局事务管理：在springboot的启动类上面，添加@**EnableTransactionManagement(proxyTargetClass = true)**注解</li>
+<li>在service层中，在要添加的方法上面添加@Transactional注解，代表这个方法里面的操作是在同一个事务里面的，只要有一个事务有异常，就会回滚。</li>
+</ol>
+<a id="more"></a>
+
+
+
+<h3 id="外键是用来干嘛的？"><a href="#外键是用来干嘛的？" class="headerlink" title="外键是用来干嘛的？"></a>外键是用来干嘛的？</h3><h3 id="有了外键应该怎么删除数据"><a href="#有了外键应该怎么删除数据" class="headerlink" title="有了外键应该怎么删除数据"></a>有了外键应该怎么删除数据</h3><h3 id="mybatis中parameterType中怎么传入多个不同类型的参数"><a href="#mybatis中parameterType中怎么传入多个不同类型的参数" class="headerlink" title="mybatis中parameterType中怎么传入多个不同类型的参数"></a>mybatis中parameterType中怎么传入多个不同类型的参数</h3><p>不需要使用parameterType参数</p>
+<ol>
+<li><p>使用下标</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart">public <span class="hljs-built_in">List</span>&lt;XXXBean&gt; getXXXBeanList(<span class="hljs-built_in">String</span> xxId, <span class="hljs-built_in">String</span> xxCode);  <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getXXXBeanList&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;XXBean&quot;</span>&gt;</span><br><br>　　select t.* from tableName where id = #&#123;0&#125; and name = #&#123;1&#125;  <br><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>  <br></code></pre></td></tr></table></figure>
+
+<p>由于是多参数那么就不能使用parameterType， 改用#｛index｝是第几个就用第几个的索引，索引从0开始</p>
+</li>
+<li><p>注解</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart">public <span class="hljs-built_in">List</span>&lt;XXXBean&gt; getXXXBeanList(<span class="hljs-meta">@Param</span>(<span class="hljs-string">&quot;id&quot;</span>)<span class="hljs-built_in">String</span> id, <span class="hljs-meta">@Param</span>(<span class="hljs-string">&quot;code&quot;</span>)<span class="hljs-built_in">String</span> code);  <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getXXXBeanList&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;XXBean&quot;</span>&gt;</span><br><br>　　select t.* from tableName where id = #&#123;id&#125; and name = #&#123;code&#125;  <br><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>  <br></code></pre></td></tr></table></figure>
+
+<p>由于是多参数那么就不能使用parameterType， 这里用@Param来指定哪一个</p>
+</li>
+<li><p>Map封装</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;XXXBean&gt; <span class="hljs-title">getXXXBeanList</span><span class="hljs-params">(HashMap <span class="hljs-built_in">map</span>)</span></span>;  <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getXXXBeanList&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;hashmap&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;XXBean&quot;</span>&gt;</span><br><br>　　select 字段... from XXX where id=#&#123;xxId&#125; code = #&#123;xxCode&#125;  <br><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>  <br></code></pre></td></tr></table></figure>
+
+<p>其中hashmap是mybatis自己配置好的直接使用就行。map中key的名字是那个就在#{}使用那个，map如何封装就不用了我说了吧。</p>
+</li>
+<li><p>List封装</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-keyword">List</span>&lt;XXXBean&gt; getXXXBeanList(<span class="hljs-keyword">List</span>&lt;<span class="hljs-keyword">String</span>&gt; <span class="hljs-keyword">list</span>);  <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getXXXBeanList&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;XXBean&quot;</span>&gt;</span><br>　　select 字段... from XXX where id in<br>　　<span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;item&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">open</span>=<span class="hljs-string">&quot;(&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;,&quot;</span> <span class="hljs-attr">close</span>=<span class="hljs-string">&quot;)&quot;</span>&gt;</span>  <br>　　　　#&#123;item&#125;  <br>　　<span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span>  <br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span> <br></code></pre></td></tr></table></figure>
+
+<p>总结</p>
+<p>传递list和map在资源消耗上肯定远大于方法一和方法二，但是有一些特殊的情形需要传递list，比如你需要传递一个id集合并批量对id进行sql操作然后再返回等等。所以都需要了解。</p>
+</li>
+</ol>
+<h3 id="Mybatis中传递参数时，会加上单引号吗"><a href="#Mybatis中传递参数时，会加上单引号吗" class="headerlink" title="Mybatis中传递参数时，会加上单引号吗"></a>Mybatis中传递参数时，会加上单引号吗</h3><p>使用**#{参数}**传入会加上单引号，sql语句解析是会加上‘ ’ </p>
+<p>比如  select * from table where name = #{name} ,传入的name为小李，那么最后打印出来的就是</p>
+<p> select * from table where name = ‘小李’，就是会当成字符串来解析</p>
+<p>但是${}并不会加上单引号</p>
+<h3 id="在数据库中以时间分组查询数据怎么查"><a href="#在数据库中以时间分组查询数据怎么查" class="headerlink" title="在数据库中以时间分组查询数据怎么查"></a>在数据库中以时间分组查询数据怎么查</h3><p><code>select 时间 from 表名 group by 时间</code></p>
+<h3 id="在数据库中按照准确的时间应该怎么查"><a href="#在数据库中按照准确的时间应该怎么查" class="headerlink" title="在数据库中按照准确的时间应该怎么查"></a>在数据库中按照准确的时间应该怎么查</h3><p>使用DATE_FORMAT()函数将date类型的转换为字符串</p>
+<p>DATE_FORMAT(date,format)用法：将时间date转换为format格式的字符串</p>
+<p>format是自己定义的格式，如<code>DATE_FORMAT(date,&#39;%Y-%m-%d&#39;)</code>，就是将date转换为格式为年-月-日的字符串</p>
+<p><code>select * from 表名 where DATE_FORMAT(date,&#39;%Y-%m-%d&#39;)=xxx</code></p>
+<h3 id="pgeHelper插件的用法"><a href="#pgeHelper插件的用法" class="headerlink" title="pgeHelper插件的用法"></a>pgeHelper插件的用法</h3><p>pageHelper插件是用来解决分页的问题</p>
+<p>使用方法</p>
+<ol>
+<li><p>导入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.pagehelper<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>pagehelper-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 特别注意版本问题 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在controller中直接使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/articles&quot;)</span><br><span class="hljs-meta">@ApiOperation(&quot;得到所有的文章信息，用于在首页进行博客展示,需要传入当前pageNum,不传默认为1,每页显示3条信息&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ResResult <span class="hljs-title">findAll</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(defaultValue = &quot;1&quot;)</span><span class="hljs-keyword">int</span> pageNum)</span></span>&#123;  <br>    <span class="hljs-comment">//传入pageNum的值，defaulValue表示默认值</span><br>    <span class="hljs-keyword">try</span> &#123;<br>        PageHelper.startPage(pageNum,<span class="hljs-number">3</span>);  <span class="hljs-comment">//设置pageNum和pageSize的值</span><br>       List&lt;Article&gt; articles = articleService.findAll();<br>        PageInfo&lt;Article&gt; pageInfo = <span class="hljs-keyword">new</span> PageInfo&lt;&gt;(articles);  <br>        <span class="hljs-comment">//将查询的结果放入PageInfo类中，在里面会有查询到的接货以及分页的信息（比如总页数，总记录数等等）</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResResult(ResultCode.SUCCESS,pageInfo);<br>    &#125;<span class="hljs-keyword">catch</span> (Exception e)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResResult(ResultCode.ERROR,e);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>PageInfo中的一些属性</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> pageNum;   <span class="hljs-comment">//当前页码</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> pageSize;   <span class="hljs-comment">//每页显示多少条信息</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-built_in">size</span>;      <span class="hljs-comment">//当前页有多少条信息</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> startRow;  <span class="hljs-comment">//表示当前页面第一个元素在数据库中的行号</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> endRow;    <span class="hljs-comment">//表示当前页面的最后一个元素在数据库中的行号  startRow和endRow不常用，</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> total;    <span class="hljs-comment">//表示总的记录数</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> pages;     <span class="hljs-comment">//表示总的页数</span><br><span class="hljs-keyword">private</span> List&lt;T&gt; <span class="hljs-built_in">list</span>;  <span class="hljs-comment">//结果集</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> prePage;   <span class="hljs-comment">//前一页</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> nextPage;  <span class="hljs-comment">//后一页</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> isFirstPage;  <span class="hljs-comment">//当前页面是第一页吗</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> isLastPage;   <span class="hljs-comment">//当前页面是最后一页吗</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> hasPreviousPage;  <span class="hljs-comment">//当前页面是否有上一页</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> hasNextPage;   <span class="hljs-comment">//当前页面是否有下一页</span><br><br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="MapperScan注解的使用"><a href="#MapperScan注解的使用" class="headerlink" title="@MapperScan注解的使用"></a>@MapperScan注解的使用</h3><p>在学习了spring之后，不在需要给dao层建立实体类，只需要写出dao的接口就行了，但是需要我们使用@Mapper注解，在dao接口类上添加@Mapper注解，在编译之后就会生成接口实现类，不在需要我们人为的去写一个实现类。</p>
+<p>但是在接口类很多的情况下，就需要我们给很多接口类都添加@Mapper注解，比较麻烦。所以就出现了@MapperScan</p>
+<p><strong>@MapperScan注解</strong>用于指定dao接口类所在的包，该包下的每一个接口在编译之后都会生成一个实现类，不用再在每一个接口类上添加@Mapper注解。</p>
+<p><strong>@MapperScan注解在springboot启动类上添加</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@MapperScan(&quot;com.hutdsj.blog.mapper&quot;)</span>   <span class="hljs-comment">//指定接口类所在的包，com.hutdsj.blog.mapper下的所有接口都会在编译后生成实现类@SpringBootApplication  //指定这是一个springboot程序public class BlogApplication &#123;    public static void main(String[] args) &#123;        SpringApplication.run(BlogApplication.class, args);    &#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>@MapperScan注解指定多个包</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@MapperScan(&#123;&quot;com.kfit.demo&quot;,&quot;com.kfit.user&quot;&#125;)</span>    <span class="hljs-comment">//使用逗号隔开</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用-Autowried-注解后注入为null"><a href="#使用-Autowried-注解后注入为null" class="headerlink" title="使用@Autowried 注解后注入为null"></a>使用@Autowried 注解后注入为null</h3><p>当你的注入对象已经注册到容器中（即已经添加了@Compoent，@Controller….等注解），但是仍然注入为null时，需要检查获取对象的方式是否为new,new出来的对象使用的是有参，无参构造，不走spring的IOC容器，直接创建出来的。而@Autowried注解是根据type自动配置，要求对象是在IOC容器里面的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/verifycode&quot;)</span><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getVerify</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;    <span class="hljs-keyword">try</span> &#123;        response.setContentType(<span class="hljs-string">&quot;image/jpeg&quot;</span>);<span class="hljs-comment">//设置相应类型,告诉浏览器输出的内容为图片        response.setHeader(&quot;Pragma&quot;, &quot;No-cache&quot;);//设置响应头信息，告诉浏览器不要缓存此内容        response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache&quot;);        response.setDateHeader(&quot;Expire&quot;, 0);        VerifyCode verifyCode = new VerifyCode();        verifyCode.getRandcode(request, response);//输出验证码图片方法    &#125; catch (Exception e) &#123;       e.printStackTrace();    &#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">VerifyCode</span> </span>&#123;    <span class="hljs-meta">@Autowired</span>    RedisUtil redisUtil;    ......    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getRandcode</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;     	.......        redisUtil.set(RANDOMCODEKEY,randomString);      	......    &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如上面这两段代码，因为verifyCode这个对象是被new出来的，即使在VerifyCode这个类中使用 <code>@Autowired</code>标注了</p>
+<p><code>RedisUtil</code>,但是仍然获取不到RedisUtil的值，即没有创建出这个对象。</p>
+<p>解决方法是在第一段代码中，verifyCode这个对象不要是new出来的，使用 <code>@Autowired</code>标注实体类  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AutowiredVerifyCode</span> verifyCode;	<br></code></pre></td></tr></table></figure>
+
+<p>简单的来说：**@Autowired注入Spring Bean，则当前类必须也是Spring Bean才能调用它，不能用new xxx()来获得对象，这种方式获得的对象无法调用@Autowired注入的Bean。**</p>
+<h3 id="使用-ConfigurationProperties注解，下面有横线"><a href="#使用-ConfigurationProperties注解，下面有横线" class="headerlink" title="使用@ConfigurationProperties注解，下面有横线"></a>使用@ConfigurationProperties注解，下面有横线</h3><p>使用<code>@ConfigurationProperties</code>注解，注解下面有横线，需要引入下面这个依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>但是好像就算有横线也没有问题，可以读取到配置文件。</p>
+<h3 id="使用-ConfigurationProperties注解，读取不到配置文件"><a href="#使用-ConfigurationProperties注解，读取不到配置文件" class="headerlink" title="使用@ConfigurationProperties注解，读取不到配置文件"></a>使用@ConfigurationProperties注解，读取不到配置文件</h3><p>使用这个注解给实体类注入信息，需要配置文件中的属性名和实体类中的属性名一致，同时实体类中的属性还需要有set,get方法。</p>
+<h3 id="在拦截器中使用-AutoWired注解注入为null"><a href="#在拦截器中使用-AutoWired注解注入为null" class="headerlink" title="在拦截器中使用@AutoWired注解注入为null"></a>在拦截器中使用@AutoWired注解注入为null</h3><p>因为拦截器的加载是在<strong>springcontext</strong>之前，所以在拦截器中注入为null。</p>
+<p>因此我们需要在配置类中使用@Bean注解提前去加载</p>
+<p>修改前的配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configurationpublic</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WebConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;        <span class="hljs-comment">//注册拦截器    @Override    public void addInterceptors(InterceptorRegistry registry) &#123;        //添加具体的拦截器，同时设置拦截的地址。        //JwtInterceptor为我们拦截器实体类        registry.addInterceptor(new JwtInterceptor()).addPathPatterns(&quot;/user/h&quot;);    &#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>修改之后：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configurationpublic</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WebConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;	<span class="hljs-comment">//使用@Bean注解提前加载JwtInterceptor这个类    @Bean    public JwtInterceptor jwtInterceptor()&#123;        return new JwtInterceptor();    &#125;    //注册拦截器    @Override    public void addInterceptors(InterceptorRegistry registry) &#123;        //添加具体的拦截器，同时设置拦截的地址。        registry.addInterceptor(jwtInterceptor()).addPathPatterns(&quot;/user/h&quot;);    &#125;	//注意：我们这里使用@Bean将jwtInterceptor 注册到IOC容器，然后下面addInterceptor中的参数不再是new JwtInterceptor(),而是调用上面的jwtInterceptor()方法&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JwtInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">HandlerInterceptor</span> </span>&#123;	    <span class="hljs-comment">//自动注入jwtutil    @Autowired    JwtUtil jwtUtil;    @Override    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;        HashMap&lt;String, Object&gt; map = new HashMap&lt;&gt;();        String token = request.getHeader(&quot;token&quot;);        try &#123;            Claims claims = jwtUtil.parseJwt(token);            return true;        &#125; catch (Exception e) &#123;            map.put(&quot;code&quot;,403);            map.put(&quot;msg&quot;,&quot;token无效&quot;);        &#125;        String json= new ObjectMapper().writeValueAsString(map);        response.getWriter().write(json);        return false;    &#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="Disconnected-from-the-target-VM-address-‘127-0-0-1-3231’-transport-‘socket’"><a href="#Disconnected-from-the-target-VM-address-‘127-0-0-1-3231’-transport-‘socket’" class="headerlink" title="Disconnected from the target VM, address: ‘127.0.0.1:3231’, transport: ‘socket’"></a>Disconnected from the target VM, address: ‘127.0.0.1:3231’, transport: ‘socket’</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201104175754449.png" srcset="/img/loading.gif" lazyload alt="image-20201104175754449"></p>
+<p>在项目中报了这个错，在网上百度了很久，都不是我错误的原因。</p>
+<p>我找了很久，发现是将一个类两次注册到IOC容器中的原因。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201104175954095.png" srcset="/img/loading.gif" lazyload alt="image-20201104175954095"></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201104180110624.png" srcset="/img/loading.gif" lazyload alt="image-20201104180110624"></p>
+<p>比如说这里，我已经使用<code>@Component</code>注解将<code>JwtInterceptor</code>注册到IOC容器中，但是我在<code>WebConfig</code>中又使用<code>@Bean</code>注解将<code>JwtInterceptor</code>注册到IOC容器中，然后就报了这样的错误。</p>
+<h3 id="使用json将地址传给前端，发现地址处有两根斜杠"><a href="#使用json将地址传给前端，发现地址处有两根斜杠" class="headerlink" title="使用json将地址传给前端，发现地址处有两根斜杠"></a>使用json将地址传给前端，发现地址处有两根斜杠</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201109193629497.png" srcset="/img/loading.gif" lazyload alt="image-20201109193629497"></p>
+<p>这个情况是正常的，因为后面的地址是字符串，而在字符串中，反斜杠需要使用转义字符，也就是两个反斜杠来表示一个反斜杠，因此，这里的两个反斜杠只是标识这是一个字符串中的转移字符，仍然是一个反斜杠。</p>
+<h3 id="从redis中获取数据，得到了Object类型，怎么将其转为java实体类"><a href="#从redis中获取数据，得到了Object类型，怎么将其转为java实体类" class="headerlink" title="从redis中获取数据，得到了Object类型，怎么将其转为java实体类"></a>从redis中获取数据，得到了Object类型，怎么将其转为java实体类</h3><p>使用fastjson来进行转换。</p>
+<p>从redis中取出数据，得到了一个List<Object>xxx,想将它转为对应的java实体类。</Object></p>
+<ul>
+<li>引入依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.4<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>转换</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//从redis中获取数据List&lt;Object&gt; topics = redisUtil.lGet(&quot;topics&quot;, 0, -1);//得到是是一个json字符串数组，将其转为topic类List&lt;Topic&gt; topics1 = JSONObject.parseArray(JSON.toJSONString(topics),Topic.class);for (Topic topic : topics1) &#123;    System.out.println(topic);</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="json返回到前端的日期格式有问题"><a href="#json返回到前端的日期格式有问题" class="headerlink" title="json返回到前端的日期格式有问题"></a>json返回到前端的日期格式有问题</h3><p>​    如果没有进行专门的设置，直接把日期返回给前端，那么日期的格式是有问题的</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201109212105358.png" srcset="/img/loading.gif" lazyload alt="image-20201109212105358"></p>
+<p>比如这个，日期看起来很乱，不是我们需要的格式（ps：之前格式更乱，和设置的时间相差8个小时）</p>
+<p>因此我们需要专门设置一下日期的格式，在对应的实体类里面，在日期属性上面使用<code>@JsonFormat</code>注解，写上日期格式以及时区。</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20201109212428691.png" srcset="/img/loading.gif" lazyload alt="image-20201109212428691"></p>
+<h3 id="保存到数据库的时间和设置的时间相差8个小时"><a href="#保存到数据库的时间和设置的时间相差8个小时" class="headerlink" title="保存到数据库的时间和设置的时间相差8个小时"></a>保存到数据库的时间和设置的时间相差8个小时</h3><p>在此之前，我写jdbc的url都是这样写的<code>url:jdbc:mysql://localhost:3306/xxx?serverTimezone=utc</code></p>
+<p>我们将时区设置为utc（utc不是时区，这样说只是为了理解），但是utc是协调世界时，中国在东八区，和这个时间相比快了8个小时，因此我们需要将时区设置为中国的时区</p>
+<p>所以以后我们的url可以这么写: <code>url: jdbc:mysql://localhost:3306/hutbbs?serverTimezone=Asia/Shanghai</code></p>
+<h3 id="数据库的字段名和关键字发生冲突"><a href="#数据库的字段名和关键字发生冲突" class="headerlink" title="数据库的字段名和关键字发生冲突"></a>数据库的字段名和关键字发生冲突</h3><p>写项目的时候报了这个错误</p>
+<p><img src="/.com//myblog\public\images\多线程\image-20210415221808053.png" srcset="/img/loading.gif" lazyload alt="image-20210415221808053"></p>
+<p><strong>ou have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near  xxxx</strong> 这个错误是数据库中的字段名和关键字起了冲突。碰到这种情况，我们一般有以下几种解决方法。</p>
+<ul>
+<li>第一种是修改字段名，将字段名修改为和关键字不冲突的名字。可以将sql语句复制到navicat中， 关键字会用蓝色标记， rank 没有用蓝色标记，但是好像也不能用，用了也会出错误，我就是被rank耽误了好久时间。</li>
+<li>第二种是不修改字段名，在sql语句中，用一些特殊的符号将起冲突的字段名给括起来。在sqlserver中，使用方括号将字段名括起来,如：**[name]**。在mysql中，使用反单引号将字段名括起来（tab上面的那个键）如：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">`name`<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="与前端对接数据时，接收到的数据为null"><a href="#与前端对接数据时，接收到的数据为null" class="headerlink" title="与前端对接数据时，接收到的数据为null"></a>与前端对接数据时，接收到的数据为null</h3><p>首先看前端传过来的数据是否为json格式，如果是json格式的话，就需要使用<code>@RequestBody</code>这个注解。</p>
+<p>其次需要知道前端是否将数据封装成一个对象传递过来，如果封装为一个对象，那么我们这边也需要使用一个对象来接收数据。比如 前端传过来了用户名和密码，但是他封装为一个对象，所以我们在方法的参数上就需要写<code>User user</code>,而不能使用<code>String username,String password</code>来接收数据。</p>
+<h3 id="将实体类存放到一些数据结构中，当再次取出来的时候，不能转成原来的实体类"><a href="#将实体类存放到一些数据结构中，当再次取出来的时候，不能转成原来的实体类" class="headerlink" title="将实体类存放到一些数据结构中，当再次取出来的时候，不能转成原来的实体类"></a>将实体类存放到一些数据结构中，当再次取出来的时候，不能转成原来的实体类</h3><p>上面<strong>从redis中获取数据，得到的Object类型</strong>问题其实和这个问题是一样的，只不过上面只是讲解的是redis中的。</p>
+<p>取出来的数据不能转成原来的类型，我们需要借助json，先将原来的数据转为json格式，然后在使用json将数据封装到具体的实体类。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--导入fastjson依赖--&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.56<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//类型转换Object user = claims.get(&quot;user&quot;);//将map中的类型转为User类//先将user转为json字符串，然后使用parseObject 将字符串转为User.classUser user1 = JSON.parseObject(JSON.toJSONString(user), User.class);o</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="sql语句中，用查询结果作为like模糊查询的参数"><a href="#sql语句中，用查询结果作为like模糊查询的参数" class="headerlink" title="sql语句中，用查询结果作为like模糊查询的参数"></a>sql语句中，用查询结果作为like模糊查询的参数</h3><p>需要拼接字符串，一开始我是使用 +  来进行拼接，但是没有拼接成功，然后使用concat函数，但是由于未用单引号将通配符括起来，所以还是错了，应该用单引号将通配符括起来</p>
+<h3 id="从前端一次接受多个参数应该怎么做"><a href="#从前端一次接受多个参数应该怎么做" class="headerlink" title="从前端一次接受多个参数应该怎么做"></a>从前端一次接受多个参数应该怎么做</h3><p>有时候前端可能一次性将填写的多个同一类型的数据提交给后端，这个时候我们需要使用list接收数据，在使用list接收数据的时候，还需要使用<code>@RequestBody</code>这个注解。</p>
+<p>将多个对象同时传入数据库，可以使用foreach来遍历。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">insert</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insert&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;list&quot;</span>&gt;</span>    insert into ApplyData (id, datatype, Idcard,      gettime, `name`, `rank`,      `group`, `code`, checkstatus,      checktime, checkpeople, IntoTime      )      values    <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;item&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;,&quot;</span>&gt;</span>       (#&#123;item.id,jdbcType=INTEGER&#125;, #&#123;item.datatype,jdbcType=INTEGER&#125;, #&#123;item.idcard,jdbcType=NVARCHAR&#125;,      #&#123;item.gettime,jdbcType=NVARCHAR&#125;, #&#123;item.name,jdbcType=VARCHAR&#125;, #&#123;item.rank,jdbcType=NVARCHAR&#125;,      #&#123;item.group,jdbcType=VARCHAR&#125;, #&#123;item.code,jdbcType=NVARCHAR&#125;, #&#123;item.checkstatus,jdbcType=NVARCHAR&#125;,      #&#123;item.checktime,jdbcType=TIMESTAMP&#125;, #&#123;item.checkpeople,jdbcType=NVARCHAR&#125;, #&#123;item.intotime,jdbcType=TIMESTAMP&#125;      )    <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">insert</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中collection是容器的类型，item是容器中的每一个对象的名字，separator是分隔符。</p>
+<p><strong>注意只要将数据放在foreach中即可，我在增加的时候，不小心将values这个字段一同放在foreach中，结果插入第二条数据死活插入不进去，看了别人的foreach的用法才知道values应该放在外面</strong></p>
+<h3 id="使用foreach查询数据"><a href="#使用foreach查询数据" class="headerlink" title="使用foreach查询数据"></a>使用foreach查询数据</h3><p>碰到一个需求，传过来一个string集合，然后根据string集合中的每一个元素去数据库查询相对应的数据。一看到参数是个集合，我就想到应该使用foreach来进行遍历，的确也是使用这个。</p>
+<p>我以为查询和上面的插入是一样的，因此直接套用了上面插入的语法，但是发现死活都插不进去。后面打印了sql语句才知道问题。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getDescribe&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;optioncode&quot;</span>&gt;</span>        select CodeNo,`Describe`,typename,count from OptionCode        where  CodeNo =        <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;item&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;,&quot;</span>&gt;</span>                  #&#123;item&#125;         <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span>    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是最初的写法，可以发现foreach和上面的插入是一样的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">[A01, A02, A03]Creating a new SqlSessionSqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3eed9c44] was not registered for synchronization because synchronization is not activeJDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@418882cf] will not be managed by Spring==&gt;  Preparing: select CodeNo,`Describe`,typename,count from OptionCode where CodeNo = ? , ? , ?==&gt; Parameters: A01(String), A02(String), A03(String)<br></code></pre></td></tr></table></figure>
+
+<p>这是打印出来的sql语句，<strong>select CodeNo,<code>Describe</code>,typename,count from OptionCode where CodeNo = ? , ? , ?</strong>  我们发现语句是 xxx= xx,xx,xx   很明显，等号并没有这个作用，等号只能附一个值，也就是说只能是xxx=xx这种，所以我之前只传一个值的时候是可以查询到数据的。当后面的具有多个参数的时候，我们就想到应该使用in这个关键字，in后面可以是一个集合。</p>
+<p>但是in的格式是 xxx in (xx,xx,xx),所以我们就需要给传过来的参数添加一对括号，因此，需要在foreach中进行修改。修改的代码如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">select CodeNo,`Describe`,typename,count from OptionCode        where  CodeNo in        <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;item&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;,&quot;</span> <span class="hljs-attr">open</span>=<span class="hljs-string">&quot;(&quot;</span> <span class="hljs-attr">close</span>=<span class="hljs-string">&quot;)&quot;</span>&gt;</span>                  #&#123;item&#125;         <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是打印出来的sql语句</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">[A01, A02, A03]Creating a new SqlSessionSqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6bd28c3b] was not registered for synchronization because synchronization is not activeJDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@6d0e99e0] will not be managed by Spring==&gt;  Preparing: select CodeNo,`Describe`,typename,count from OptionCode where CodeNo in ( ? , ? , ? )==&gt; Parameters: A01(String), A02(String), A03(String)<br></code></pre></td></tr></table></figure>
+
+<p>可以很明显的看见这里已经变成了in ,<strong>select CodeNo,<code>Describe</code>,typename,count from OptionCode where CodeNo in ( ? , ? , ? )</strong>  这样查询是可以查询到的。</p>
+<h3 id="打印sql语句"><a href="#打印sql语句" class="headerlink" title="打印sql语句"></a>打印sql语句</h3><p>在application.yml中修改配置文件</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">mybatis:  type-aliases-package:</span> <span class="hljs-string">com.hut.jsj.pojo,;com.hut.jsj.vo</span>  <span class="hljs-attr">mapper-locations:</span> <span class="hljs-string">classpath:mapper/*</span>  <span class="hljs-comment">#加入下面这段代码  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="如何在PostMan中传递Date类型的数据"><a href="#如何在PostMan中传递Date类型的数据" class="headerlink" title="如何在PostMan中传递Date类型的数据"></a>如何在PostMan中传递Date类型的数据</h3><p>今天在做数据库课设的时候，在学生表中有一个字段是生日，建表的同学将该字段的类型设置为Date型（如果是我自己写的话，我是不会将这个设置为Date型的，设置成字符串型会更加方便）。在使用postman测试接口的时候，我发现直接输入<code>2000-9-17</code>这种数据是加不进去的，会报下面这个错误。</p>
+<p>(图挂了)</p>
+<p>大概的意思 就是String型的数据不能转换为Date型的数据。</p>
+<p><strong>那么应该如何传递参数呢？</strong></p>
+<p>我百度了一下，有的说需要设置全局变量等等，我觉得很麻烦，后面发现只需要改变一下传递的参数的格式即可。</p>
+<p><code>2000/09/17</code>即可，也就是用<code>/</code>连接年月日。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%BC%80%E5%8F%91/">开发</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/mybatis/">mybatis</a>
+                    
+                      <a class="hover-with-bg" href="/tags/mysql/">mysql</a>
+                    
+                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/08/markdown%E8%AF%AD%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">markdown语法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

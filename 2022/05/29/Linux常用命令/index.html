@@ -1,0 +1,1781 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="vi和vim编辑器三种常见模式：
+正常模式
+在正常模式下，我们可以使用快捷键。
+
+插入模式/编辑模式
+在这个模式下，程序猿可以输入内容。
+
+命令行模式
+在这个模式中，可以提供相关指令。">
+  <meta name="author" content="pty">
+  <meta name="keywords" content="">
+  
+  <title>linux常用命令 - Pety&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"follow_dnt":true}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Pety's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Pety</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/message.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="linux常用命令">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-29 21:17" pubdate>
+        May 29, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      11.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      132
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">linux常用命令</h1>
+            
+            <div class="markdown-body">
+              <h2 id="vi和vim编辑器"><a href="#vi和vim编辑器" class="headerlink" title="vi和vim编辑器"></a>vi和vim编辑器</h2><h3 id="三种常见模式："><a href="#三种常见模式：" class="headerlink" title="三种常见模式："></a>三种常见模式：</h3><ul>
+<li><p>正常模式</p>
+<p>在正常模式下，我们可以使用快捷键。</p>
+</li>
+<li><p>插入模式/编辑模式</p>
+<p>在这个模式下，程序猿可以输入内容。</p>
+</li>
+<li><p>命令行模式</p>
+<p>在这个模式中，可以提供相关指令。</p>
+<a id="more"></a>
+
+</li>
+</ul>
+<h3 id="快捷键使用练习："><a href="#快捷键使用练习：" class="headerlink" title="快捷键使用练习："></a>快捷键使用练习：</h3><ul>
+<li>yy：拷贝当前行</li>
+<li>5yy：拷贝当前5行</li>
+<li>dd：删除当前行</li>
+<li>5dd：删除当前行向下的5行</li>
+<li>在文件中查找某个单词：命令行输入 /（查找内容），按n查找下一个,N向上查找</li>
+<li>设置文件行号：set nu，取消文件行号：set nonu</li>
+<li>编辑文件，正常模式下使用快捷键到达文档最末行：G，最首行：gg</li>
+<li>撤销输入：在正常模式下输入u</li>
+<li>编辑文件，光标移动到某行：shift+g<ul>
+<li>显示行号：set nu</li>
+<li>输入行号这个数</li>
+<li>输入shift+g</li>
+</ul>
+</li>
+</ul>
+<h2 id="关机、重启和用户登录注销"><a href="#关机、重启和用户登录注销" class="headerlink" title="关机、重启和用户登录注销"></a>关机、重启和用户登录注销</h2><ul>
+<li>shutdown -h now：表示立即关机</li>
+<li>shutdown -h 1：表示1分钟后关机</li>
+<li>shutdown -r now：立即重启</li>
+<li>halt：直接使用，关机</li>
+<li>reboot：重启</li>
+<li>sync：把内存的数据同步到磁盘上，<strong>当我们关机或者重启时，都应该先执行一下sync，防止数据丢失</strong>。</li>
+<li>logout：注销用户，<strong>在图形运行级别无效，在运行级别3有效</strong>。</li>
+</ul>
+<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><p>用户，组，家目录。</p>
+<ol>
+<li>Linux系统是一个多用户多任务的操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。</li>
+<li>Linux的用户需要至少要属于一个组。</li>
+</ol>
+<ul>
+<li>添加用户：useradd [选项] 用户名。</li>
+<li>cd：表示change directory，切换目录。</li>
+<li>当创建用户成功后，会自动的创建和用户同名的家目录。</li>
+<li>也可以通过useradd -d 指定目录 新的用户名。</li>
+<li>指定/修改密码：passwd 用户名</li>
+<li>删除用户，保留家目录：userdel 用户名，<strong>一般保留家目录，因为干过的活要留着</strong>。</li>
+<li>删除用户以及家目录：userdel -r 用户名</li>
+<li>查询用户信息：id 用户名</li>
+<li>切换用户：su - 切换用户名，<strong>从权限高切换到权限低的用户不需要输密码</strong>。</li>
+<li>返回切换前的用户：exit</li>
+<li>查看当前用户/登录用户：who am i</li>
+<li>用户组：类似于角色，系统可以对有共性的多个用户进行统一的管理。</li>
+<li>增加组：groupadd 组名</li>
+<li>删除组：groupdel 组名</li>
+<li>增加用户时直接加上组：useradd -g 用户组 用户名</li>
+<li>修改用户组：usermod -g 用户组 用户名</li>
+</ul>
+<ol start="3">
+<li>/etc/passwd 文件</li>
+</ol>
+<ul>
+<li>用户（user）的配置文件，记录用户的各种信息。</li>
+<li>每行的含义：用户名：口令：用户标识号：注释性描述：主目录：登录shell</li>
+</ul>
+<ol start="4">
+<li>/etc/shadow 文件</li>
+</ol>
+<ul>
+<li>口令配置文件</li>
+<li>每行的含义：登录名：加密口令：最后一次修改时间：最小时间间隔：最大时间间隔：警告时间：不活动时间：失效时间：标志</li>
+</ul>
+<ol start="5">
+<li>/etc/group 文件</li>
+</ol>
+<ul>
+<li>组（group）的配置文件，记录Linux包含的组的信息。</li>
+<li>每行含义：组名：口令：组标识号：组内用户列表</li>
+</ul>
+<h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><ul>
+<li><p>pwd：Print Working Directory，显示当前工作目录的绝对路径。</p>
+</li>
+<li><p>ls：-a：显示当前目录所有的文件和目录，包括隐藏的；-l：以列表的方式显示信息。</p>
+</li>
+<li><p>cd：cd ~：回到自己的家目录；cd ..：回到当前目录的上一级目录。</p>
+</li>
+<li><p>mkdir：创建目录；-p：创建多级目录。</p>
+</li>
+<li><p>rmdir：删除空目录。rmdir不能删除非空的目录。如果需要删除非空的目录，需要使用rm -rf。</p>
+</li>
+<li><p>touch：创建空文件。可以一次性创建多个文件</p>
+</li>
+<li><p>cp：拷贝文件到指定目录；-r：递归复制整个文件夹。强制覆盖不提示的方法：cp命令改为\cp</p>
+</li>
+<li><p>rm：移除文件或目录；-r：递归删除整个文件夹；-f：强制删除不提示。</p>
+</li>
+<li><p>mv：移动文件与目录或重命名，两种功能！</p>
+</li>
+<li><p>cat：查看文件内容。只能浏览文件，而不能修改文件。-n：显示行号。结尾加上 | more：分页显示，不会全部一下显示完。</p>
+</li>
+<li><p>more：是一个基于VI编辑器的文本过滤器，它以全屏幕的方式按页显示文本文件的内容。more还内置了很多快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空白键（Space）</td>
+<td>向下翻一页</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>向下翻一行</td>
+</tr>
+<tr>
+<td>q</td>
+<td>立刻离开more，不再显示该文件内容</td>
+</tr>
+<tr>
+<td>Ctrl + F</td>
+<td>向下滚动一屏</td>
+</tr>
+<tr>
+<td>Ctrl + B</td>
+<td>返回上一屏</td>
+</tr>
+<tr>
+<td>=</td>
+<td>输出当前行的行号</td>
+</tr>
+<tr>
+<td>：f</td>
+<td>输出文件名和当前行的行号</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>less：用来分屏查看文件内容，与more相似，但是更强大，支持各种显示终端。less指令在显示文件内容时，并不是一次将整个文件加载之后才显示，而是根据显示需要加载内容。<strong>对于显示大型文件具有较高的效率。</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空白键（Space）</td>
+<td>向下翻一页</td>
+</tr>
+<tr>
+<td>[pagedown]</td>
+<td>向下翻一行</td>
+</tr>
+<tr>
+<td>[pageup]</td>
+<td>向上翻动一页</td>
+</tr>
+<tr>
+<td>/字串</td>
+<td>向下搜寻字串的功能；n向下找，N向上找</td>
+</tr>
+<tr>
+<td>？子串</td>
+<td>向上搜寻字串的功能；n向上找，N向下找   （n正向）</td>
+</tr>
+<tr>
+<td>q</td>
+<td>离开less这个程序</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>&gt;</code>指令：输出重定向。如果不存在会创建文件，否则会将原来的文件内容覆盖。</li>
+<li><code>&gt;&gt;</code>指令：追加。如果不存在会创建文件，否则不会覆盖原来的文件内容，而是追加到文件的尾部。</li>
+<li>cat是查看，echo是写入，echo （内容） &gt;&gt; 文件</li>
+<li>cal：显示当前月日历。</li>
+<li>echo：输出内容到控制台。</li>
+<li>head：显示文件的开头部分。-n 5：看前面5行内容。</li>
+<li>tail：输出文件中尾部的内容。-n 5：看后面5行内容。-f：时事追踪该文档的所有更新</li>
+<li>ln -s :建立软连接 </li>
+<li>history: 查看历史指令</li>
+</ul>
+<h2 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h2><ul>
+<li>date：显示当前日期和时间</li>
+<li>date “+%Y”：显示当前年份</li>
+<li>date “+%d”：显示当前月份</li>
+<li>date “+%Y-%m-%d %H:%M:%S”：显示年-月-日 时：分：秒</li>
+<li>设置日期：date -s 字符串时间</li>
+<li>cal：查看日历指令；cal 年份：显示某一年一整年的日历</li>
+</ul>
+<h2 id="搜索查找"><a href="#搜索查找" class="headerlink" title="搜索查找"></a>搜索查找</h2><ul>
+<li>find：从指定目录向下递归的遍历其各个子目录，将满足条件的文件或者目录显示在终端。<ul>
+<li>find (搜索范围) -name (文件名)：按照指定的文件名查找模式查找文件。</li>
+<li>find (搜索范围) -user (用户名)：按照指定的用户名查找模式查找文件。</li>
+<li>find (搜索范围) -size (+多少/-多少/多少)：按照指定的文件大小查找模式查找文件（大于多少/小于多少/等于多少）</li>
+<li><strong>查询 /目录下所有.txt的文件</strong>：find / -name *.txt</li>
+<li>根据文件名删除文件：<code>find . -name 文件名 | xargs rm -rf</code></li>
+</ul>
+</li>
+<li>locate： locate (搜索文件)<ul>
+<li>可以快速定位文件路径。locate指令利用事先建立的系统中所有文件名称及路径的locate数据库实现快速定位给定的文件。locate指令无需遍历整个文件系统，查询速度较快。为了保证查询结果的准确度，管理员必须定期更新locate时刻。</li>
+<li>在第一次运行之前，<strong>必须使用updatedb指令创建locate数据库</strong>。</li>
+</ul>
+</li>
+<li>grep：过滤查找，表示将前一个命令的处理结果输出传递给后面的命令处理。经常跟管道一起使用。<ul>
+<li>grep [选项] 查找内容 源文件</li>
+<li>-n：显示匹配行及行号。</li>
+<li>-i：忽略大小写字母。</li>
+<li><code>cat hello.txt | grep &quot;yes&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="压缩和解压"><a href="#压缩和解压" class="headerlink" title="压缩和解压"></a>压缩和解压</h2><ul>
+<li>gzip/gunzip：压缩文件/解压<ul>
+<li>gzip (文件)：压缩为.gz文件，原来文件不保留。</li>
+<li>gunzip (文件)：解压缩，同样也不保留源文件。</li>
+</ul>
+</li>
+<li>zip/unzip：压缩文件/解压<ul>
+<li>zip [选项] (压缩后文件xxx.zip) (将要压缩的文件)</li>
+<li>unzip [选项] (要解压的文件xxx.zip)</li>
+<li>zip -r：递归压缩，即压缩目录</li>
+<li>unzip -d (目录)：指定解压后的文件的存放目录</li>
+</ul>
+</li>
+<li>tar：打包指令，最后打包后的文件是.tar.gz的文件<ul>
+<li>tar [选项] xxx.tar.gz (打包的内容)</li>
+<li>-c：产生.tar打包文件</li>
+<li>-v：显示详细信息</li>
+<li>-f：指定压缩后的文件名</li>
+<li>-z：打包同时压缩</li>
+<li>-x：解压.tar文件</li>
+<li>压缩：tar -zcvf (压缩后文件名) (要压缩的文件)</li>
+<li>解压：tar -zxvf (要解压的文件)</li>
+<li>解压到指定目录：tar -zxvf (要解压的文件) -C (指定目录)，指定解压到的目录要存在。</li>
+</ul>
+</li>
+</ul>
+<h2 id="组"><a href="#组" class="headerlink" title="组"></a>组</h2><p>在Linux中每个用户必须属于一个组，不能独立于组外。每个文件有所有者、所在组、其他组概念</p>
+<ol>
+<li>所有者</li>
+<li>所在组</li>
+<li>其他组</li>
+<li>改变用户所在组</li>
+</ol>
+<ul>
+<li>文件/目录所有者：<ul>
+<li>一般为文件的创建者，谁创建了该文件，就自然的称为该文件的所有者。</li>
+<li>查看文件所有者：ls -ahl</li>
+<li>修改文件所有者：chown (用户名) (文件名)</li>
+<li>文件所在组不一定是文件所有者。</li>
+</ul>
+</li>
+<li>组的创建<ul>
+<li>groupadd (组名)</li>
+</ul>
+</li>
+<li>文件/目录所在组<ul>
+<li>修改文件所在组：chgrp (组名) (文件名)</li>
+</ul>
+</li>
+<li>其他组<ul>
+<li>除文件的所有者和所在组的用户外，系统的其他用户都是文件的其他组</li>
+</ul>
+</li>
+<li>改变用户所在组<ul>
+<li>在添加用户时，可以指定将该用户添加到哪个组中，同样的用root的管理权限可以改变某个用户所在的组</li>
+<li>改变用户所在组：usermod -g 组名 用户名</li>
+<li>改变用户登录的初始目录：usermod -d 目录名 用户名</li>
+</ul>
+</li>
+</ul>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">-rw-r--r--.  1 zwj  root       0 4月   5 18:20 apple.txt<br></code></pre></td></tr></table></figure>
+
+<p>第0位是符号类型</p>
+<ul>
+<li><p>文件类型：</p>
+<ul>
+<li>-：普通类型</li>
+<li>d：目录</li>
+<li>l：软连接  相当于快捷方式</li>
+<li>c：字符设备【键盘、鼠标等】</li>
+<li>b：块文件【硬盘】</li>
+</ul>
+</li>
+<li><p>rw-：表示文件所有者权限（rw，读写）(第1-3位)</p>
+</li>
+<li><p>r–：表示文件所在组的用户的权限（r，只有读的权限）（第4-6位）</p>
+</li>
+<li><p>r–：表示文件其他组的用户的权限（r，只有读的权限）（第7-9位）</p>
+</li>
+<li><p>1：如果是文件，表示硬连接的数；如果是目录则表示该目录的子目录个数</p>
+</li>
+<li><p>zwj：文件所有者</p>
+</li>
+<li><p>root：文件所在组</p>
+</li>
+<li><p>0：文件的大小，0个字节；如果是目录，则统一为4096</p>
+</li>
+<li><p>July 1 13：40：文件最后的修改时间</p>
+</li>
+<li><p>apple.txt：文件名</p>
+</li>
+</ul>
+<ul>
+<li><p>rwx作用到文件：</p>
+<ul>
+<li>r：read，可读。读取查看。</li>
+<li>w：write，可以修改。但不代表可以删除该文件。删除一个文件的前提条件是对该文件所在的目录有写权限，才能删除该文件。</li>
+<li>x：execute，可执行。可以被执行。</li>
+</ul>
+</li>
+<li><p>rwx作用到目录：</p>
+<ul>
+<li>r：可以读取，ls查看目录内容。</li>
+<li>w：可以修改，目录内创建+删除+重命名目录。</li>
+<li>x：可执行，可以进入该目录。</li>
+</ul>
+</li>
+<li><p>修改权限 chmod</p>
+<ul>
+<li>修改文件或者目录的权限</li>
+<li>u：所有者；g：所在组；o：其他人；a：所有人（u、g、o的总和）</li>
+<li>chmod u=rwx，g=rx，o=x 文件目录名：分别权限</li>
+<li>chmod o+w 文件目录名：给其他人都增加写的权限</li>
+<li>chmod a-x 文件目录名：给所有的用户都减掉执行权限</li>
+</ul>
+</li>
+<li><p>通过数字变更权限</p>
+<ul>
+<li>规则：r=4 w=2 x=1 rwx=4+2+1=7</li>
+<li>chmod u=rwx，g=rx，o=x 文件目录名 <strong>等价于</strong> chmod 751 文件目录名</li>
+</ul>
+</li>
+<li><p>修改文件所有者 chown</p>
+<ul>
+<li>chown newowner file：改变文件的所有者</li>
+<li>chown newowner：newgroup file：改变文件的所有者和所在组</li>
+<li>-R：如果是目录，则使其下所有子文件或目录递归生效</li>
+</ul>
+</li>
+<li><p>修改文件所在组 chgrp</p>
+<ul>
+<li>chgrp newgroup file：改变文件的所有组</li>
+<li>-R：如果是目录，则使其下所</li>
+</ul>
+</li>
+</ul>
+<h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><ul>
+<li><p>rond任务调度：crontab进行定时任务调度</p>
+<ul>
+<li>crontab [选项]</li>
+<li>-e：编辑crontab定时任务</li>
+<li>-l：查询crontab任务</li>
+<li>-r：删除当前用户所有的crontab任务</li>
+<li>service crond restart：重启任务调度</li>
+<li>当保存退出后就生效了</li>
+</ul>
+<p><strong>快速入门</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"># 设置任务调度文件： <br>/etc/crontab<br><br>#设置个人任务调度,执行crontab -e命令，接着输入任务到调度文件，如：<br>*/1 * * * * ls -l /etc/ &gt; /tmp/to.txt     #每个* 之前有空格<br>意思是每小时的每分钟执行 ls -l /etc/ &gt; /tmp/to.txt 命令<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>含义</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一个“*”</td>
+<td>一小时当中的第几分钟</td>
+<td>0-59</td>
+</tr>
+<tr>
+<td>第二个“*”</td>
+<td>一天当中的第几小时</td>
+<td>0-23</td>
+</tr>
+<tr>
+<td>第三个“*”</td>
+<td>一个月当中的第几天</td>
+<td>1-31</td>
+</tr>
+<tr>
+<td>第四个“*”</td>
+<td>一年当中的第几月</td>
+<td>1-12</td>
+</tr>
+<tr>
+<td>第五个“*”</td>
+<td>一周当中的星期几</td>
+<td>0-7（0和7都代表星期日）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>特殊符号说明</p>
+<ul>
+<li><code>*</code>：代表任何时间。比如第一个<code>*</code>就代表一小时中每分钟都执行一次的意思。</li>
+<li><code>,</code>：代表不连续的时间。比如“0 8,12,16 * * *命令”，就代表在每天的8点0分，12点0分，16点0分都执行一次命令。</li>
+<li><code>-</code>：代表连续的时间范围。比如“0 5 * * 1-6命令”，代表在周一到周六的凌晨5点0分执行命令。</li>
+<li><code>*/n</code>：代表每隔多久执行一次。比如“*/10 * * * * 命令”，代表每隔10分钟就执行一遍命令。</li>
+</ul>
+<p>** 特定时间执行任务案例</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45 22 * * * 命令</td>
+<td>22点45分执行命令</td>
+</tr>
+<tr>
+<td>0 17 * * 1 命令</td>
+<td>每周一的17点执行</td>
+</tr>
+<tr>
+<td>0 5 1,15 * * 命令</td>
+<td>每月的1号和15号的5点执行</td>
+</tr>
+<tr>
+<td>40 4 * * 1-5 命令</td>
+<td>每周一到周五的4点40执行</td>
+</tr>
+<tr>
+<td>*/10 4 * * * 命令</td>
+<td>每天的4点每隔10分钟执行</td>
+</tr>
+<tr>
+<td>0 0 1,15 * 1 命令</td>
+<td>每月1号和15号、周一的零点执行，星期和几号最好不要同时出现</td>
+</tr>
+</tbody></table>
+<h3 id="at定时任务"><a href="#at定时任务" class="headerlink" title="at定时任务"></a>at定时任务</h3><blockquote>
+<ol>
+<li>at命令是一次性定时计划任务，at的守护进程atd会以后台模式运行，检查作业队列来运行。</li>
+<li>默认情况下，atd守护进程每60秒检查作业队列，有作业时，会检查作业运行时间，如果时间与当前时间匹配，则运行此作业。</li>
+<li>at命令是一次性定时计划任务，执行完一个任务后不再执行此任务了</li>
+<li>在使用at命令的时候，一定要保证atd进程的启动，可以使用相关指令来查看</li>
+<li>ps -ef | grep atd //可以检测atd是否在运行    ps - ef 可以查看所有运行的进程</li>
+</ol>
+</blockquote>
+<ul>
+<li>atq：查看当前任务</li>
+<li>atrm: 删除已经设置的任务，atrm 任务编号</li>
+</ul>
+<p><strong>案例</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"># 两分钟后把时间写到xx.log<br>at now + 2 minutes  回车<br>at&gt; date &gt; /home/xx.log   输入完按两次 Ctrl+D<br><br>#两天后的下午5点执行 /bin/li/home<br>at 5pm + 2 days   回车<br>at&gt; /bin/ls/home  输入完按两次 Ctrl+D<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h2><blockquote>
+<p>Linux来说无论有几个分区，分给哪一个目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构，Linux中每个分区都是用来组成整个文件系统的一部分。</p>
+<p>Linux采用了一种叫做“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录，且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。</p>
+</blockquote>
+<ul>
+<li><p>硬盘说明</p>
+<ul>
+<li>Linux硬盘分IDE硬盘和SCSI硬盘，目前基本上是SCSI硬盘</li>
+<li>lsblk -f：查看当前系统的分区和挂载情况。（list block）</li>
+<li>lsblk: 查看系统分区情况</li>
+</ul>
+</li>
+<li><p>新增硬盘的操作</p>
+<ul>
+<li>虚拟机添加硬盘</li>
+<li>分区：fdsk  /dev/sdb（sdb是新增加的硬盘的名字)</li>
+<li>格式化：mkfs -t ext4 /dev/sdb1  (sdb1是刚才分区的名字)</li>
+<li>挂载：新建目录：mkdir /home/newdisk；挂载：mount /dev/sdb1 /home/newdisk , ==将sdb1挂载到 /home/newdisk目录下，这样保存到 /home/newdisk目录下的文件就保存到 sdb1硬盘中==</li>
+<li>设置可以自动挂载（永久挂载）：重启系统后，仍然可以挂载。vim etc/fstab 增加挂载信息。mount -a：生效</li>
+<li>取消挂载：unmount /dev/sdb1</li>
+</ul>
+</li>
+<li><p>磁盘情况查询：</p>
+<ul>
+<li>查询系统整体磁盘使用情况：df -h 、  df -l</li>
+<li>查询指定目录的磁盘占用情况：du -h /目录，默认为当前目录<ul>
+<li>-s：指定目录占用大小汇总</li>
+<li>-h：带计量单位</li>
+<li>-a：含文件</li>
+<li>–max-depth=1：子目录深度</li>
+<li>-c：列出明细的同时，增加汇总值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>磁盘情况-工作实用指令</p>
+<ol>
+<li>统计/home文件夹下文件的个数：<code>ls -l /home | grep &quot;^-&quot; | wc -l</code>  <strong>wc的功能是进行统计，“^-” 是正则表达式，以-开头的</strong></li>
+<li>统计/home文件夹下目录的个数：<code>ls -l /home | grep &quot;^d&quot; | wc -l</code></li>
+<li>统计/home文件夹下文件的个数，包括子文件夹里的：<code>ls -lR /home | grep &quot;^-&quot; | wc -l</code></li>
+<li>统计文件夹下目录的个数，包括子文件夹里的：<code>ls -lR /home | grep &quot;^d&quot; | wc -l</code></li>
+<li>以树状显示目录结构：首先安装tree指令：yum install tree，tree</li>
+</ol>
+</li>
+</ul>
+<h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><ul>
+<li>指定固定IP：直接修改配置文件来指定IP，并可以连接到外网，编辑：vim /etc/sysconfig/network-scripts/ifcfg-eth33。修改如下只<ul>
+<li>BOOTPROTO=static  <em>静态分配</em></li>
+<li>IPADDR= 192.168.200.139  <em>ip地址</em></li>
+<li>GETWAY=192.168.200.2<em>网关</em></li>
+<li>DNS1=192.168.200.2 <em>域名解析器</em></li>
+<li>重启网络服务 （service network restart)  或重启系统生效(reboot)</li>
+</ul>
+</li>
+<li>设置主机名 : vim/etc/hostname</li>
+<li>查看主机名:hostname</li>
+<li>设置ip和主机名的映射关系<ul>
+<li>windows:  C:\windows\System2\drivers\etc\hosts，添加映射关系</li>
+<li>linux：在etc/hosts 文件中添加</li>
+</ul>
+</li>
+</ul>
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><ul>
+<li><p>在Linux中，每个执行的<strong>程序（代码）</strong>都称为一个进程。每个进程都分配一个ID号</p>
+</li>
+<li><p>每一个进程，都会对应一个父进程，而这个父进程可以复制多个子进程。例如www服务器。</p>
+</li>
+<li><p>每个进程都可能以两种方式存在：前台和后台</p>
+<ul>
+<li>前台进程：用户目前的屏幕上可以进行操作的。</li>
+<li>后台进程：实际在操作，但由于屏幕上无法看到的进程，通常使用后台方式执行。</li>
+</ul>
+</li>
+<li><p>一般系统的服务都是以后台进程的方式存在，而且都会常驻在系统中，直到关机才结束。</p>
+</li>
+<li><p>显示系统执行的进程</p>
+<ul>
+<li>ps：查看目前系统中，有哪些正在执行，以及它们执行的状况。可以不加任何参数。PID：进程识别号；TTY：终端机号；TIME：此进程所消耗的CPU时间；CMD：正在执行的命令或进程名</li>
+<li>ps -a：显示当前终端的所有进程信息。</li>
+<li>ps -u：以用户的格式显示进程信息。</li>
+<li>ps -x：显示后台进程运行的参数。</li>
+<li>ps -axu | grep xxx：过滤得到xxx的信息。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml">System V展示风格<br><br>USER:用户名称<br><br>PID:进程号<br><br>%CPU:进程占用CPU的百分比<br><br>%MEM:进程占用物理内存的百分比<br><br>VSZ:进程占用的虚拟内存大小（单位:KB)<br><br>RSS:进程占用的物理内存大小(单位:KB)<br><br>TT:终端名称,缩写<br><br>STAT:进程状态，其中S-睡眠,s-表示该进程是会话的先导进程，N-表示进程拥有比普通优先级更低的优先级，R-正在运行，D-短期等待，Z-僵死进程，T-被跟踪或者被停止等等<br><br>STARTED:进程的启动时间<br><br>TIME:CPU时间，即进程使用CPU的总时间<br><br>COMMAND:启动进程所用的命令和参数，如果过长会被截断显示<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>ps -ef：以全格式显示当前所有的进程，查看进程的父进程。</li>
+<li>-e：显示所有进程。</li>
+<li>-f：全格式。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml">UID:用户ID<br><br>PID:进程ID<br><br>PPID:父进程ID<br><br>C: CPU用于计算执行优先级的因子。数值越大，表明进程是CPU密集型运算，执行优先级会降低;数值越小，表明进程是IO密集型运算，执行优先级会提高<br><br>STIME:进程启动的时间<br><br>TTY:完整的终端名称<br><br>TIME:CPU时间<br><br>CMD:启动进程所用的命令和参数<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>终止进程</p>
+<ul>
+<li>kill [选项] 进程号：通过进程号杀死进程</li>
+<li>killall 进程名称：通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变得很慢时很有用</li>
+<li>-9：表示强迫进程立刻停止</li>
+<li>案例1：踢掉非法用户：kill 进程号</li>
+<li>案例2：终止远程登录服务sshd，在适当时候再次重启sshd服务  :kill sshd对应的进程号， 重启： /bin/systemctl start sshd.service</li>
+<li>案例3：终止多个gedit编辑器：killall 进程名称</li>
+<li>案例4：强制杀掉一个终端：kill -9 进程号</li>
+</ul>
+</li>
+<li><p>查看进程树：pstree [选项]</p>
+<ul>
+<li>-p：显示进程的PID</li>
+<li>-u：显示进程的所属用户</li>
+</ul>
+</li>
+</ul>
+<h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><ul>
+<li><p>service管理指令：service 服务名 [start | stop | restart | reload | status]</p>
+</li>
+<li><p>在CentOS7.0之后，不再使用service，而是systemctl</p>
+</li>
+<li><p>查看防火墙情况：</p>
+<ul>
+<li>service iptables status</li>
+<li>systemctl status firewalld（7.0之后的版本）</li>
+</ul>
+</li>
+<li><p>运行级别：通常使用3和5，3是无图形界面，5有图形化界面</p>
+<ul>
+<li>查看或修改默认级别：vim /etc/inittab</li>
+<li>systemctl get-default 查看当前的运行级别</li>
+<li>systemctl set-default TARGENT.target 设置当前运行级别为3</li>
+</ul>
+</li>
+<li><p>chkconfig：可以给每个服务的各个运行级别设置自启动/关闭</p>
+<ul>
+<li>查看xxx服务：chkconfig –list | grep xxx</li>
+<li>查看服务的状态：chkconfig 服务名 –list</li>
+<li>给服务的运行级别设置自启动：chkconfig –level 5 服务名 on/off</li>
+<li>要所有运行级别关闭或开启：chkconfig 服务名 on/off</li>
+</ul>
+</li>
+<li><p>systemctl管理指令</p>
+<ul>
+<li>基本语法:systemctl [start | stop | restart | status]服务名</li>
+<li>systemctl指令管理的服务在/usr/lib/systemd/system查看</li>
+<li>systemctl设置服务的自启动状态</li>
+<li>systemctl list-unit-files [l grep 服务名](查看服务开机启动状态, grep可以进行过滤)</li>
+<li>systemctl enable服务名(设置服务开机启动)</li>
+<li>systemctl disable 服务名(关闭服务开机启动)</li>
+<li>systemctl is-enabled服务名(查询某个服务是否是自启动的)</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml">systemctl status firewalld   #查看firewalld的状况<br>systemctl stop firewalld   #关闭防火墙<br>systemctl start firewalld #重启防火墙<br><br>#以上命令指示临时生效，当系统重启后还是回归以前的配置<br>#如果需要永久生效，使用systemctl [enable|disable] 服务名   进行修改 <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>windows 在 cmd下使用 telnet ip  端口号 可以连接端口</li>
+</ul>
+</li>
+<li><p>端口设置</p>
+<ul>
+<li>打开端口：<code>firewall-cmd --permanent --add-port=端口号/协议</code>  如：<code>firewall-cmd --permanent --add-port=111/tcp</code></li>
+<li>关闭端口：<code>firewall-cmd --permanent --remove-port-端口号/协议</code>   如：<code>frewall-cmd --permanent --remove-port=111/tcp</code></li>
+<li>重新载入之后上面的操作才能够生效：<code>firewall-cmd --reload</code></li>
+<li>查询端口是否开放： <code>firewall-cmd --query-port=端口号/协议</code></li>
+<li>查看开放的所有端口：<code>firewall-cmd --zone=public --list-ports</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="动态监控进程"><a href="#动态监控进程" class="headerlink" title="动态监控进程"></a>动态监控进程</h2><blockquote>
+<p>top和ps命令很相似。它们都用来显示正在执行的进程。top和ps最大的不同之处在于top在执行一段时间可以更新正在运行的进程。</p>
+</blockquote>
+<ul>
+<li>top [选项]<ul>
+<li>-d 秒数：指定top命令每隔几秒更新。默认是3秒。</li>
+<li>-i：使top不显示任何闲置或者僵死进程。</li>
+<li>-p：通过指定监控进程ID来仅仅监控某个进程的状态。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml">PID：进程号 <br><br>USER：进程所有者的用户名 ( 该 process 所属的使用者 )<br><br>PR：进程的优先级别 ( Priority 的简写，程序的优先执行顺序，越小越早被执行 )<br><br>NI：进程的优先级别数值 ( Nice 的简写，与 Priority 有关，也是越小越早被执行 )<br><br>VIRT：进程占用的虚拟内存值。<br><br>RES：进程占用的物理内存值。<br><br>SHR：进程使用的共享内存值。<br><br>S：进程的状态，其中S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值是负数。<br><br>%CPU：该进程占用的CPU使用率。<br><br>%MEM：该进程占用的物理内存和总内存的百分比。<br><br>TIME＋：该进程启动后占用的总的CPU时间 ( CPU 使用时间的累加 )<br><br>Command：进程启动的启动命令名称，如果这一行显示不下，进程会有一个完整的命令行。<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>交互操作说明：(在top界面按下对应的选型)<ul>
+<li>P：以CPU使用率排序，默认就是此项</li>
+<li>M：以内存的使用率排序</li>
+<li>N：以PID排序</li>
+<li>q：退出top</li>
+</ul>
+</li>
+<li>案例1：监控特定用户：==top查看进程；u输入用户名。==</li>
+<li>案例2：终止指定的进程：==top查看进程；k输入要结束的进程号。==</li>
+<li>案例3：指定系统状态更新的时间（每隔10秒自动更新，默认是3秒）：top -d 10</li>
+</ul>
+<h2 id="监控网络状态"><a href="#监控网络状态" class="headerlink" title="监控网络状态"></a>监控网络状态</h2><ul>
+<li>netstat [选项]<ul>
+<li>-an：按一定顺序排列输出</li>
+<li>-p：显示哪个进程在调用</li>
+</ul>
+</li>
+</ul>
+<h2 id="rpm"><a href="#rpm" class="headerlink" title="rpm"></a>rpm</h2><blockquote>
+<p>rpm用于互联网下载包的打包及安装工具，它包含在某些Linux分发版中。它生成只有.RPM扩展名的文件。RPM是RedHat Package Manager( RedHat软件包管理工具)的缩写，类似windows的setup.exe，这一文件格式名称虽然打上了RedHat的标志，但理念是通用的。</p>
+<p>Linux的分发版本都有采用(suse,redhat, centos等等），可以算是公认的行业标准了.</p>
+</blockquote>
+<ul>
+<li>rpm包的查询指令：<ul>
+<li>rpm -qa：查询所安装的所有rpm软件包</li>
+<li>rpm -qa | more</li>
+<li>rpm -qa | grep xx</li>
+<li>rpm -q xx：查询xx软件包是否安装</li>
+<li>rpm -qi xx：查询软件包信息</li>
+<li>rpm -ql xx：查询软件包中的文件</li>
+<li>rpm -qf 文件全路径名：查询文件所属的软件包</li>
+</ul>
+</li>
+<li>卸载rpm包：rpm -e 软件包名称<ul>
+<li>删除时可能会发生依赖错误，忽视依赖强制删除的方法：rpm -e –nodeps 软件包名称</li>
+</ul>
+</li>
+<li>安装rpm包：rpm -ivh 软件包全路径名称<ul>
+<li>i=install：安装</li>
+<li>v=verbose：提示</li>
+<li>h=hash：进度条</li>
+</ul>
+</li>
+</ul>
+<h2 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h2><blockquote>
+<p>Yum是一个Shell前端软件包管理器。基于RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包。</p>
+</blockquote>
+<ul>
+<li>yum list | grep xx：查询yum服务器是否有需要安装的软件</li>
+<li>yum install xx：安装指定的yum包</li>
+<li>yum -y remove xx：卸载指定的yum包</li>
+</ul>
+<h2 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h2><ol>
+<li><p>使用windows下载jdk1.8的压缩包，使用xftp传输给linux  <em>通常保存到/opt/xxx下</em></p>
+</li>
+<li><p>使用 <code>tar -zxvf xxx</code>解压文件</p>
+</li>
+<li><p>将压缩文件移动到<code>/usr/local/xxx</code>文件夹下,<em>最好先在usr/local下创建文件夹，再使用mv移动文件夹</em></p>
+</li>
+<li><p>配置环境变量 ：<code>vim /etc/profile</code>,添加如下命令:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml">export JAVA_HOME=/usr/local/java/jdk1.8.0_321    #jdk1.8.0_321为你自己的文件夹名字<br>export PATH=$JAVA_HOME/bin:$PATH<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>source /etc/profile</code>让刚才配置的环境变量生效</p>
+</li>
+<li><p>使用<code>echo $PATH</code>可以查看配置的环境变量是否生效</p>
+</li>
+</ol>
+<h2 id="shell编程"><a href="#shell编程" class="headerlink" title="shell编程"></a>shell编程</h2><blockquote>
+<p>Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便裕兴程序的界面系统级程序，用户可以用Shell来启动、挂起、停止甚至是编写一些程序。</p>
+</blockquote>
+<h3 id="Shell脚本的执行方式："><a href="#Shell脚本的执行方式：" class="headerlink" title="Shell脚本的执行方式："></a>Shell脚本的执行方式：</h3><ul>
+<li>脚本格式要求：<ul>
+<li>脚本以#!/bin/bash 开头</li>
+<li>脚本需要有可执行权限</li>
+</ul>
+</li>
+<li>脚本的常用执行方式：<ul>
+<li>方式1（输入脚本的绝对路径或相对路径）<ul>
+<li>首先要赋予xx.sh脚本的+x权限：chmod 744 myShell.sh</li>
+<li>执行脚本：./myShell.sh</li>
+</ul>
+</li>
+<li>方式2（sh+脚本）：<ul>
+<li>说明：不用赋予+x权限，直接执行即可</li>
+<li>sh ./myShell.sh</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="shell的变量"><a href="#shell的变量" class="headerlink" title="shell的变量"></a>shell的变量</h3><ul>
+<li><p>shell变量的介绍</p>
+<ul>
+<li>Linux Shell的变量分为，系统变量和用户自定义变量</li>
+<li>系统变量：<code>$HOME</code>、<code>$PWD</code>、<code>$SHELL</code>、<code>$USER</code>等等</li>
+<li>显示当前shell中所有变量：set</li>
+</ul>
+</li>
+<li><p>shell变量的定义</p>
+<ul>
+<li><p>基本语法</p>
+<p>定义变量：变量名=值，**=两边不能有空格**</p>
+<p>撤销变量：unset 变量名</p>
+<p>声明静态变量：readonly 变量，注意：不能unset</p>
+<p>输出变量： $变量名</p>
+</li>
+</ul>
+</li>
+<li><p>定义变量的规则</p>
+<ul>
+<li>变量名称可以由字母、数字和下划线组成，但是不能以数字开头</li>
+<li>等号两侧不能有空格</li>
+<li>变量名称一般习惯为大写</li>
+</ul>
+</li>
+<li><p>将命令的返回值赋给变量</p>
+<ul>
+<li>A=`date`，使用反引号，运行里面的命令，并把结果返回给变量A</li>
+<li>A=$(date)等价于上面</li>
+</ul>
+</li>
+</ul>
+<h3 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h3><ul>
+<li><p>基本语法</p>
+<ul>
+<li><p>export 变量名=变量值：将shell变量输出为环境变量/全局变量</p>
+</li>
+<li><p>source 配置文件：让修改后的配置文件信息立即生效</p>
+</li>
+<li><p>echo $变量名：查询环境变量的值</p>
+</li>
+<li><p>多行注释：</p>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">:&lt;&lt;!<br>需要注释的内容<br>!<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="位置参数变量"><a href="#位置参数变量" class="headerlink" title="位置参数变量"></a>位置参数变量</h3><blockquote>
+<p>当我们执行一个shell脚本时，如果希望获取到命令行的参数信息就可以使用到位置参数变量。比如： ./myshell.sh 100 200，这个就是一个执行shell的命令行，可以在myshell脚本中传参100，200。</p>
+</blockquote>
+<ul>
+<li>基本语法：<ul>
+<li><code>$n</code>：n为数字，<code>$0</code>代表命令本身，<code>$1-$9</code>代表第一到第九个参数，10以上的参数需要用大括号包含，如<code>$&#123;10&#125;</code></li>
+<li><code>$*</code>：这个变量代表命令行中所有的参数，<code>$*</code>把所有的参数看成一个整体</li>
+<li><code>$@</code>：这个变量也代表命令行中所有的参数，不过<code>$@</code>把每个参数区分对待</li>
+<li><code>$#</code>：这个变量代表命令行中所有参数的个数</li>
+</ul>
+</li>
+</ul>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><ul>
+<li>shell设计者事先已经定义好的变量，可以直接在shell脚本中使用</li>
+<li>基本语法：<ul>
+<li><code>$$</code>：当前进程的进程号（PID）</li>
+<li><code>$!</code>：后台运行的最后一个进程的进程号（PID）</li>
+<li><code>$?</code>：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确。</li>
+<li>后台运行：./myShell.sh &amp;</li>
+</ul>
+</li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li>在Shell中进行各种运算操作</li>
+<li>“<code>$</code>((运算式))”或“<code>$</code>[运算时]”</li>
+<li>expr m + n，注意expr运算符间要有空格</li>
+<li>expr m - n</li>
+<li>expr <code>\*</code> / %，乘，除，取余</li>
+</ul>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><ul>
+<li>基本语法：[ condition ]，<strong>注意condition前后有空格！</strong></li>
+<li>非空返回true，可使用$?验证（0为true，&gt;1为false）</li>
+<li>两个整数比较<ul>
+<li>=：字符串比较</li>
+<li>-lt：小于</li>
+<li>-le：小于等于</li>
+<li>-eq：等于</li>
+<li>-gt：大于</li>
+<li>-ge：大于等于</li>
+<li>-ne：不等于</li>
+</ul>
+</li>
+<li>按照文件权限进行判断<ul>
+<li>-r：有读的权限</li>
+<li>-w：有写的权限</li>
+<li>-x：有执行的权限</li>
+</ul>
+</li>
+<li>按照文件类型进行判断<ul>
+<li>-f：文件存在并且是一个常规的文件</li>
+<li>-e：文件存在</li>
+<li>-d：文件存在并且是一个目录</li>
+</ul>
+</li>
+</ul>
+<h3 id="流程控制if语句"><a href="#流程控制if语句" class="headerlink" title="流程控制if语句"></a>流程控制if语句</h3><ul>
+<li><p>if判断基本语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">if [ 条件判断式 ]<br>then<br>	代码<br>fi<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>或者：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">if [ 条件判断式 ]<br><br> then<br>	程序<br>elif [ 条件判断式 ]<br>then<br>	程序<br>fi<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="流程控制case语句"><a href="#流程控制case语句" class="headerlink" title="流程控制case语句"></a>流程控制case语句</h3><ul>
+<li><p>case语句基本语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">case $变量名 in<br><br>“值1”)<br><br>	如果变量的值等于值1，则执行程序1<br><br>;;<br><br>“值2”)<br><br>	如果变量的值等于值2，则执行程序2<br><br>;;<br><br>…省略其他分支…<br><br>*)<br><br>如果变量的值都不是以上的值，则执行此程序<br><br>;;<br><br>esac<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="流程控制for循环"><a href="#流程控制for循环" class="headerlink" title="流程控制for循环"></a>流程控制for循环</h3><ul>
+<li><p>for循环基本语法1：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">for 变量 in 值1 值2 值3…<br><br> do<br><br> 程序<br><br> done<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>for循环基本语法2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shel">for ((初始值;循环控制条件;变量变化))<br><br> do<br><br> 程序<br><br> done<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="流程控制while循环"><a href="#流程控制while循环" class="headerlink" title="流程控制while循环"></a>流程控制while循环</h3><ul>
+<li><p>while循环基本语法1：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">while [ 条件判断式 ]     #条件判断和括号之间有空格<br><br> do<br><br> 程序<br><br> done<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="read读取控制台的输入"><a href="#read读取控制台的输入" class="headerlink" title="read读取控制台的输入"></a>read读取控制台的输入</h3><ul>
+<li>read [选项] (参数)</li>
+<li>-p：指定读取值时的提示符</li>
+<li>-t：指定读取值时等待的时间（秒），如果没有在指定的时间内输入，就不再等待了。</li>
+<li>参数：变量：指定读取值的变量名</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
+<li><p>系统函数</p>
+<ul>
+<li>basename：<strong>返回完整路径最后/的部分，常用于获取文件名</strong><ul>
+<li>basename [pathname] [suffix]</li>
+<li>basename [string] [suffix]</li>
+<li>basename命令会删掉所有的前缀包括最后一个/</li>
+<li>选项：suffix为后缀，如果suffix被指定了，basename会将pathname或string中的suffix去掉</li>
+</ul>
+</li>
+<li>dirname：返回完整路径最后/的前面的部分，常用于返回路径部分<ul>
+<li>dirname 文件绝对路径：从给定的包含绝对路径的文件名中出去文件名（非目录部分），然后返回剩下的路径（目录部分）</li>
+</ul>
+</li>
+<li><strong>反正两个系统函数都不要最后一个/</strong></li>
+</ul>
+</li>
+<li><p>自定义函数</p>
+<ul>
+<li><p>基本语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">function funname()<br><br>&#123;<br><br> Action;<br><br> [return int;]<br><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>调用直接写函数名：funname（不用写括号），然后在后面写参数</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h1><blockquote>
+<p>日志文件是重要的系统信息文件，其中记录了许多重要的系统事件，包括用户的登录信息、系统的启动信息、系统的安全信息、邮件相关信息、各种服务相关信息等。这些信息有些非常敏感，所以在 Linux 中这些日志文件只有 root 用户可以读取。<br>日志对于安全来说也很重要，它记录了系统每天发生的各种事情，通过日志来检查错误发生的原因，或者受到攻击时攻击者留下的痕迹。<br>可以这样理解日志是用来记录重大事件的工具。</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<ul>
+<li>基本介绍<br>日志文件是重要的系统信息文件，其中记录了许多重要的系统事件，包括用户的登录信息、系统的启动信息、系统的安全信息、邮件相关信息、各种服务相关信息等。这些信息有些非常敏感，所以在 Linux 中这些日志文件只有 root 用户可以读取。<br>日志对于安全来说也很重要，它记录了系统每天发生的各种事情，通过日志来检查错误发生的原因，或者受到攻击时攻击者留下的痕迹。<br>可以这样理解日志是用来记录重大事件的工具。</li>
+<li>系统常用的日志<br>/var/log/ 目录就是系统日志文件的保存位置</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">日志文件</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">/var/log/boot.log</td>
+<td align="center">系统启动日志</td>
+</tr>
+<tr>
+<td align="center">/var/log/cron</td>
+<td align="center">记录与系统定时任务相关的日志</td>
+</tr>
+<tr>
+<td align="center">/var/log/cups/</td>
+<td align="center">记录打印信息的曰志</td>
+</tr>
+<tr>
+<td align="center">/var/log/dmesg</td>
+<td align="center">记录了系统在开机时内核自检的信总。也可以使用 dmesg 命令直接查看内核自检信息</td>
+</tr>
+<tr>
+<td align="center">/var/log/btmp</td>
+<td align="center">记录错误登陆的日志。这个文件是二进制文件，不能直接用Vi查看，而要使用 lastb 命令查看</td>
+</tr>
+<tr>
+<td align="center">/var/log/lasllog</td>
+<td align="center">记录系统中所有用户最后一次的登录时间的曰志。这个文件也是二进制文件。不能直接用Vi查看，而要使用lastlog命令查看</td>
+</tr>
+<tr>
+<td align="center">/var/log/mailog</td>
+<td align="center">记录邮件信息的日志</td>
+</tr>
+<tr>
+<td align="center">/var/log/message</td>
+<td align="center">记录系统里要佶息的日志.这个日志文件中会记录 Linux 系统的绝大多数重要信息。如果系统出现问题，首先要检查的应该就是这个日志文件</td>
+</tr>
+<tr>
+<td align="center">/var/log/secure</td>
+<td align="center">记录验证和授权方面的倍息，只要涉及账户和密码的程序都会记录，比如系统的登录、ssh 的登录、su 切换用户，sudo 授权，甚至添加用户和修改用户密码都会记录在这个日志文件中</td>
+</tr>
+<tr>
+<td align="center">/var/log/wtmp</td>
+<td align="center">永久记录所有用户的登陆、注销信息，同时记录系统的后动、重启、关机事件。同样，这个文件也是二进制文件.不能直接用Vi查看，而要使用 last 命令查看</td>
+</tr>
+<tr>
+<td align="center">/var/tun/ulmp</td>
+<td align="center">记录当前已经登录的用户的信息。这个文件会随着用户的登录和注销而不断变化，只记录当前登录用户的信息。同样，这个文件不能直接用Vi查看，而要使用 w、who、users 等命令查看</td>
+</tr>
+<tr>
+<td align="center">除系统默认的日志之外，采用 RPM 包方式安装的系统服务也会默认把日志记录在 /var/log/ 目录中（源码包安装的服务日志存放在源码包指定的目录中）。不过这些日志不是由 rsyslogd 服务来记录和管理的，而是各个服务使用自己的日志管理文档来记录自身的日志。以下介绍的日志目录在你的 Linux 上不一定存在，只有安装了相应的服务，日志才会出现。</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">日志文件</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">/var/log/httpd/</td>
+<td align="center">RPM 包安装的apache取务的默认日志目录</td>
+</tr>
+<tr>
+<td align="center">/var/log/mail/</td>
+<td align="center">RPM 包安装的邮件服务的额外日志因录</td>
+</tr>
+<tr>
+<td align="center">/var/log/samba/</td>
+<td align="center">RPM色安装的Samba服务的日志目录</td>
+</tr>
+<tr>
+<td align="center">/var/log/sssd/</td>
+<td align="center">守护进程安全服务目录</td>
+</tr>
+</tbody></table>
+</blockquote>
+<ul>
+<li><strong>日志管理服务 rsyslogd</strong></li>
+</ul>
+<blockquote>
+<p>CentOS 7.6日志服务是 rsyslogd，CentOS 6.x 日志服务是 syslogd，rsyslogd 功能更强大。rsyslogd 的使用、日志文件的格式，和 syslogd 服务兼容的。</p>
+<ul>
+<li>查询 Linux 中的 rsyslogd 服务是否启动<ul>
+<li>ps aux | grep “rsyslog” | grep -v “grep”</li>
+</ul>
+</li>
+<li>查询 rsyslogd 服务的自启动状态<ul>
+<li>systemctl list-unit-files | grep rsyslog</li>
+</ul>
+</li>
+<li>配置文件：/etc/rsyslog.conf<ul>
+<li>编辑文件时的格式：*.*，其中第一个 * 代表日志类型，第二个 * 代表日志类别</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">日志类型</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">auth</td>
+<td align="center">安全和认证相关消息，pam 产生的日志（不推荐使用 authpriv 替代）</td>
+</tr>
+<tr>
+<td align="center">authpirv</td>
+<td align="center">安全和认证相关信息，ssh、ftp 等登录信息的验证信息（私有的）</td>
+</tr>
+<tr>
+<td align="center">cron</td>
+<td align="center">系统定时任务 crond 和 at 产生的日志</td>
+</tr>
+<tr>
+<td align="center">daemon</td>
+<td align="center">和各个守护进程相关的日志</td>
+</tr>
+<tr>
+<td align="center">ftp</td>
+<td align="center">ftp 守护进程产生的日志</td>
+</tr>
+<tr>
+<td align="center">kern</td>
+<td align="center">内核产生的日志（不是用户进程产生的）</td>
+</tr>
+<tr>
+<td align="center">lpr</td>
+<td align="center">打印产生的日志</td>
+</tr>
+<tr>
+<td align="center">mail</td>
+<td align="center">邮件收发信息</td>
+</tr>
+<tr>
+<td align="center">news</td>
+<td align="center">与新闻服务器相关的日志</td>
+</tr>
+<tr>
+<td align="center">syslog</td>
+<td align="center">有syslogd服务产生的日志信息（虽然服务名称已经改了 rsyslogd 服务，但是很多配置都还是沿用了 syslogd 的，这里并没有修改服务名）</td>
+</tr>
+<tr>
+<td align="center">user</td>
+<td align="center">用户等级类别的日志信息</td>
+</tr>
+<tr>
+<td align="center">uucp</td>
+<td align="center">uucp 子系统的日志信息，uucp 时早期 Linux 系统进行数据传递的协议，后来也经常用在新闻组服务中</td>
+</tr>
+<tr>
+<td align="center">local0-local7</td>
+<td align="center">为本地使用预留的服务</td>
+</tr>
+</tbody></table>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">日志级别</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">debug</td>
+<td align="center">一般的调试信息说明，日志通信最多</td>
+</tr>
+<tr>
+<td align="center">info</td>
+<td align="center">基本的通知信息</td>
+</tr>
+<tr>
+<td align="center">notice</td>
+<td align="center">普通信息，但是有一定的重要性</td>
+</tr>
+<tr>
+<td align="center">warning</td>
+<td align="center">警告信息，但是还不会影响到服务或系统的运行</td>
+</tr>
+<tr>
+<td align="center">err</td>
+<td align="center">错误信息，一般达到 err 等级的信息已经可以影响到服务或系统的运行了</td>
+</tr>
+<tr>
+<td align="center">crit</td>
+<td align="center">严重错误信息，比 err 等级还要严重，系统或整个软件不能正常工作</td>
+</tr>
+<tr>
+<td align="center">alert</td>
+<td align="center">需要立刻修改的信息，比 crit 还要严重，必须立即采取行动</td>
+</tr>
+<tr>
+<td align="center">emerg</td>
+<td align="center">内核崩溃等重要信息，系统已经无法使用了</td>
+</tr>
+<tr>
+<td align="center">none</td>
+<td align="center">什么都不记录</td>
+</tr>
+<tr>
+<td align="center">注意：日志级别从上到下，级别从低到高，记录信息越来越少，优先处理的等级就越高，危害就越大。</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+</blockquote>
+</blockquote>
+<ul>
+<li><p>由日志服务 rsyslogd 记录的日志文件，日志文件的格式包含以下4列：</p>
+<ul>
+<li>事件产生的时间</li>
+<li>发生事件的服务器的主机名</li>
+<li>产生事件的服务名或程序名</li>
+<li>事件的具体信息</li>
+</ul>
+</li>
+<li><p>日志管理服务应用实例</p>
+<p>在 /etc/rsyslog.conf 中添加一个日志文件 /var/log/hsp.log，当有事件发送时，该文件会接收到信息并保存。</p>
+<ul>
+<li>在 /etc/rsyslog.conf 文件中增加如下命令</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">*.*                         <span class="hljs-regexp">/var/</span>log/hsp.log<br></code></pre></td></tr></table></figure>
+</blockquote>
+</blockquote>
+<ul>
+<li>新建 /var/log/hsp.log 文件，重启系统，再查看该文件内容。</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>日志轮替</strong></li>
+</ul>
+<blockquote>
+<ul>
+<li><p>基本介绍</p>
+<ul>
+<li>日志是重要的系统文件，记录和保存了系统中所有的重要事件。但是日志文件也需要进行定期的维护，因为日志文件是不断增长的，如果完全不进行日志维护，而任由其随意递增，那么用不了多久，我们的硬盘就会被写满。</li>
+<li>日志维护的最主要的工作就是把旧的日志文件删除，从而腾出空间保存新的日志文件。这项工作如果靠管理员手工来完成，那其实是非常烦琐的，而且也容易忘记。那么 Linux 系统是否可以自动完成日志的轮替工作呢？</li>
+<li>logrotate 就是用来进行日志轮替（也叫日志转储）的，也就是把旧的日志文件移动并改名，同时创建一个新的空日志文件用来记录新日志，当旧日志文件超出保存的范围时就删除。</li>
+</ul>
+</li>
+<li><p>日志轮替文件的命名规则</p>
+<ul>
+<li>日志轮替最主要的作用就是把旧的日志文件移动并改名，同时建立新的空日志文件，当旧日志文件超出保存的范围时就删除。那么，旧的日志文件改名之后，如何命名呢？主要依靠 /etc/logrotate.conf 配置文件中的“dateext”参数。</li>
+<li>如果配置文件中有“dateext”参数，那么日志会用日期来作为日志文件的后缀，如“secure-20130605”。这样日志文件名不会重叠，也就不需要对日志文件进行改名，只需要保存指定的日志个数，删除多余的日志文件即可。</li>
+<li>如果配置文件中没有“dateext”参数，那么日志文件就需要进行改名了。当第一次进行日志轮替时，当前的“secure”日志会自动改名为“secure.1”，然后新建“secure”日志，用来保存新的日志；当第二次进行日志轮替时，“secure.1”会自动改名为“secure.2”，当前的“secure”日志会自动改名为“secure.1”，然后也会新建“secure”日志，用来保存新的日志；以此类推。</li>
+</ul>
+</li>
+<li><p>配置文件：/etc/logrotate.conf</p>
+<p>可以设置全局的日志轮替规则，当然也可以单独给某个日志文件指定策略。</p>
+<p>在这个配置文件中，主要分为三部分：</p>
+<ul>
+<li>第一部分是默认设置，如果需要转储的日志文件没有特殊配置，则遵循默认设置的参数；</li>
+<li>第二部分是读取 /etc/logrotate.d/ 目录中的日志轮替的子配置文件，也就是说，在 /etc/logrotate.d/ 目录中的所有符合语法规则的子配置文件也会进行日志轮替；</li>
+<li>第三部分是对 wtmp 和 btmp 日志文件的轮替进行设定，如果此设定和默认参数冲突，则当前设定生效（如 wtmp 的当前参数设定的轮替时间是每月，而默认参数的轮替时间是每周，则对 wtmp 这个日志文件来说，轮替时间是每月，当前的设定参数生效）。</li>
+</ul>
+</li>
+<li><p>logrotate 配置文件的主要参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">daily</td>
+<td align="center">日志的轮替周期是毎天</td>
+</tr>
+<tr>
+<td align="center">weekly</td>
+<td align="center">日志的轮替周期是每周</td>
+</tr>
+<tr>
+<td align="center">monthly</td>
+<td align="center">日志的轮控周期是每月</td>
+</tr>
+<tr>
+<td align="center">rotate 数宇</td>
+<td align="center">保留的日志文件的个数。0指没有备份</td>
+</tr>
+<tr>
+<td align="center">compress</td>
+<td align="center">当进行日志轮替时，对旧的日志进行压缩</td>
+</tr>
+<tr>
+<td align="center">create mode owner group</td>
+<td align="center">建立新日志，同时指定新日志的权限与所有者和所属组。如 create 0600 root utmp</td>
+</tr>
+<tr>
+<td align="center">mail address</td>
+<td align="center">当进行日志轮替时.输出内存通过邮件发送到指定的邮件地址</td>
+</tr>
+<tr>
+<td align="center">missingok</td>
+<td align="center">如果日志不存在，则忽略该日志的警告信息</td>
+</tr>
+<tr>
+<td align="center">nolifempty</td>
+<td align="center">如果曰志为空文件，則不进行日志轮替</td>
+</tr>
+<tr>
+<td align="center">minsize 大小</td>
+<td align="center">日志轮替的最小值。也就是日志一定要达到这个最小值才会进行轮持，否则就算时间达到也不进行轮替</td>
+</tr>
+<tr>
+<td align="center">size 大小</td>
+<td align="center">日志只有大于指定大小才进行日志轮替，而不是按照时间轮替，如 size 100k</td>
+</tr>
+<tr>
+<td align="center">dateext</td>
+<td align="center">使用日期作为日志轮替文件的后缀，如 secure-20130605</td>
+</tr>
+<tr>
+<td align="center">sharedscripts</td>
+<td align="center">在此关键宇之后的脚本只执行一次</td>
+</tr>
+<tr>
+<td align="center">prerotate/cndscript</td>
+<td align="center">在日志轮替之前执行脚本命令。endscript 标识 prerotate 脚本结束</td>
+</tr>
+<tr>
+<td align="center">postrolaie/endscripl</td>
+<td align="center">在日志轮替之后执行脚本命令。endscripi 标识 postrotate 脚本结束</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>把自己的日志加入日志轮替</p>
+<p>如果有些日志默认没有加入日志轮替（比如源码包安装的服务的日志，或者自己添加的日志），那么这些日志默认是不会进行日志轮替的，这样当然不符合我们对日志的管理要求。如果需要把这些日志也加入日志轮替，那该如何操作呢？</p>
+<p>这里有两种方法：</p>
+<ul>
+<li>第一种方法是直接在 /etc/logrotate.conf 配置文件中写入该日志的轮替策略，从而把日志加入轮替；</li>
+<li>第二种方法是在 /etc/logrotate.d/ 目录中新建立该日志的轮替文件，在该轮替文件中写入正确的轮替策略，因为该目录中的文件都会被包含到主配置文件中，所以也可以把日志加入轮替。<br>推荐第二种方法，因为系统中需要轮替的日志非常多，如果全部直接写入 /etc/logrotate.conf 配置文件，那么这个文件的可管理性就会非常差，不利于此文件的维护。</li>
+</ul>
+</li>
+<li><p>日志轮替服务应用实例</p>
+<p>对于自己设置的 /var/log/hsp.log 日志，不是系统默认日志，而是通过 /etc/rsyslog.conf 配置文件自己生成的日志，所以默认这个日志是不会进行轮替的。如果需要把这个日志加入。就采用第二种方法，在 /etc/logrotate.d/ 目录中建立此日志的轮替文件。</p>
+<ul>
+<li>先创建 /etc/logrotate.d/hsplog 轮替文件</li>
+<li>在文件中写入命令，即事先约定好的日志轮替规则</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lua">/var/<span class="hljs-built_in">log</span>/hsp.<span class="hljs-built_in">log</span> &#123;<br>     missingok<br>     daily<br>     copytruncate<br>     rotate <span class="hljs-number">7</span><br>     nolifempty<br>&#125;<br></code></pre></td></tr></table></figure>
+</blockquote>
+</blockquote>
+<ul>
+<li>日志轮替机制原理<ul>
+<li>logrotate 在很多 Linux 发行版上都是默认安装的。系统会定时运行 logrotate，一般是每天一次。系统是这么实现按天执行的。crond 会每天定时执行 /etc/cron.daily 目录下的脚本，而这个目录下有个文件叫 logrotate。logrotate 通过这个文件依赖定时任务执行的。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>查看内存日志</strong></li>
+</ul>
+<blockquote>
+<ul>
+<li>基本介绍<br>日志管理工具 journalctl 是CentOS 7上专有的日志管理工具，该工具是从 message 这个文件里读取信息。Systemd 统一管理所有 Unit 的启动日志。带来的好处就是，可以只用 journalctl 一个命令，查看所有日志（内核日志和应用日志）。日志的配置文件是 /etc/systemd/journald.conf</li>
+<li>journalctl 用法<ul>
+<li>查看所有日志（默认情况下 ，只保存本次启动的日志）：journalctl</li>
+<li>查看内核日志（不显示应用日志）：journalctl -k</li>
+<li>查看系统本次启动的日志：journalctl -b</li>
+<li>实时滚动显示最新日志：journalctl -f</li>
+<li>显示尾部的最新10行日志：journalctl -n </li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/29/window%E7%AB%AF%E5%8F%A3%E5%91%BD%E4%BB%A4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">windows端口命令</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/">
+                        <span class="hidden-mobile">Java基础</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

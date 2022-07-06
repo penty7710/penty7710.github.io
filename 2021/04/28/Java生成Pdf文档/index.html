@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Java生成Pdf文档故事背景​        在做填报系统的时候，有一个需求是将用户填报的信息生成一个pdf文档，本来是打算前端来做这个pdf的，但是后面前端说他生成的文档显示不全，于是我就被迫接受这个任务。
+​        然后在百度了一两个小时后，就开始着手画pdf文档了，注意是画，不是生成，就和html一样需要自己一个一个的堆盒子。而且刚开始画的时候，出现了很多问题，比如说表格不出现，不">
+  <meta name="author" content="pty">
+  <meta name="keywords" content="">
+  
+  <title>Java生成Pdf文档 - Pety&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"follow_dnt":true}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Pety's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Pety</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/message.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java生成Pdf文档">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-04-28 19:54" pubdate>
+        April 28, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      45
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java生成Pdf文档</h1>
+            
+            <div class="markdown-body">
+              <h3 id="Java生成Pdf文档"><a href="#Java生成Pdf文档" class="headerlink" title="Java生成Pdf文档"></a>Java生成Pdf文档</h3><h4 id="故事背景"><a href="#故事背景" class="headerlink" title="故事背景"></a>故事背景</h4><p>​        在做填报系统的时候，有一个需求是将用户填报的信息生成一个pdf文档，本来是打算前端来做这个pdf的，但是后面前端说他生成的文档显示不全，于是我就被迫接受这个任务。</p>
+<p>​        然后在百度了一两个小时后，就开始着手画pdf文档了，注意是画，不是生成，就和html一样需要自己一个一个的堆盒子。而且刚开始画的时候，出现了很多问题，比如说表格不出现，不能控制列宽……第一天搞了3个多小时，就写出了个标题，好在第二天有了第一天的教训，摸清楚了使用方法，花了一个下午给画好了。</p>
+<a id="more"></a>
+
+<p>​            写下这篇博客，来记录下，顺便做个工具类，万一以后还需要使用。</p>
+<h4 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.itextpdf<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>itextpdf<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.5.11<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.itextpdf<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>itext-asian<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>需要导入以上两个依赖。</p>
+<h4 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h4><ul>
+<li>创建document对象 </li>
+<li>获取PdfWriter实例</li>
+<li>打开document文档</li>
+<li>向文档写入内容</li>
+<li>关闭文档</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.pdf.pty;<br><br><span class="hljs-keyword">import</span> com.itextpdf.text.Document;<br><span class="hljs-keyword">import</span> com.itextpdf.text.DocumentException;<br><span class="hljs-keyword">import</span> com.itextpdf.text.Paragraph;<br><span class="hljs-keyword">import</span> com.itextpdf.text.pdf.PdfWriter;<br><br><span class="hljs-keyword">import</span> java.io.FileNotFoundException;<br><span class="hljs-keyword">import</span> java.io.FileOutputStream;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pdf</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> FileNotFoundException, DocumentException </span>&#123;<br>        <span class="hljs-comment">//创建document对象</span><br>        Document document = <span class="hljs-keyword">new</span> Document();<br><br>        <span class="hljs-comment">//获取Pdfwriter实例，将生成的pdf写入 D:\hello.pdf</span><br>        PdfWriter.getInstance(document,<span class="hljs-keyword">new</span> FileOutputStream(<span class="hljs-string">&quot;D:\\hello.pdf&quot;</span>));<br><br>        <span class="hljs-comment">//打开文档</span><br>        document.open();<br><br>        <span class="hljs-comment">//向文档添加内容</span><br>        document.add(<span class="hljs-keyword">new</span> Paragraph(<span class="hljs-string">&quot;helloworld&quot;</span>));<br>        <br>        <span class="hljs-comment">//关闭文档</span><br>        document.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上述是一个简单的生成pdf的程序，向<code>D:\hello.pdf</code>写入了helloworld内容。</p>
+<p>但是一般我们生成的pdf并不会这么简单，还需要表格等信息。</p>
+<h4 id="itext常用API"><a href="#itext常用API" class="headerlink" title="itext常用API"></a>itext常用API</h4><h5 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//xxx为段落的实际内容，fontchina18是字体，这个是之前代码已经设置好的，不能通用，要自己设置</span><br>Paragraph paragraph = <span class="hljs-keyword">new</span> Paragraph(<span class="hljs-string">&quot;xxxx&quot;</span>,fontChina18);<br><span class="hljs-comment">//设置文字对齐方式 0靠左对齐，1居中对齐，2靠右对齐</span><br>paragraph.setAlignment(<span class="hljs-number">1</span>);<br><span class="hljs-comment">//设置左边缩进几个字符</span><br>paragraph.setIndentationLeft(<span class="hljs-number">2</span>);<br><span class="hljs-comment">//设置右边缩进几个字符</span><br>paragraph.setIndentationRight(<span class="hljs-number">2</span>);<br><span class="hljs-comment">//设置首行缩进几个字符</span><br>paragraph.setFirstLineIndent(<span class="hljs-number">2</span>);<br><span class="hljs-comment">//行间距</span><br>paragraph.setLeading(<span class="hljs-number">20f</span>);<br><span class="hljs-comment">//设置段落上空白</span><br>paragraph.setSpacingBefore(<span class="hljs-number">5f</span>); <br><span class="hljs-comment">//设置段落下空白</span><br>paragraph.setSpacingAfter(<span class="hljs-number">10f</span>); <br><br><span class="hljs-comment">//将段落添加到文档</span><br>document.addd(paragraph);<br></code></pre></td></tr></table></figure>
+
+<p><strong>标题一般直接居中显示，同时可以设置一个空的段落，从而实现空一行的操作  Paragraph paragraph = new Paragraph(“ “);  ,注意引号之间有个空格，没有空格好像并不能表示一个空的段落,设置完段落后，别忘了加入到文档</strong></p>
+<h5 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//创建指定列的表格，下面代码为创建列数为3的表格</span><br>PdfPTable table = <span class="hljs-keyword">new</span> PdfPTable(<span class="hljs-number">3</span>);<br><br><span class="hljs-comment">//创建指定列宽的表格，需要传入一个数组，数组的个数就是列的个数，数组的数字就是列宽</span><br><span class="hljs-comment">//自定义列宽的时候要设置LockedWidth为true，将宽度锁定</span><br>PdfPTable table = <span class="hljs-keyword">new</span> PdfPTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[] &#123;<span class="hljs-number">30</span>,<span class="hljs-number">40</span>,<span class="hljs-number">70</span>,<span class="hljs-number">190</span>,<span class="hljs-number">70</span>,<span class="hljs-number">190</span>,<span class="hljs-number">120</span>&#125;);<br>table.setLockedWidth(<span class="hljs-keyword">true</span>);<br><br><span class="hljs-comment">//设置表格的总宽度</span><br>table.setTotalWidth(maxWidth);<br><br><span class="hljs-comment">//设置表格的边框宽度？</span><br>table.getDefaultCell().setBorder(<span class="hljs-number">1</span>);<br><br><span class="hljs-comment">//设置表格占页面的多少，如图设置为100%</span><br>table.setWidthPercentage(<span class="hljs-number">100</span>);<br><br><span class="hljs-comment">//将表格添加到文档中</span><br>document.add(table);<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="单元格"><a href="#单元格" class="headerlink" title="单元格"></a>单元格</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//创建一个单元格</span><br>PdfPCell cell = <span class="hljs-keyword">new</span> PdfPCell();<br><br><span class="hljs-comment">//设置单元格跨几列</span><br>cell.setColspan(<span class="hljs-number">2</span>);<br><br><span class="hljs-comment">//设置单元格跨几行</span><br>cell.setRowspan(<span class="hljs-number">2</span>);<br><br><span class="hljs-comment">//设置单元格边框宽度</span><br>cell.setBorderWidth(<span class="hljs-number">1</span>);<br><br><span class="hljs-comment">//设置水平居中</span><br>cell.setHorizontalAlignment(Element.ALIGN_CENTER);<br><br><span class="hljs-comment">//设置垂直居中</span><br>cell.setVerticalAlignment(Element.ALIGN_MIDDLE);<br><br><span class="hljs-comment">//设置单元格内容</span><br>cell.setPhrase(<span class="hljs-keyword">new</span> Paragraph(<span class="hljs-string">&quot;xxx&quot;</span>,字体));<br><br><span class="hljs-comment">//将单元格加入到表格中</span><br>table.addcell(cell)<br></code></pre></td></tr></table></figure>
+
+<p><strong>如果你创建了一个有7列的表格，但是你只添加了6个单元格，那么表格的内容是不会在页面中显示出来，只有当添加的单元格的数量大于列数，才会显示出来表格内容，没满一行的表格不显示</strong></p>
+<h5 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//解决中文不显示问题</span><br>BaseFont bfChinese = BaseFont.createFont(<span class="hljs-string">&quot;STSong-Light&quot;</span>,<span class="hljs-string">&quot;UniGB-UCS2-H&quot;</span>, BaseFont.NOT_EMBEDDED);<br>Font fontChina18 = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">18</span>);<br>Font fontChina12 = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">12</span>);<br><br><br><br><br><span class="hljs-comment">//这里也是设置字体，定义全局都可以使用</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font titlefont;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font headfont;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font keyfont;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font textfont;<br>    <span class="hljs-comment">// 最大宽度</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> maxWidth = <span class="hljs-number">520</span>;<br>    <span class="hljs-comment">// 静态代码块</span><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 不同字体（这里定义为同一种字体：包含不同字号、不同style）</span><br>            BaseFont bfChinese = BaseFont.createFont(<span class="hljs-string">&quot;STSong-Light&quot;</span>, <span class="hljs-string">&quot;UniGB-UCS2-H&quot;</span>, BaseFont.NOT_EMBEDDED);<br>            titlefont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">16</span>, Font.BOLD);<br>            headfont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">14</span>, Font.BOLD);<br>            keyfont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">10</span>, Font.BOLD);<br>            textfont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">10</span>, Font.NORMAL);<br><br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h4><p>附上这一次画pdf的成果，以后也可以直接拿这个做一些调整即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.pdf.pty;<br><br><br><span class="hljs-keyword">import</span> com.itextpdf.text.*;<br><span class="hljs-keyword">import</span> com.itextpdf.text.pdf.BaseFont;<br><span class="hljs-keyword">import</span> com.itextpdf.text.pdf.PdfPCell;<br><span class="hljs-keyword">import</span> com.itextpdf.text.pdf.PdfPTable;<br><span class="hljs-keyword">import</span> com.itextpdf.text.pdf.PdfWriter;<br><br><span class="hljs-keyword">import</span> java.io.FileOutputStream;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">chapter</span> </span>&#123;<br><br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font titlefont;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font headfont;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font keyfont;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Font textfont;<br>    <span class="hljs-comment">// 最大宽度</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> maxWidth = <span class="hljs-number">520</span>;<br>    <span class="hljs-comment">// 静态代码块</span><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 不同字体（这里定义为同一种字体：包含不同字号、不同style）</span><br>            BaseFont bfChinese = BaseFont.createFont(<span class="hljs-string">&quot;STSong-Light&quot;</span>, <span class="hljs-string">&quot;UniGB-UCS2-H&quot;</span>, BaseFont.NOT_EMBEDDED);<br>            titlefont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">16</span>, Font.BOLD);<br>            headfont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">14</span>, Font.BOLD);<br>            keyfont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">10</span>, Font.BOLD);<br>            textfont = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">10</span>, Font.NORMAL);<br><br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, DocumentException </span>&#123;<br>        <span class="hljs-comment">//创建document对象</span><br>        Document document = <span class="hljs-keyword">new</span> Document();<br>        <span class="hljs-comment">//获取PdfWriter实例</span><br>        PdfWriter.getInstance(document,<span class="hljs-keyword">new</span> FileOutputStream(<span class="hljs-string">&quot;D:\\hello1.pdf&quot;</span>));<br>        <span class="hljs-comment">//打开文档</span><br>        document.open();<br><br>        <span class="hljs-comment">//解决中文不显示问题</span><br>        BaseFont bfChinese = BaseFont.createFont(<span class="hljs-string">&quot;STSong-Light&quot;</span>,<span class="hljs-string">&quot;UniGB-UCS2-H&quot;</span>, BaseFont.NOT_EMBEDDED);<br>        Font fontChina18 = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">18</span>);<br>        Font fontChina12 = <span class="hljs-keyword">new</span> Font(bfChinese, <span class="hljs-number">12</span>);<br><br><br><br>        <span class="hljs-comment">//标题</span><br>        Paragraph paragraph = <span class="hljs-keyword">new</span> Paragraph(<span class="hljs-string">&quot;湖南工业大学2021-2023年岗位定级申请表&quot;</span>,fontChina18);<br>        paragraph.setAlignment(<span class="hljs-number">1</span>);<span class="hljs-comment">//居中</span><br>        document.add(paragraph);<br><br>        Paragraph blank = <span class="hljs-keyword">new</span> Paragraph(<span class="hljs-string">&quot; &quot;</span>);<br>        document.add(blank);<br><br><br>        chapter chapter = <span class="hljs-keyword">new</span> chapter();<br><br>        <span class="hljs-comment">//表格</span><br>        PdfPTable table = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[] &#123;<span class="hljs-number">30</span>,<span class="hljs-number">120</span>,<span class="hljs-number">100</span>,<span class="hljs-number">120</span>,<span class="hljs-number">100</span>,<span class="hljs-number">120</span>,<span class="hljs-number">120</span>&#125;);<br><br>        <span class="hljs-comment">// 个人信息</span><br>        table.addCell(chapter.createCell(<span class="hljs-number">4</span>,<span class="hljs-string">&quot;个人信息&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;姓名&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;张三&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;性别&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;男&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;归口单位&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;计算机学院&quot;</span>));<br><br><br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;现任专业技术职务&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;教授&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;取得时间&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot; &quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;专业技术证书编号&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;&quot;</span>));<br><br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;申请岗位类别&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;专业技术岗位&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;申请岗位等级&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;教授四级&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;教师资格证书编号&quot;</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;&quot;</span>));<br><br><br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;工作业绩取得的年度&quot;</span>,<span class="hljs-number">2</span>));<br>        table.addCell(chapter.createCell(<span class="hljs-string">&quot;2017年   2018年   2019年   2020年&quot;</span>,<span class="hljs-number">4</span>));<br><br>        document.add(table);<br>        document.add(blank);<br><br>        <span class="hljs-comment">//必选条件</span><br>        PdfPTable table1 = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[] &#123;<span class="hljs-number">30</span>,<span class="hljs-number">40</span>,<span class="hljs-number">70</span>,<span class="hljs-number">190</span>,<span class="hljs-number">70</span>,<span class="hljs-number">190</span>,<span class="hljs-number">120</span>&#125;);<br><br>        table1.addCell(chapter.createCell(<span class="hljs-number">5</span>,<span class="hljs-string">&quot;必选条件&quot;</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;发表中心核心期刊论文3篇&quot;</span>,<span class="hljs-number">6</span>,<span class="hljs-number">0</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;序号&quot;</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;发表时间&quot;</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;论文标题（书名）&quot;</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;排名&quot;</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;刊物名称&quot;</span>));<br>        table1.addCell(chapter.createCell(<span class="hljs-string">&quot;审核人签字盖章&quot;</span>));<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">3</span>;i++)&#123;<br>            String s = Integer.toString(i+<span class="hljs-number">1</span>);<br>            table1.addCell(chapter.createCell(s));<br>            table1.addCell(chapter.createCell(<span class="hljs-string">&quot;2017&quot;</span>));<br>            table1.addCell(chapter.createCell(<span class="hljs-string">&quot; &quot;</span>));<br>            table1.addCell(chapter.createCell(<span class="hljs-string">&quot; &quot;</span>));<br>            table1.addCell(chapter.createCell(<span class="hljs-string">&quot; &quot;</span>));<br>            table1.addCell(chapter.createCell(<span class="hljs-string">&quot; &quot;</span>));<br><br>        &#125;<br>        document.add(table1);<br>        document.add(blank);<br><br>        <span class="hljs-comment">//任选条件</span><br>        PdfPTable table2 = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[] &#123;<span class="hljs-number">30</span>,<span class="hljs-number">40</span>,<span class="hljs-number">70</span>,<span class="hljs-number">190</span>,<span class="hljs-number">70</span>,<span class="hljs-number">190</span>,<span class="hljs-number">120</span>&#125;);<br><br><br>        <span class="hljs-comment">//TODO 这里跨几行应该根据前端传过来的数据动态变化，先写死</span><br>        table2.addCell(chapter.createCell(<span class="hljs-number">3</span>*<span class="hljs-number">4</span>,<span class="hljs-string">&quot;任选条件&quot;</span>));<br>        <span class="hljs-comment">//TODO 这里的名字应该也是动态的，先写死</span><br>        chapter.createTable(table2,<span class="hljs-string">&quot;D01 湖南省普通高校学科带头人培养对象或入选省“思想政治教育中青年杰出人才支持计划”、或省文艺人才扶持“三百工程&quot;</span>,<span class="hljs-string">&quot;荣誉称号&quot;</span>);<br>        chapter.createTable(table2,<span class="hljs-string">&quot;D05 省部级教学成果一等级前5名、或二等奖前4名、或三等奖前2名&quot;</span>,<span class="hljs-string">&quot;奖项名称&quot;</span>);<br>        chapter.createTable(table2,<span class="hljs-string">&quot;D10 国家级教学工程项目的前6名&quot;</span>,<span class="hljs-string">&quot;项目(专利名称)&quot;</span>);<br>        chapter.createTable(table2,<span class="hljs-string">&quot;D16 一等刊期、或CSSCI/CSCD期刊论文1篇，或国外专业学术期刊论文1篇，或三大检索收录论文1篇，或被《新华文橘》/《中国社会科学文摘》/《人大复印资料》全文收录论文1篇&quot;</span>,<span class="hljs-string">&quot;论文标题（书名）&quot;</span>);<br>        document.add(table2);<br><br>        document.add(blank);<br>        <span class="hljs-comment">//教学情况</span><br>        PdfPTable table3 = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[] &#123;<span class="hljs-number">30</span>,<span class="hljs-number">80</span>,<span class="hljs-number">120</span>,<span class="hljs-number">160</span>,<span class="hljs-number">160</span>,<span class="hljs-number">160</span>&#125;);<br>        table3.addCell(chapter.createCell(<span class="hljs-number">4</span>,<span class="hljs-string">&quot;教学情况&quot;</span>));<br>        table3.addCell(chapter.createCell(<span class="hljs-string">&quot;序号&quot;</span>));<br>        table3.addCell(chapter.createCell(<span class="hljs-string">&quot;时间&quot;</span>));<br>        table3.addCell(chapter.createCell(<span class="hljs-string">&quot;课程名称&quot;</span>));<br>        table3.addCell(chapter.createCell(<span class="hljs-string">&quot;工作完成量(积分)&quot;</span>));<br>        table3.addCell(chapter.createCell(<span class="hljs-string">&quot;审核人签字盖章&quot;</span>));<br><br>        <span class="hljs-comment">//TODO 这里循环次数和年份也应该动态变化</span><br>        <span class="hljs-keyword">int</span> year = <span class="hljs-number">2017</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">3</span>;i++)&#123;<br>            String s = Integer.toString(i + <span class="hljs-number">1</span>);<br>            chapter.createTable(table3,s,year++);<br>        &#125;<br>        document.add(table3);<br>        document.add(blank);<br><br>        <span class="hljs-comment">//个人承诺</span><br>        PdfPTable table4 = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[]&#123;<span class="hljs-number">30</span>, <span class="hljs-number">680</span>&#125;);<br>        table4.addCell(chapter.createCell(<span class="hljs-string">&quot;个人承诺&quot;</span>));<br>        table4.addCell(chapter.createCell(<span class="hljs-string">&quot;\n\n\n\n\n本人保证本表所填内容情况属实，否则愿意承担一切后果和责任。\n\n&quot;</span>+<br>                                               <span class="hljs-string">&quot;                                                        本人签字：&quot;</span>+<span class="hljs-string">&quot;\n\n&quot;</span>+<br>                                               <span class="hljs-string">&quot;                                                        年      月     日\n\n\n\n\n&quot;</span>,<span class="hljs-keyword">true</span>));<br>        document.add(table4);<br>        document.add(blank);<br><br>        <span class="hljs-comment">//所在单位推荐意见</span><br>        PdfPTable table5 = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[]&#123;<span class="hljs-number">30</span>, <span class="hljs-number">680</span>&#125;);<br>        table5.addCell(chapter.createCell(<span class="hljs-string">&quot;所在单位推荐意见&quot;</span>));<br>        table5.addCell(chapter.createCell(<span class="hljs-string">&quot;\n\n\n\n\n经本单位评议，该同志在本次考核定级中， 符合岗位的聘任条件，同意推荐上报\n\n&quot;</span>+<br>                                            <span class="hljs-string">&quot;                                                        单位负责人签字（单位公章）\n\n&quot;</span>+<br>                                            <span class="hljs-string">&quot;                                                        年      月       日\n\n\n\n\n&quot;</span>,<span class="hljs-keyword">true</span>));<br>        document.add(table5);<br>        document.add(blank);<br><br>        PdfPTable table6 = chapter.creteTable(<span class="hljs-keyword">new</span> <span class="hljs-keyword">float</span>[]&#123;<span class="hljs-number">30</span>, <span class="hljs-number">680</span>&#125;);<br>        table6.addCell(chapter.createCell(<span class="hljs-string">&quot;学校岗位定级工作领导小组意见&quot;</span>));<br>        table6.addCell(chapter.createCell(<span class="hljs-string">&quot;\n\n\n\n\n经审核，同意核准该同志聘用到 岗位 级，聘期为2020年1月1日至2023年12月31日。\n\n&quot;</span>+<br>                <span class="hljs-string">&quot;                                                        签字（公章）\n\n&quot;</span>+<br>                <span class="hljs-string">&quot;                                                        年      月       日\n\n\n\n\n\n\n&quot;</span>,<span class="hljs-keyword">true</span>));<br>        document.add(table6);<br>        <span class="hljs-comment">//关闭</span><br>        document.close();<br>    &#125;<br><br><br>    <span class="hljs-comment">//简单的单元格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> PdfPCell <span class="hljs-title">createCell</span><span class="hljs-params">(String value)</span></span>&#123;<br>        PdfPCell cell = <span class="hljs-keyword">new</span> PdfPCell();<br>        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);<br>        cell.setBorderWidth(<span class="hljs-number">1</span>);<br>        cell.setHorizontalAlignment(Element.ALIGN_CENTER);<br>        cell.setPhrase(<span class="hljs-keyword">new</span> Paragraph(value,textfont));<br>        cell.setFixedHeight(<span class="hljs-number">32</span>);<br>        <span class="hljs-keyword">return</span>  cell;<br>    &#125;<br><br><br>    <span class="hljs-comment">//简单的单元格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> PdfPCell <span class="hljs-title">createCell</span><span class="hljs-params">(String value,<span class="hljs-keyword">boolean</span> a)</span></span>&#123;<br>        PdfPCell cell = <span class="hljs-keyword">new</span> PdfPCell();<br>        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);<br>        cell.setBorderWidth(<span class="hljs-number">1</span>);<br>        cell.setHorizontalAlignment(Element.ALIGN_CENTER);<br>        cell.setPhrase(<span class="hljs-keyword">new</span> Paragraph(value,textfont));<br>        <span class="hljs-keyword">return</span>  cell;<br>    &#125;<br><br>    <span class="hljs-comment">//跨列的单元格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> PdfPCell <span class="hljs-title">createCell</span><span class="hljs-params">(String value,<span class="hljs-keyword">int</span> col)</span></span>&#123;<br>        PdfPCell cell = <span class="hljs-keyword">new</span> PdfPCell();<br>        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);<br>        cell.setColspan(col);<br>        cell.setBorderWidth(<span class="hljs-number">1</span>);<br>        cell.setHorizontalAlignment(Element.ALIGN_CENTER);<br>        cell.setPhrase(<span class="hljs-keyword">new</span> Paragraph(value,textfont));<br>        cell.setFixedHeight(<span class="hljs-number">32</span>);<br>        <span class="hljs-keyword">return</span>  cell;<br>    &#125;<br><br>    <span class="hljs-comment">//跨行的单元格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> PdfPCell <span class="hljs-title">createCell</span><span class="hljs-params">(<span class="hljs-keyword">int</span> row,String value)</span></span>&#123;<br>        PdfPCell cell = <span class="hljs-keyword">new</span> PdfPCell();<br>        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);<br>        cell.setRowspan(row);<br>        cell.setBorderWidth(<span class="hljs-number">1</span>);<br>        cell.setHorizontalAlignment(Element.ALIGN_CENTER);<br>        cell.setPhrase(<span class="hljs-keyword">new</span> Paragraph(value,textfont));<br>        cell.setFixedHeight(<span class="hljs-number">32</span>);<br>        <span class="hljs-keyword">return</span>  cell;<br>    &#125;<br><br>    <span class="hljs-comment">//跨列的 自定义对齐方式单元格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> PdfPCell <span class="hljs-title">createCell</span><span class="hljs-params">(String value,<span class="hljs-keyword">int</span> col,<span class="hljs-keyword">int</span> alin)</span></span>&#123;<br>        PdfPCell cell = <span class="hljs-keyword">new</span> PdfPCell();<br>        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);<br>        cell.setColspan(col);<br>        cell.setBorderWidth(<span class="hljs-number">1</span>);<br>        cell.setHorizontalAlignment(alin);<br>        cell.setPhrase(<span class="hljs-keyword">new</span> Paragraph(value,textfont));<br>        cell.setFixedHeight(<span class="hljs-number">32</span>);<br>        <span class="hljs-keyword">return</span>  cell;<br>    &#125;<br><br>    <span class="hljs-comment">//创建表格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> PdfPTable <span class="hljs-title">creteTable</span><span class="hljs-params">(<span class="hljs-keyword">float</span>[] cols)</span></span>&#123;<br>        PdfPTable table = <span class="hljs-keyword">new</span> PdfPTable(cols);<br>        table.setTotalWidth(maxWidth);<br>        table.setLockedWidth(<span class="hljs-keyword">true</span>);<br>        table.getDefaultCell().setBorder(<span class="hljs-number">1</span>);<br>        table.setWidthPercentage(<span class="hljs-number">100</span>);<br>        <span class="hljs-keyword">return</span> table;<br>    &#125;<br><br><br>    <span class="hljs-comment">//创建任选条件时的表格</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">createTable</span><span class="hljs-params">(PdfPTable table,String title,String name)</span></span>&#123;<br>        table.addCell(createCell(title,<span class="hljs-number">6</span>,<span class="hljs-number">0</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;序号&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;发表时间&quot;</span>));<br>        table.addCell(createCell(name));<br>        table.addCell(createCell(<span class="hljs-string">&quot;排名&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;授予组织&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;审核人签字盖章&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;1&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;2017&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot;&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot; &quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot; &quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot; &quot;</span>));<br>    &#125;<br><br>    <span class="hljs-comment">//教学情况</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">createTable</span><span class="hljs-params">(PdfPTable table,String t,<span class="hljs-keyword">int</span> year)</span></span>&#123;<br>        table.addCell(createCell(t));<br>        table.addCell(createCell(Integer.toString(year)));<br>        table.addCell(createCell(<span class="hljs-string">&quot;&quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot; &quot;</span>));<br>        table.addCell(createCell(<span class="hljs-string">&quot; &quot;</span>));<br>    &#125;<br><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B7%A5%E5%85%B7%E7%B1%BB/">工具类</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/17/python%20%E5%88%9B%E5%BB%BAjwt/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">python创建Token</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/27/java%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81/">
+                        <span class="hidden-mobile">java生成二维码</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

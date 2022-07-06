@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Python创建Token关于 JWTJWT 表示 「JSON Web Tokens」。
+它是一个将 JSON 对象编码为密集且没有空格的长字符串的标准。字符串看起来像这样：
+1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ">
+  <meta name="author" content="pty">
+  <meta name="keywords" content="">
+  
+  <title>python创建Token - Pety&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"follow_dnt":true}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Pety's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Pety</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/message.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python创建Token">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-17 12:53" pubdate>
+        July 17, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python创建Token</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Python创建Token"><a href="#Python创建Token" class="headerlink" title="Python创建Token"></a>Python创建Token</h1><h2 id="关于-JWT"><a href="#关于-JWT" class="headerlink" title="关于 JWT"></a>关于 JWT</h2><p>JWT 表示 「JSON Web Tokens」。</p>
+<p>它是一个将 JSON 对象编码为密集且没有空格的长字符串的标准。字符串看起来像这样：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span>.eyJzdWIiOiIxMjM<span class="hljs-number">0</span>NTY<span class="hljs-number">3</span>ODkwIiwibmFtZSI<span class="hljs-number">6</span>IkpvaG<span class="hljs-number">4</span>gRG<span class="hljs-number">9</span>lIiwiaWF<span class="hljs-number">0</span>IjoxNTE<span class="hljs-number">2</span>MjM<span class="hljs-number">5</span>MDIyfQ.SflKxwRJSMeKKF<span class="hljs-number">2</span>QT<span class="hljs-number">4</span>fwpMeJf<span class="hljs-number">36</span>POk<span class="hljs-number">6</span>yJV_adQssw<span class="hljs-number">5</span>c<br></code></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>它没有被加密，因此任何人都可以从字符串内容中还原数据。</p>
+<p>但它经过了签名。因此，当你收到一个由你发出的令牌时，可以校验令牌是否真的由你发出。</p>
+<p>通过这种方式，你可以创建一个有效期为 1 周的令牌。然后当用户第二天使用令牌重新访问时，你知道该用户仍然处于登入状态。</p>
+<p>一周后令牌将会过期，用户将不会通过认证，必须再次登录才能获得一个新令牌。而且如果用户（或第三方）试图修改令牌以篡改过期时间，你将因为签名不匹配而能够发觉。</p>
+<h3 id="JWT组成"><a href="#JWT组成" class="headerlink" title="JWT组成"></a>JWT组成</h3><h4 id="Header头部"><a href="#Header头部" class="headerlink" title="Header头部"></a>Header头部</h4><p>头部包含了两部分，token类型和采用的加密算法</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;alg&quot;</span>:<span class="hljs-string">&quot;HS256&quot;</span><br>    <span class="hljs-string">&quot;typ&quot;</span>:<span class="hljs-string">&quot;JWT&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>会使用Base64编码组成JWT结构的第一部分。</p>
+<h4 id="Payload负载"><a href="#Payload负载" class="headerlink" title="Payload负载"></a>Payload负载</h4><p>负载就是存放有效信息的地方，这些有效信息包含三个部分。</p>
+<ul>
+<li>标准中注册声明</li>
+<li>公共的声明</li>
+<li>私有的声明</li>
+</ul>
+<h5 id="公共的声明："><a href="#公共的声明：" class="headerlink" title="公共的声明："></a>公共的声明：</h5><p>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密。</p>
+<h5 id="私有的声明："><a href="#私有的声明：" class="headerlink" title="私有的声明："></a>私有的声明：</h5><p>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;iss&quot;</span>: <span class="hljs-string">&quot;lion1ou JWT&quot;</span>,<br>    <span class="hljs-attr">&quot;iat&quot;</span>: <span class="hljs-number">1441593502</span>,<br>    <span class="hljs-attr">&quot;exp&quot;</span>: <span class="hljs-number">1441594722</span>,<br>    <span class="hljs-attr">&quot;aud&quot;</span>: <span class="hljs-string">&quot;www.example.com&quot;</span>,<br>    <span class="hljs-attr">&quot;sub&quot;</span>: <span class="hljs-string">&quot;lion1ou@163.com&quot;</span><br>&#125;<br><br><span class="hljs-comment">// 包括需要传递的用户信息；</span><br>&#123; <br>  <span class="hljs-attr">&quot;iss&quot;</span>: <span class="hljs-string">&quot;Online JWT Builder&quot;</span>, <br>  <span class="hljs-attr">&quot;iat&quot;</span>: <span class="hljs-number">1416797419</span>, <br>  <span class="hljs-attr">&quot;exp&quot;</span>: <span class="hljs-number">1448333419</span>, <br>  <span class="hljs-attr">&quot;aud&quot;</span>: <span class="hljs-string">&quot;www.gusibi.com&quot;</span>, <br>  <span class="hljs-attr">&quot;sub&quot;</span>: <span class="hljs-string">&quot;uid&quot;</span>, <br>  <span class="hljs-attr">&quot;nickname&quot;</span>: <span class="hljs-string">&quot;goodspeed&quot;</span>, <br>  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;goodspeed&quot;</span>, <br>  <span class="hljs-attr">&quot;scopes&quot;</span>: [ <span class="hljs-string">&quot;admin&quot;</span>, <span class="hljs-string">&quot;user&quot;</span> ] <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>iss: 该JWT的签发者，是否使用是可选的；</li>
+<li>sub: 该JWT所面向的用户，是否使用是可选的；</li>
+<li>aud: 接收该JWT的一方，是否使用是可选的；</li>
+<li>exp(expires): 什么时候过期，这里是一个Unix时间戳，是否使用是可选的</li>
+<li>iat(issued at): 在什么时候签发的(UNIX时间)，是否使用是可选的；</li>
+<li>nbf (Not Before)：如果当前时间在nbf里的时间之前，则Token不被接受；一般都会留一些余地，比如几分钟；，是否使用是可选的；</li>
+<li>jti: jwt的唯一身份标识，主要用来作为一次性token，从而回避重放攻击。同样的，它会使用 Base64 编码组成 JWT 结构的第二部分。</li>
+<li>Signature 签名<br>前面两部分都是使用 Base64 进行编码的，即前端可以解开知道里面的信息。Signature 需要使用编码后的 header 和 payload 以及我们提供的一个密钥，然后使用 header 中指定的签名算法（HS256）进行签名。签名的作用是保证 JWT 没有被篡改过。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// 根据alg算法与私有秘钥进行加密得到的签名字串；</span><br><span class="hljs-comment">// 这一段是最重要的敏感信息，只能在服务端解密；</span><br>HMACSHA256(  <br>    base64UrlEncode(header) + &quot;.&quot; +<br>    base64UrlEncode(payload),<br>    SECREATE_KEY<br>)<br></code></pre></td></tr></table></figure>
+
+<p>三个部分通过.连接在一起就是我们的 JWT 了，它可能长这个样子，长度貌似和你的加密算法和私钥有关系。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3ZmVmMTY0ZTU0YWY2NGZmYzUzZGJkNSIsInhzcmYiOiI0ZWE1YzUwOGE2NTY2ZTc2MjQwNTQzZjhmZWIwNmZkNDU3Nzc3YmUzOTU0OWM0MDE2NDM2YWZkYTY1ZDIzMzBlIiwiaWF0IjoxNDc2NDI3OTMzfQ.PA3QjeyZSUh7H0GfE0vJaKW4LjKJuC3dVLQiY4hii8s<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="签名的目的"><a href="#签名的目的" class="headerlink" title="签名的目的"></a>签名的目的</h3><p>最后一步签名的过程，实际上是对头部以及负载内容进行签名，防止内容被窜改。如果有人对头部以及负载的内容解码之后进行修改，再进行编码，最后加上之前的签名组合形成新的JWT的话，那么服务器端会判断出新的头部和负载形成的签名和JWT附带上的签名是不一样的。如果要对新的头部和负载进行签名，在不知道服务器加密时用的密钥的话，得出来的签名也是不一样的。</p>
+<blockquote>
+<p>itsdangerous(使用固定密钥/字符串进行加密, jwt 有多种加密方式, 这只是其中一种, 建议先去了解一下)所生成的 token 仍然是可以被破译从而看到 jwt 的 payload(有效负载) 里的数据, 只不过因为破译者并不知道加密的密钥, 也就无法对数据进行篡改, 所以如果是私密的数据, 就不应该使用 jwt 进行传递, 如 账号的密码, 以防止泄露. 如果需要传递私密数据, 解决办法是,对 payload 的数据进行加密,从而杜绝非法破译者看到 payload 内的任何信息,但是目前加密payload的操作不是很普及,在不加密 payload 的前提下, jwt 比较适合进行非受信任端的身份验证, 此时即使接收方破译了 token, 看到了 payload 的数据, 也不会造成太大的影响, 因为数据是无法被篡改的(当接收方将 token 值返回给服务器后, 需要使用相同的密钥进行解密, 所以服务器的密钥一定要保管好), 只要接收方将 token 原封不动的返回给服务器, 那么服务器就可以根据 token 值的内容来确认接收方身份的合法性,而不需要关心接收方是否看到过 payload 的内容.</p>
+<p>　简而言之, 除非额外对 payload 加密过, 否则就不要在 jwt 中传递不可被第三方获知的私密数据</p>
+</blockquote>
+<h2 id="安装python-jose"><a href="#安装python-jose" class="headerlink" title="安装python-jose"></a>安装<code>python-jose</code></h2><p>需要安装<code>python-jose</code>以在Python中生成和校验JWT令牌：</p>
+<p><code>pip install python-jose</code></p>
+<h2 id="生成和解析jwt"><a href="#生成和解析jwt" class="headerlink" title="生成和解析jwt"></a>生成和解析jwt</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#从jose导入jwt，用于token的生成和验证</span><br><span class="hljs-keyword">from</span> jose <span class="hljs-keyword">import</span> jwt<br><br><span class="hljs-comment">#导入日期模块，用来设置和验证token的过期时间</span><br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span>  datetime,timedelta<br><br><span class="hljs-comment">#密钥，这个很重要，可以通过他来验证是否是自己签发的token</span><br><span class="hljs-comment">#内容可以随便写，也可以不定义变量</span><br>SECRT_KEY=<span class="hljs-string">&quot;hut@pty&quot;</span><br><br><span class="hljs-comment">#生成token的代码，token过期时长定义为默认参数，单位为秒</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_token</span>(<span class="hljs-params">seconds=<span class="hljs-number">60</span></span>):</span><br>    <span class="hljs-comment">#定义过期时间，当前时间+60秒</span><br>    expire = datetime.utcnow()+timedelta(seconds=seconds)<br>    <span class="hljs-comment">#定义签发时间</span><br>    iat = datetime.utcnow()<br><br>    <span class="hljs-comment">#定义token的payload，设置了过期时间,签发时间，username（自定义）...</span><br>    <span class="hljs-comment">#此处的to_encode还可以是空的字典，但是不建议这样</span><br>    to_encode=&#123;<span class="hljs-string">&quot;expire&quot;</span>:expire,<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;pty&quot;</span>,<span class="hljs-string">&quot;iat&quot;</span>:iat&#125;<br><br>    <span class="hljs-comment">#使用jwt生成token，传入payload、签名、验证算法</span><br>    token =jwt.encode(to_encode,SECRT_KEY,<span class="hljs-string">&quot;HS256&quot;</span>)<br>    <span class="hljs-keyword">return</span> token<br><br><br><span class="hljs-comment">#解析jwt</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">verify_token</span>(<span class="hljs-params">token:str</span>):</span><br>    <span class="hljs-comment">#解析jwt，需要传入token，签名，验证算法，返回token的payload</span><br>    payload = jwt.decode(token,SECRT_KEY,<span class="hljs-string">&quot;HS256&quot;</span>)<br>    <span class="hljs-comment">#可以取出payload的值</span><br>    username = payload.get(<span class="hljs-string">&quot;username&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B7%A5%E5%85%B7%E7%B1%BB/">工具类</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/22/ORM/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ORM简介</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/28/Java%E7%94%9F%E6%88%90Pdf%E6%96%87%E6%A1%A3/">
+                        <span class="hidden-mobile">Java生成Pdf文档</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
