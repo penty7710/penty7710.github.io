@@ -9887,4 +9887,443 @@ public static void main(String args[])&#123;
 
 ]]></content>
   </entry>
+  <entry>
+    <title>Mysql函数</title>
+    <url>/2022/07/31/Mysql%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>记录刷题过程中需要使用到的一些mysql函数</p>
+<p>窗口函数：窗口函数也叫OLAP函数，可以对数据进行实时分析处理。</p>
+<p>窗口函数用法：</p>
+<p>&lt;窗口函数&gt; OVER ( [PARTITION BY &lt;列清单&gt; ]</p>
+<p>​                ORDER BY &lt;排序用列清单&gt; ）</p>
+<p>*其中[ ]中的内容可以忽略</p>
+</blockquote>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="RANK"><a href="#RANK" class="headerlink" title="RANK()"></a>RANK()</h3><p>在计算排序时，若存在相同位次，会跳过之后的位次。例如，有3条排在第1位时，排序为：1，1，1，4······</p>
+<h3 id="DENSE-RANK"><a href="#DENSE-RANK" class="headerlink" title="DENSE_RANK()"></a>DENSE_RANK()</h3><p>在计算排序时，若存在相同位次，不会跳过之后的位次。例如，有3条排在第1位时，排序为：1，1，1，2······</p>
+<h3 id="ROW-NUMBER"><a href="#ROW-NUMBER" class="headerlink" title="ROW_NUMBER()"></a>ROW_NUMBER()</h3><p>这个函数赋予唯一的连续位次。例如，有3条排在第1位时，排序为：1，2，3，4······</p>
+<p>牛客网SQL217就用到了<code>dense_rank()</code>函数：</p>
+<p>对所有员工的薪水按照salary降序先进行1-N的排名，如果salary相同，再按照emp_no升序排列</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span><br>  emp_no,<br>  salary,<br>  <span class="hljs-keyword">dense_rank</span>() <span class="hljs-keyword">over</span> (<br>    <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span><br>      salary <span class="hljs-keyword">desc</span><br>  ) <span class="hljs-keyword">rank</span><br><span class="hljs-keyword">from</span><br>  salaries<br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">rank</span> <span class="hljs-keyword">asc</span>,emp_no <span class="hljs-keyword">asc</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="小数格式化"><a href="#小数格式化" class="headerlink" title="小数格式化"></a>小数格式化</h2><blockquote>
+<p>有时题目需要将结果保留几位小数</p>
+</blockquote>
+<h3 id="ROUND"><a href="#ROUND" class="headerlink" title="ROUND()"></a>ROUND()</h3><p><code>round(number,n)</code>可以指定保留几位小数，采用四舍五入。 如<code>round(3.1415,3)</code>会变成3.142</p>
+<p>如果小数位不足指定的位数，比如只有一位小数，需要保留到两位小数则只会显示一位小数。</p>
+<h3 id="CONVERT"><a href="#CONVERT" class="headerlink" title="CONVERT()"></a>CONVERT()</h3><p><code>CONVERT(X,DECIMAL(L,D))</code></p>
+<p>L:格式化的数的总的长度；D:小数的个数；X:格式化的数字。 如：<code>convert(3.1314,decimal(10,2))</code>将会保留两位小数。四舍五入。</p>
+<p>如果小数位不足，会自动补0。</p>
+<h3 id="TRUNCATE"><a href="#TRUNCATE" class="headerlink" title="TRUNCATE"></a>TRUNCATE</h3><p><code>TRUNCATE（X,D）</code></p>
+<p>X:格式化的数字，D:小数的个数。会直接舍去，不会四舍五入。</p>
+<p>如果小数位不足，只会显示已有的小数位。不会补0。</p>
+<h3 id="FORMAT"><a href="#FORMAT" class="headerlink" title="FORMAT"></a>FORMAT</h3><p><code>FORMAT（X,D）</code></p>
+<p>四舍五入，会自动补0。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/07/31/php/</url>
+    <content><![CDATA[<hr>
+<h2 id="title-Php语言基础"><a href="#title-Php语言基础" class="headerlink" title="title:Php语言基础"></a>title:Php语言基础</h2><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><blockquote>
+<ul>
+<li>定义在函数外部的就是全局变量，它的作用域从定义处一直到文件结尾。</li>
+<li>函数内定义的变量就是局部变量，它的作用域为函数定义范围内。</li>
+<li>函数之间存在作用域互不影响。</li>
+<li>函数内访问全局变量需要 <strong>global</strong> 关键字或者使用 <strong>$GLOBALS[index]</strong> 数组</li>
+</ul>
+<p>在 php 中函数是有独立的作用域，所以局部变量会覆盖全局变量，即使局部变量中没有全局变量相同的变量，也会被覆盖。</p>
+</blockquote>
+<p>php是一门弱类型语言，声明变量时不需要声明变量的数据类型。</p>
+<p>命名规则和Java一样，以字母或者下划线开头，只能用字母、下划线、数字命名。区分大小写。</p>
+<p>声明变量时，使用<code>$</code>,后面紧跟变量名称。</p>
+<p>如：<code>$a = 1</code></p>
+<p>有四种变量定义域：</p>
+<ul>
+<li>local:局部作用域</li>
+<li>global：全局作用域</li>
+<li>static：静态作用域</li>
+<li>parameter：参数作用域</li>
+</ul>
+<p>定义在所有函数之外的变量具有全局作用域。在一个函数内想要使用全局变量，需要使用<code>global</code>关键字。</p>
+<p>PHP 将所有全局变量存储在一个名为 <code>$GLOBALS[*index*]</code>的数组中。 <em>index</em> 保存变量的名称。这个数组可以在函数内部访问，也可以直接用来更新全局变量。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>$x=<span class="hljs-number">5</span>;<br>$y=<span class="hljs-number">10</span>;<br> <br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myTest</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">global</span> $x,$y;<br>    $y=$x+$y;<br>&#125;<br> <br>myTest();<br><span class="hljs-keyword">echo</span> $y; <span class="hljs-comment">// 输出 15</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>当一个函数完成时，他定义的所有变量都会被删除，如果你不想某个局部变量被删除，可以使用static修饰。<strong>该变量仍然是函数的局部变量。</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myTest</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">static</span> $x=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">echo</span> $x;<br>    $x++;<br>    <span class="hljs-keyword">echo</span> PHP_EOL;    <span class="hljs-comment">// 换行符</span><br>&#125;<br> <br>myTest(); <span class="hljs-comment">//0</span><br>myTest(); <span class="hljs-comment">//1</span><br>myTest(); <span class="hljs-comment">//2</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>常量值被定义后，在脚本的其他任何地方都不能被改变，在整个脚本中都可以使用。</p>
+<p>设置常量，使用 define() 函数，函数语法如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">bool</span> define ( <span class="hljs-keyword">string</span> $name , mixed $value [, <span class="hljs-keyword">bool</span> $case_insensitive = <span class="hljs-literal">false</span> ] )<br></code></pre></td></tr></table></figure>
+
+<p>该函数有三个参数:</p>
+<ul>
+<li><strong>name：</strong>必选参数，常量名称，即标志符。</li>
+<li><strong>value：</strong>必选参数，常量的值。</li>
+<li><strong>case_insensitive</strong> ：可选参数，如果设置为 TRUE，该常量则大小写不敏感。默认是大小写敏感的。</li>
+</ul>
+<p><code>define(&quot;GREETING&quot;, &quot;欢迎访问 Runoob.com&quot;);</code></p>
+<p>创建了一个变量名为GREETING的常量。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>可以使用<code>echo</code> 和<code>print</code>来进行打印输出，两者都可以使用括号或者不使用括号。</p>
+<p>区别在于前者可以输出多个字符串，后者只可以输出一个字符串。</p>
+<p>输出的字符可以包含html标签。</p>
+<h2 id="类型比较"><a href="#类型比较" class="headerlink" title="类型比较"></a>类型比较</h2><p>虽然 PHP 是弱类型语言，但也需要明白变量类型及它们的意义，因为我们经常需要对 PHP 变量进行比较，包含松散和严格比较。</p>
+<ul>
+<li>松散比较：使用两个等号 <strong>==</strong> 比较，只比较值，不比较类型。</li>
+<li>严格比较：用三个等号 <strong>===</strong> 比较，除了比较值，也比较类型。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span>(<span class="hljs-number">42</span> == <span class="hljs-string">&quot;42&quot;</span>) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;1、值相等&#x27;</span>;<br>&#125;<br> <br><span class="hljs-keyword">echo</span> PHP_EOL; <span class="hljs-comment">// 换行符</span><br> <br><span class="hljs-keyword">if</span>(<span class="hljs-number">42</span> === <span class="hljs-string">&quot;42&quot;</span>) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;2、类型相等&#x27;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;3、类型不相等&#x27;</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br>  <br><span class="hljs-comment">// 1、值相等 3、类型不相等</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>定义字符串的时候需要使用单引号或者双引号括起来。</p>
+<h3 id="并置运算符"><a href="#并置运算符" class="headerlink" title="并置运算符"></a>并置运算符</h3><p>将两个字符串连接起来。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>$txt1=<span class="hljs-string">&quot;Hello world!&quot;</span>;<br>$txt2=<span class="hljs-string">&quot;What a nice day!&quot;</span>;<br><span class="hljs-keyword">echo</span> $txt1 . $txt2;<br><span class="hljs-meta">?&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="strlen"><a href="#strlen" class="headerlink" title="strlen()"></a>strlen()</h3><p>返回字符串的长度</p>
+<h3 id="strpos"><a href="#strpos" class="headerlink" title="strpos()"></a>strpos()</h3><p>在字符串中查找一个字符或者指定的文本。如果存在返回第一个匹配的字符的位置，否则返回false。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> strpos(<span class="hljs-string">&quot;Hello world!&quot;</span>,<span class="hljs-string">&quot;world&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br>  <br><span class="hljs-comment">//返回6</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>构造函数主要用来在创建对象时初始化对象，即为对象成员变量赋初值。</p>
+<p>使用<code>_construct</code>关键字定义。</p>
+<h3 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h3><p>析构函数和构造函数相反，当对象结束其生命周期时系统自动执行析构函数。</p>
+<p>使用<code>_destruct</code>关键字定义。</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>子类可以继承父类，使用<code>extends</code>关键字。</p>
+<p>继承之后，子类拥有父类的所有东西，包括protected、private，但是父类私有的属性和方法不能让子类直接调用。子类可以扩展自己的属性和方法。</p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>接口使用<code>interface</code>定义，接口中的所有方法都必须是公有的。php可以实现多个接口，实现接口时必须实现接口定义的所有方法，使用<code>implements</code>实现接口。</p>
+<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><p>如果一个类里面有一个抽象方法，那么这个类必须是抽象类。抽象类不能被实例化。</p>
+<p>继承一个抽象类的时候，必须重写所有的抽象方法；并且这些方法的访问权限必须大于等于父类的访问权限。使用<code>abstruct</code>修饰抽象方法和抽象类。</p>
+<h3 id="static关键字"><a href="#static关键字" class="headerlink" title="static关键字"></a>static关键字</h3><p>声明属性或者方法为static，就可以不实例化类而直接访问。</p>
+<p>静态属性不能通过一个实例化的对象来访问，静态方法可以。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> </span>&#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> $my_static = <span class="hljs-string">&#x27;foo&#x27;</span>;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">staticValue</span>(<span class="hljs-params"></span>) </span>&#123;<br>     <span class="hljs-keyword">return</span> <span class="hljs-built_in">self</span>::$my_static;<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">print</span> Foo::$my_static . PHP_EOL;<br>$foo = <span class="hljs-keyword">new</span> Foo();<br><br><span class="hljs-keyword">print</span> $foo-&gt;staticValue() . PHP_EOL;<br><span class="hljs-meta">?&gt;</span>  <br>  <br><span class="hljs-comment">//foo</span><br><span class="hljs-comment">//foo</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Final关键字"><a href="#Final关键字" class="headerlink" title="Final关键字"></a>Final关键字</h3><p>如果父类中的方法被声明为final，则子类无法覆盖该方法。如果一个类被声明为final，则不能被继承。</p>
+<h3 id="调用父类的构造方法"><a href="#调用父类的构造方法" class="headerlink" title="调用父类的构造方法"></a>调用父类的构造方法</h3><p>php不像java，php不会自动调用父类的构造方法。要执行父类的构造方法，需要在子类的构造方法中调用<code>parent::_construct()</code></p>
+<h3 id="date-函数"><a href="#date-函数" class="headerlink" title="date()函数"></a>date()函数</h3><p>date()函数用于格式化时间/日期。</p>
+<p><code>string date ( string $format [, int $timestamp ] )</code></p>
+<ul>
+<li>format:必需。规定时间戳的格式。</li>
+<li>timestamp:可选。规定时间戳。默认是当前的日期和时间。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">echo</span> date(<span class="hljs-string">&quot;Y/m/d&quot;</span>) . <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> date(<span class="hljs-string">&quot;Y.m.d&quot;</span>) . <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> date(<span class="hljs-string">&quot;Y-m-d&quot;</span>);<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">	2016/10/21</span><br><span class="hljs-comment">	2016.10.21</span><br><span class="hljs-comment">	2016-10-21</span><br><span class="hljs-comment">*/</span><br><br></code></pre></td></tr></table></figure>
+
+<p>date() 函数的第一个必需参数 <em>format</em> 规定了如何格式化日期/时间。</p>
+<p>这里列出了一些可用的字符：</p>
+<ul>
+<li>d - 代表月中的天 (01 - 31)</li>
+<li>m - 代表月 (01 - 12)</li>
+<li>Y - 代表年 (四位数)</li>
+</ul>
+<h2 id="包含文件"><a href="#包含文件" class="headerlink" title="包含文件"></a>包含文件</h2><p>假设您有一个标准的页头文件，名为 “header.php”。如需在页面中引用这个页头文件，请使用 include/require：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php">&lt;html&gt;<br>&lt;head&gt;<br>&lt;meta charset=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;<br>&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">include</span> <span class="hljs-string">&#x27;header.php&#x27;</span>; <span class="hljs-meta">?&gt;</span><br>&lt;h1&gt;欢迎来到我的主页!&lt;/h1&gt;<br>&lt;p&gt;一些文本。&lt;/p&gt;<br><br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p>require() 语句的性能与 include() 相类似，都是包括并运行指定文件。不同之处在于：对 include() 语句来说，在执行文件时每次都要进行读取和评估；而对于 require() 来说，文件只处理一次（实际上，文件内容替换 require() 语句）。这就意味着如果可能执行多次的代码，则使用 require() 效率比较高。</p>
+<ul>
+<li><p>require 一般放在 PHP 文件的最前面，程序在执行前就会先导入要引用的文件；==在一开始就加载==</p>
+</li>
+<li><p>include 一般放在程序的流程控制中，当程序执行时碰到才会引用，简化程序的执行流程。==用到时才加载==</p>
+</li>
+<li><p>require 引入的文件有错误时，执行会中断，并返回一个致命错误；</p>
+</li>
+<li><p>include 引入的文件有错误时，会继续执行，并返回一个警告。</p>
+</li>
+</ul>
+<h2 id="文件处理"><a href="#文件处理" class="headerlink" title="文件处理"></a>文件处理</h2><h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><p>fopen() 函数用于在 PHP 中打开文件。</p>
+<p>此函数的第一个参数含有要打开的文件的名称，第二个参数规定了使用哪种模式来打开文件：</p>
+<table>
+<thead>
+<tr>
+<th align="left">模式</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">r</td>
+<td align="left">只读。在文件的开头开始。</td>
+</tr>
+<tr>
+<td align="left">r+</td>
+<td align="left">读/写。在文件的开头开始。</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="left">只写。打开并清空文件的内容；如果文件不存在，则创建新文件。</td>
+</tr>
+<tr>
+<td align="left">w+</td>
+<td align="left">读/写。打开并清空文件的内容；如果文件不存在，则创建新文件。</td>
+</tr>
+<tr>
+<td align="left">a</td>
+<td align="left">追加。打开并向文件末尾进行写操作，如果文件不存在，则创建新文件。</td>
+</tr>
+<tr>
+<td align="left">a+</td>
+<td align="left">读/追加。通过向文件末尾写内容，来保持文件内容。</td>
+</tr>
+<tr>
+<td align="left">x</td>
+<td align="left">只写。创建新文件。如果文件已存在，则返回 FALSE 和一个错误。</td>
+</tr>
+<tr>
+<td align="left">x+</td>
+<td align="left">读/写。创建新文件。如果文件已存在，则返回 FALSE 和一个错误。</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php">&lt;html&gt;<br>&lt;body&gt;<br><br><span class="hljs-meta">&lt;?php</span><br>$file=fopen(<span class="hljs-string">&quot;welcome.txt&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>);  <span class="hljs-comment">//以只读的形式打开文件</span><br><span class="hljs-meta">?&gt;</span><br><br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>如果无法打开文件则fopen()函数会返回0</strong></p>
+<h3 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h3><p>fclose() 函数用于关闭打开的文件：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>$file = fopen(<span class="hljs-string">&quot;test.txt&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>);<br><br><span class="hljs-comment">//执行一些代码</span><br><br>fclose($file);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="检测文件末尾（EOF）"><a href="#检测文件末尾（EOF）" class="headerlink" title="检测文件末尾（EOF）"></a>检测文件末尾（EOF）</h3><p>feof() 函数检测是否已到达文件末尾（EOF）。</p>
+<p>在循环遍历未知长度的数据时，feof() 函数很有用。</p>
+<p><strong>注释：</strong>在 w 、a 和 x 模式下，您无法读取打开的文件！</p>
+<p><code>if (feof($file)) echo &quot;文件结尾&quot;;</code></p>
+<h3 id="逐行读取文件"><a href="#逐行读取文件" class="headerlink" title="逐行读取文件"></a>逐行读取文件</h3><p>fgets() 函数用于从文件中逐行读取文件。</p>
+<p><strong>注释：</strong>在调用该函数之后，文件指针会移动到下一行。</p>
+<p>下面的实例逐行读取文件，直到文件末尾为止：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>$file = fopen(<span class="hljs-string">&quot;welcome.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">&quot;无法打开文件!&quot;</span>);<br><span class="hljs-comment">// 读取文件每一行，直到文件结尾</span><br><span class="hljs-keyword">while</span>(!feof($file))<br>&#123;<br>  <span class="hljs-keyword">echo</span> fgets($file). <span class="hljs-string">&quot;&lt;br&gt;&quot;</span>;<br>&#125;<br>fclose($file);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="逐字符读取文件"><a href="#逐字符读取文件" class="headerlink" title="逐字符读取文件"></a>逐字符读取文件</h3><p>fgetc() 函数用于从文件中逐字符地读取文件。</p>
+<p><strong>注释：</strong>在调用该函数之后，文件指针会移动到下一个字符。</p>
+<p>下面的实例逐字符地读取文件，直到文件末尾为止：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>$file=fopen(<span class="hljs-string">&quot;welcome.txt&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">&quot;无法打开文件!&quot;</span>);<br><span class="hljs-keyword">while</span> (!feof($file))<br>&#123;<br>  <span class="hljs-keyword">echo</span> fgetc($file);<br>&#125;<br>fclose($file);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><p><a href="https://www.runoob.com/php/php-file-upload.html">详情参考如下链接</a></p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><blockquote>
+<p>cookie 常用于识别用户。cookie 是一种服务器留在用户计算机上的小文件。每当同一台计算机通过浏览器请求页面时，这台计算机将会发送 cookie。</p>
+</blockquote>
+<h3 id="创建cookie"><a href="#创建cookie" class="headerlink" title="创建cookie"></a>创建cookie</h3><p>setcookie() 函数用于设置 cookie。<strong>setcookie() 函数必须位于 <html> 标签之前。</html></strong></p>
+<p><code>setcookie(name, value, expire, path, domain);</code></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>setcookie(<span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-string">&quot;runoob&quot;</span>, time()+<span class="hljs-number">3600</span>);<br><span class="hljs-meta">?&gt;</span><br><br>&lt;html&gt;<br>.....<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="取回cookie"><a href="#取回cookie" class="headerlink" title="取回cookie"></a>取回cookie</h3><p>PHP 的 $_COOKIE 变量用于取回 cookie 的值。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// 输出 cookie 值</span><br><span class="hljs-keyword">echo</span> $_COOKIE[<span class="hljs-string">&quot;user&quot;</span>];<br><br><span class="hljs-comment">// 查看所有 cookie</span><br>print_r($_COOKIE);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除cookie"><a href="#删除cookie" class="headerlink" title="删除cookie"></a>删除cookie</h3><p>当删除 cookie 时，您应当使过期日期变更为过去的时间点。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// 设置 cookie 过期时间为过去 1 小时</span><br>setcookie(<span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, time()<span class="hljs-number">-3600</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="SESSION"><a href="#SESSION" class="headerlink" title="SESSION"></a>SESSION</h2><p>PHP session 变量用于存储关于用户会话（session）的信息，或者更改用户会话（session）的设置。Session 变量存储单一用户的信息，并且对于应用程序中的所有页面都是可用的。</p>
+<p>在使用php session之前，需要先开启php session</p>
+<p><code>session_start();</code>,这个函数必须位于<html>标签之前</html></p>
+<p>session_start()会向服务器注册用户的会话，以便您可以开始保存用户信息，同时会为用户会话分配一个 UID。</p>
+<h3 id="存储session"><a href="#存储session" class="headerlink" title="存储session"></a>存储session</h3><p>存储和取回 session 变量的正确方法是使用 PHP $_SESSION 变量：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>session_start();<br><span class="hljs-comment">// 存储 session 数据</span><br>$_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>]=<span class="hljs-number">1</span>;<br><span class="hljs-meta">?&gt;</span><br> <br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;meta charset=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;<br>&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br> <br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// 检索 session 数据</span><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;浏览量：&quot;</span>. $_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>];<br><span class="hljs-meta">?&gt;</span><br> <br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在下面的实例中，我们创建了一个简单的 page-view 计数器。isset() 函数检测是否已设置 “views” 变量。如果已设置 “views” 变量，我们累加计数器。如果 “views” 不存在，则创建 “views” 变量，并把它设置为 1：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>session_start();<br> <br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>]))<br>&#123;<br>    $_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>]=$_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>]+<span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br>    $_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>]=<span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;浏览量：&quot;</span>. $_SESSION[<span class="hljs-string">&#x27;views&#x27;</span>];<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="销毁SESSION"><a href="#销毁SESSION" class="headerlink" title="销毁SESSION"></a>销毁SESSION</h3><p>使用 unset() 或 session_destroy() 函数销毁session。</p>
+<p>unset() 函数用于释放指定的 session 变量；session_destroy() 函数彻底销毁 session：</p>
+<p><code>unset($_SESSION[&#39;views&#39;]); 或者  session_destroy();</code></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Go语言基础</title>
+    <url>/2022/07/31/Go/</url>
+    <content><![CDATA[<h2 id="结构程序化"><a href="#结构程序化" class="headerlink" title="结构程序化"></a>结构程序化</h2><h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><blockquote>
+<p>必须以字母或者下划线开头，后面可以跟任意数量的字母、数字或下划线。大写字母和小写字母是不同的：heapSort和Heapsort是两个不同的名字。</p>
+</blockquote>
+<p>如果一个名字是在函数内部定义，那么它就只在函数内部有效。如果是在函数外部定义，那么将在当前包的所有文件中都可以访问。名字的开头字母的大小写决定了名字在包外的可见性。如果一个名字是大写字母开头的（译注：必须是在函数外部定义的包级名字；包级函数名本身也是包级名字），那么它将是导出的，也就是说可以被外部的包访问，例如fmt包的Printf函数就是导出的，可以在fmt包外部访问。包本身的名字一般总是用小写字母。</p>
+<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><p>Go语言主要有四种类型的声明语句：var、const、type和func，分别对应变量、常量、类型和函数实体对象的声明。</p>
+<blockquote>
+<p>一个Go语言编写的程序对应一个或多个以.go为文件后缀名的源文件。每个源文件中以包的声明语句开始，说明该源文件是属于哪个包。包声明语句之后是import语句导入依赖的其它包，然后是包一级的类型、变量、常量、函数的声明语句，包一级的各种类型的声明语句的顺序无关紧要（函数内部的名字则必须先声明之后才能使用）。</p>
+</blockquote>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>var声明语句可以创建一个特定类型的变量，然后给变量附加一个名字，并且设置变量的初始值。变量声明的一般语法如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">var</span> 变量名字 类型 = 表达式<br></code></pre></td></tr></table></figure>
+
+<p>其中“<em>类型</em>”或“*= 表达式*”两个部分可以省略其中的一个。如果省略的是类型信息，那么将根据初始化表达式来推导变量的类型信息。如果初始化表达式被省略，那么将用零值初始化该变量。 数值类型变量对应的零值是0，布尔类型变量对应的零值是false，字符串类型对应的零值是空字符串，接口或引用类型（包括slice、指针、map、chan和函数）变量对应的零值是nil。数组或结构体等聚合类型对应的零值是每个元素或字段都是对应该类型的零值。</p>
+<h4 id="简短变量声明"><a href="#简短变量声明" class="headerlink" title="简短变量声明"></a>简短变量声明</h4><p>在函数内部，有一种称为简短变量声明语句的形式可用于声明和初始化局部变量。它以“名字 := 表达式”形式声明变量，变量的类型根据表达式来自动推导。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">i := <span class="hljs-number">1.2</span><br></code></pre></td></tr></table></figure>
+
+<p>请记住“:=”是一个变量声明语句，而“=”是一个变量赋值操作。</p>
+<p>简短变量声明左边的变量可能并不是全部都是刚刚声明的。如果有一些已经在相同的词法域声明过了，那么简短变量声明语句对这些已经声明过的变量就只有赋值行为了。</p>
+<p>在下面的代码中，第一个语句声明了in和err两个变量。在第二个语句只声明了out一个变量，然后对已经声明的err进行了赋值操作。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go">in, err := os.Open(infile)<br><span class="hljs-comment">// ...</span><br>out, err := os.Create(outfile)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>简短变量声明语句中必须至少要声明一个新的变量，下面的代码将不能编译通过：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go">f, err := os.Open(infile)<br><span class="hljs-comment">// ...</span><br>f, err := os.Create(outfile) <span class="hljs-comment">// compile error: no new variables</span><br></code></pre></td></tr></table></figure>
+
+<p>解决的方法是第二个简短变量声明语句改用普通的多重赋值语句。</p>
+<h4 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h4><p>一个指针的值是另一个变量的地址。一个指针对应变量在内存中的存储位置。并不是每一个值都会有一个内存地址，但是对于每一个变量必然有对应的内存地址。通过指针，我们可以直接读或更新对应变量的值，而不需要知道该变量的名字。</p>
+<p>如果用<code>var x int</code>声明语句声明一个x变量，那么&amp;x表达式（取x变量的内存地址）将产生一个指向该整数变量的指针，指针对应的数据类型是<code>*int</code>，指针被称之为“指向int类型的指针”。如果指针名字为p，那么可以说“p指针指向变量x”，或者说“p指针保存了x变量的内存地址”。同时<code>*p</code>表达式对应p指针指向的变量的值。一般<code>*p</code>表达式读取指针指向的变量的值，这里为int类型的值，同时因为<code>*p</code>对应一个变量，所以该表达式也可以出现在赋值语句的左边，表示更新指针所指向的变量的值。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go">x := <span class="hljs-number">1</span><br>p := &amp;x         <span class="hljs-comment">// p, of type *int, points to x</span><br>fmt.Println(*p) <span class="hljs-comment">// &quot;1&quot;</span><br>*p = <span class="hljs-number">2</span>          <span class="hljs-comment">// equivalent to x = 2</span><br>fmt.Println(x)  <span class="hljs-comment">// &quot;2&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>任何类型的指针的零值都是nil。如果p指向某个有效变量，那么<code>p != nil</code>测试为真。指针之间也是可以进行相等测试的，只有当它们指向同一个变量或全部是nil时才相等。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">var</span> x, y <span class="hljs-keyword">int</span><br>fmt.Println(&amp;x == &amp;x, &amp;x == &amp;y, &amp;x == <span class="hljs-literal">nil</span>) <span class="hljs-comment">// &quot;true false false&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="变量的生命周期"><a href="#变量的生命周期" class="headerlink" title="变量的生命周期"></a>变量的生命周期</h4><p><strong>变量的生命周期指的是在程序运行期间变量有效存在的时间段。</strong>对于在包一级声明的变量来说，它们的生命周期和整个程序的运行周期是一致的。而相比之下，局部变量的生命周期则是动态的：<strong>每次从创建一个新变量的声明语句开始，直到该变量不再被引用为止，然后变量的存储空间可能被回收。</strong>函数的参数变量和返回值变量都是局部变量。它们在函数每次被调用的时候创建。</p>
+<p>Go的垃圾收集器判断一个变量是否可以回收的基本思路：从每个包级的变量和每个当前的运行函数的每一个局部变量开始，通过指针或引用的访问路径遍历，是否可以找到该变量。如果不存在这样的访问路径，那么说明该变量是不可达的。也就是说它是否存在并不影响程序后续的计算结果。</p>
+<p><strong>因为一个变量的有效周期只取决于是否可达，因此一个循环迭代内部的局部变量的生命周期可能超出其局部作用域。同时，局部变量可能在函数返回之后依然存在。</strong></p>
+<p>编译器会自动选择在栈上还是在堆上分配局部变量的存储空间，但可能令人惊讶的是，这个选择并不是由用var还是new声明变量的方式决定的。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go"><span class="hljs-keyword">var</span> global *<span class="hljs-keyword">int</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> x <span class="hljs-keyword">int</span><br>    x = <span class="hljs-number">1</span><br>    global = &amp;x<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span> &#123;<br>    y := <span class="hljs-built_in">new</span>(<span class="hljs-keyword">int</span>)<br>    *y = <span class="hljs-number">1</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>f函数里的x变量必须在堆上分配，因为它在函数退出后依然可以通过包一级的global变量找到，虽然它是在函数内部定义的；用Go语言的术语说，这个x局部变量从函数f中逃逸了。相反，当g函数返回时，变量<code>*y</code>将是不可达的，也就是说可以马上被回收的。因此，<code>*y</code>并没有从函数g中逃逸，编译器可以选择在栈上分配<code>*y</code>的存储空间（译注：也可以选择在堆上分配，然后由Go语言的GC回收这个变量的内存空间），虽然这里用的是new方式。其实在任何时候，你并不需为了编写正确的代码而要考虑变量的逃逸行为，要记住的是，逃逸的变量需要额外分配内存，同时对性能的优化可能会产生细微的影响。</p>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p><strong>反转数组</strong></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">reverse</span><span class="hljs-params">(s []<span class="hljs-keyword">int</span>)</span></span> &#123;<br>    <span class="hljs-keyword">for</span> i, j := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(s)<span class="hljs-number">-1</span>; i &lt; j; i, j = i+<span class="hljs-number">1</span>, j<span class="hljs-number">-1</span> &#123;<br>        s[i], s[j] = s[j], s[i]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go">a := [...]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;<br>reverse(a[:])<br>fmt.Println(a) <span class="hljs-comment">// &quot;[5 4 3 2 1 0]&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>将元素循环向左旋转n个元素</strong>：三次调用reverse反转函数，第一次是反转开头的n个元素，然后是反转剩下的元素，最后是反转整个slice的元素。（如果是向右循环旋转，则将第三个函数调用移到第一个调用位置就可以了。）</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs Go">s := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;<br><span class="hljs-comment">// Rotate s left by two positions.</span><br>reverse(s[:<span class="hljs-number">2</span>])<br>reverse(s[<span class="hljs-number">2</span>:])<br>reverse(s)<br>fmt.Println(s) <span class="hljs-comment">// &quot;[2 3 4 5 0 1]&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h3><blockquote>
+<p>defer语句 后紧跟随到语句会被延迟处理。</p>
+<p>在defer所属函数返回时，将被defer修饰的语句逆序执行。</p>
+<p>也就是最下面的defer语句最先执行。可以用来做资源清理：数据库连接释放、锁资源释放、关闭文件</p>
+</blockquote>
+<h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><blockquote>
+<p>先于main函数自动执行，不可以被其他函数调用。</p>
+<p>init函数既没有参数也没有返回值，一个包可以有多个init函数，</p>
+<p>可以用来做一些初始化操作：初始化顺序：<strong>变量初始化-&gt;init-&gt;main</strong></p>
+</blockquote>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-comment">//定义结构体</span><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>   name <span class="hljs-keyword">string</span><br>   age  <span class="hljs-keyword">int</span><br>&#125;<br><br><span class="hljs-comment">//定义构造方法 ，返回两个参数，第一个是一个指针类型</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">newPerson</span><span class="hljs-params">(name <span class="hljs-keyword">string</span>, age <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(*Person, error)</span></span> &#123;<br>   <span class="hljs-comment">// 字符串可以直接比较</span><br>   <span class="hljs-keyword">if</span> name == <span class="hljs-string">&quot;&quot;</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;姓名不能为空&quot;</span>)<br>   &#125;<br>   <span class="hljs-keyword">if</span> age &lt; <span class="hljs-number">0</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;age 不能小于0&quot;</span>)<br>   &#125;<br><br>   <span class="hljs-keyword">return</span> &amp;Person&#123;name, age&#125;, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-comment">//接受两个参数，第一个是一个指针类型</span><br>   person, err := newPerson(<span class="hljs-string">&quot;12&quot;</span>, <span class="hljs-number">-1</span>)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err)<br>   &#125; <span class="hljs-keyword">else</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, *person)<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h2><h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><blockquote>
+<p>创建一个协程非常容易，在语句前面加上 go 即可</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;fmt&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">show</span><span class="hljs-params">(msg <span class="hljs-keyword">string</span>)</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++ &#123;<br>      fmt.Println(msg)<br>      <span class="hljs-comment">//休眠100ms</span><br>      time.Sleep(time.Millisecond * <span class="hljs-number">100</span>)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">go</span> show(<span class="hljs-string">&quot;java&quot;</span>) <span class="hljs-comment">//go 启动了一个协程来执行</span><br>   <span class="hljs-keyword">go</span> show(<span class="hljs-string">&quot;golang&quot;</span>)<br>   fmt.Println(<span class="hljs-string">&quot;end...&quot;</span>) <span class="hljs-comment">//主函数退出，程序就结束了，会发现并不会打印5次java 和5次 go</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="通道"><a href="#通道" class="headerlink" title="通道"></a>通道</h3><blockquote>
+<p>通道用于在协程之前共享数据</p>
+<ol>
+<li>对于一个通道，发送操作之间是互斥的，接受操作之间也是互斥的</li>
+<li>发送操作和接受操作中对元素值的处理都是不可分割的</li>
+<li>发送操作在完全完成之前会被阻塞。接收操作也是如此。</li>
+</ol>
+</blockquote>
+<p>根据数据交换的行为，有两种类型的通道：无缓冲通道和缓冲通道。无缓冲通道用于执行通道之间的同步通信，而缓冲通道用于执行异步通信。无缓冲通道保证在发送和接收发生的瞬间执行两个协程之间的交换，缓冲通道没有这样的保证。</p>
+<p>语法：由make函数创建，制定chan关键字和通道的元素类型</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">unbuffered := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)  <span class="hljs-comment">//创建无缓冲的int型通道</span><br>buffered :=<span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span> <span class="hljs-number">10</span>) <span class="hljs-comment">//创建有缓冲的int型通道</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>示例：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;fmt&quot;</span><br>   <span class="hljs-string">&quot;math/rand&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-comment">//创建一个无缓冲的通道</span><br><span class="hljs-keyword">var</span> values = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)<br><br><span class="hljs-comment">//向通道中添加数据</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">send</span><span class="hljs-params">()</span></span> &#123;<br>   rand.Seed(time.Now().UnixNano())<br>   <span class="hljs-comment">//返回[0,n)的伪随机数</span><br>   value := rand.Intn(<span class="hljs-number">10</span>)<br>   <span class="hljs-built_in">println</span>(value)<br>   <span class="hljs-comment">//休眠5s，5s之后向通道放入数据</span><br>   time.Sleep(time.Second * <span class="hljs-number">5</span>)<br>   <span class="hljs-comment">//将value 写入到 values中（通道）</span><br>   values &lt;- value<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//程序运行结束的之前关闭通道</span><br>   <span class="hljs-keyword">defer</span> <span class="hljs-built_in">close</span>(values)<br>   <span class="hljs-comment">//启动一个协程</span><br>   <span class="hljs-keyword">go</span> send()<br>   fmt.Println(<span class="hljs-string">&quot;wait...&quot;</span>)<br>   <span class="hljs-comment">//会一直阻塞，直到通道中被放入数据</span><br>   value := &lt;-values<br>   fmt.Println(value)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="waitgroup"><a href="#waitgroup" class="headerlink" title="waitgroup"></a>waitgroup</h3><blockquote>
+<p>有点像java的countdownlanch，用于实现同步</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;sync&quot;</span><br><br><span class="hljs-keyword">var</span> wg sync.WaitGroup<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">showMessage</span><span class="hljs-params">(i <span class="hljs-keyword">int</span>)</span></span> &#123;<br>   <span class="hljs-comment">//表示任务完成，计数器减1</span><br>   <span class="hljs-keyword">defer</span> wg.Done()<br>   <span class="hljs-built_in">println</span>(i)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++ &#123;<br>      <span class="hljs-comment">//计数器加1</span><br>      wg.Add(<span class="hljs-number">1</span>)<br>      <span class="hljs-keyword">go</span> showMessage(i)<br>   &#125;<br>   <span class="hljs-comment">//阻塞，直到计数器的值为0</span><br>   wg.Wait()<br>   <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;end...&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h3><h4 id="Gosched"><a href="#Gosched" class="headerlink" title="Gosched()"></a>Gosched()</h4><blockquote>
+<p>主动让出cpu时间，重新等待安排任务</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;runtime&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">show</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i++ &#123;<br>      <span class="hljs-built_in">println</span>(s)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">go</span> show(<span class="hljs-string">&quot;java&quot;</span>)<br><br>  <span class="hljs-comment">//主协程</span><br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i++ &#123;<br>      <span class="hljs-comment">//让出cpu时间片，等待重新分配任务</span><br>      runtime.Gosched()<br>      <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;golang&quot;</span>)<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的例子会先打印两遍java，再打印两遍golang。</p>
+<p>虽然主协程和开启的协程会异步运行，但是由于使用了<code>runtime.Gosched()</code>,主协程会自动让出cpu，让其他协程运行，因此会等到没有其他协程运行才开始运行，实现了同步。</p>
+<h4 id="Goexit"><a href="#Goexit" class="headerlink" title="Goexit"></a>Goexit</h4><blockquote>
+<p>退出当前协程</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;runtime&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">show</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>      <span class="hljs-comment">//如果i&gt;=5，直接退出协程</span><br>      <span class="hljs-keyword">if</span> i &gt;= <span class="hljs-number">5</span> &#123;<br>         runtime.Goexit()<br>      &#125;<br>      <span class="hljs-built_in">println</span>(s)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">go</span> show(<span class="hljs-string">&quot;java&quot;</span>)<br>   time.Sleep(time.Second)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="GOMAXPROCS"><a href="#GOMAXPROCS" class="headerlink" title="GOMAXPROCS"></a>GOMAXPROCS</h4><blockquote>
+<p>设置最大的可执行的cpu数量</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;fmt&quot;</span><br>   <span class="hljs-string">&quot;runtime&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;a:%v\n&quot;</span>, i)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">b</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;b:%v\n&quot;</span>, i)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//获取当前机器的cpu数量</span><br>   cpu := runtime.NumCPU()<br>   <span class="hljs-comment">//设置当前最大的执行cpu数量</span><br>   runtime.GOMAXPROCS(<span class="hljs-number">1</span>)<br>   <span class="hljs-keyword">go</span> a()<br>   <span class="hljs-keyword">go</span> b()<br>   <span class="hljs-built_in">println</span>(cpu)<br><br>   time.Sleep(time.Second)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="Metux"><a href="#Metux" class="headerlink" title="Metux"></a>Metux</h3><blockquote>
+<p>加互斥锁</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;fmt&quot;</span><br>   <span class="hljs-string">&quot;sync&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> i <span class="hljs-keyword">int</span> = <span class="hljs-number">100</span><br><span class="hljs-keyword">var</span> wt sync.WaitGroup<br><span class="hljs-comment">//定义互斥锁变量</span><br><span class="hljs-keyword">var</span> lock sync.Mutex<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">defer</span> wt.Done()<br>   lock.Lock()<br>   i++<br>   fmt.Println(<span class="hljs-string">&quot;add&quot;</span>, i)<br>   lock.Unlock()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sub</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">defer</span> wt.Done()<br>  <span class="hljs-comment">//加锁</span><br>   lock.Lock()<br>   time.Sleep(time.Millisecond * <span class="hljs-number">2</span>)<br>   i--<br>   fmt.Println(<span class="hljs-string">&quot;sub&quot;</span>, i)<br>  <span class="hljs-comment">//解锁 </span><br>   lock.Unlock()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++ &#123;<br>      wt.Add(<span class="hljs-number">1</span>)<br>      <span class="hljs-keyword">go</span> add()<br>      wt.Add(<span class="hljs-number">1</span>)<br>      <span class="hljs-keyword">go</span> sub()<br>   &#125;<br><br>   wt.Wait()<br>   fmt.Println(<span class="hljs-string">&quot;end:&quot;</span>, i)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="select-switch"><a href="#select-switch" class="headerlink" title="select switch"></a>select switch</h3><blockquote>
+<p>并发中的控制语句，类似于switch。用于处理异步io。</p>
+<p>select会监听case中channel的读写操作，当case中的读写操作为非阻塞操作时，会触发响应的动作</p>
+<p>select中的case语句必须是一个channel操作</p>
+<p>select中的default语句总是可以运行</p>
+</blockquote>
+<ul>
+<li>如果有多个case可以运行，select会公平的随机选择一个执行，其他的不执行</li>
+<li>如果没有可运行的case，且有default语句，那么就会执行default语句</li>
+<li>如果没有可运行的case，且没有default语句,select会阻塞，直到某个case通信可以运行</li>
+</ul>
+<h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><blockquote>
+<p>定时器，可以实现一些定时操作，内部通过channel实现</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;fmt&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//创建一个2s的定时器</span><br>   timer := time.NewTimer(time.Second * <span class="hljs-number">2</span>)<br>   fmt.Printf(<span class="hljs-string">&quot;%v\n&quot;</span>, time.Now())<br>   <span class="hljs-comment">//会一直阻塞，直到定时器的时间过了</span><br>   t := &lt;-timer.C<br>   fmt.Printf(<span class="hljs-string">&quot;%v\n&quot;</span>, t)<br><br>   <span class="hljs-comment">//创建一个定时器，又阻塞两秒，</span><br>   timer2 := time.NewTimer(time.Second * <span class="hljs-number">2</span>)<br>   &lt;-timer2.C<br><br>   <span class="hljs-comment">//可以使用Sleep实现阻塞功能</span><br>   time.Sleep(time.Second * <span class="hljs-number">2</span>)<br><br>   <span class="hljs-comment">//after也可以实现阻塞，after返回的就是 chan Time</span><br>   &lt;-time.After(time.Second * <span class="hljs-number">2</span>)<br><br>   timer3 := time.NewTimer(time.Second * <span class="hljs-number">2</span>)<br>   <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>      &lt;-timer3.C<br>      fmt.Println(<span class="hljs-string">&quot;hhh&quot;</span>)<br>   &#125;()<br>   <span class="hljs-comment">//上面定义了一个2s的定时器timer3，但是调用stop会立即停止等待,后面的打印也不会执行</span><br>   timer3.Stop()<br><br>   <span class="hljs-comment">//定义一个5s的定时器</span><br>   timer4 := time.NewTimer(time.Second * <span class="hljs-number">5</span>)<br>   <span class="hljs-comment">//修改定时器的时间为2s</span><br>   timer4.Reset(time.Second * <span class="hljs-number">2</span>)<br>   <span class="hljs-comment">//只阻塞2s</span><br>   &lt;-timer.C<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Ticker"><a href="#Ticker" class="headerlink" title="Ticker"></a>Ticker</h3><blockquote>
+<p>ticker周期性的执行</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;time&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//创建一个ticker，周期性的执行一次</span><br>   ticker := time.NewTicker(time.Second)<br>   <span class="hljs-comment">/*count := 1</span><br><span class="hljs-comment">   for _ = range ticker.C &#123;</span><br><span class="hljs-comment">      println(&quot;ticker&quot;)</span><br><span class="hljs-comment">      count++</span><br><span class="hljs-comment">      if count &gt;= 5 &#123;</span><br><span class="hljs-comment">         ticker.Stop()</span><br><span class="hljs-comment">         break</span><br><span class="hljs-comment">      &#125;</span><br><span class="hljs-comment">   &#125;*/</span><br><br>   chanInt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)<br><br>   <span class="hljs-comment">//创建一个协程，周期性的向channel中写入数据，后面加（）是让匿名函数自己调用自己</span><br>   <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>      <span class="hljs-keyword">for</span> _ = <span class="hljs-keyword">range</span> ticker.C &#123;<br>         <span class="hljs-keyword">select</span> &#123;<br>         <span class="hljs-keyword">case</span> chanInt &lt;- <span class="hljs-number">1</span>:<br>            <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;发送1&quot;</span>)<br>         <span class="hljs-keyword">case</span> chanInt &lt;- <span class="hljs-number">2</span>:<br>            <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;发送2&quot;</span>)<br>         <span class="hljs-keyword">case</span> chanInt &lt;- <span class="hljs-number">3</span>:<br>            <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;发送3&quot;</span>)<br>         &#125;<br>      &#125;<br>   &#125;()<br><br>   <span class="hljs-comment">//从channel中读取数据</span><br>   <span class="hljs-keyword">for</span> v := <span class="hljs-keyword">range</span> chanInt &#123;<br>      <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;收到：&quot;</span>, v)<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h3><blockquote>
+<p>sycn下的atomic是一个原子包，可以保证操作的原子性</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;sync/atomic&quot;</span><br>   <span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> i <span class="hljs-keyword">int32</span> = <span class="hljs-number">100</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//使用原子操作：cas，compare and swap 保证线程安全</span><br>   <span class="hljs-comment">//第一个是变量的地址，第二个是增加的值</span><br>   atomic.AddInt32(&amp;i, <span class="hljs-number">1</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sub</span><span class="hljs-params">()</span></span> &#123;<br>   atomic.AddInt32(&amp;i, <span class="hljs-number">-1</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++ &#123;<br>      <span class="hljs-keyword">go</span> add()<br>      <span class="hljs-keyword">go</span> sub()<br>   &#125;<br>   time.Sleep(time.Second)<br>   <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;结果为：&quot;</span>, i)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h2><h3 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h3><figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;fmt&quot;</span><br>   <span class="hljs-string">&quot;io/ioutil&quot;</span><br>   <span class="hljs-string">&quot;os&quot;</span><br>)<br><br><span class="hljs-comment">//创建文件</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">createFile</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//创建文件，传入文件名称</span><br>   <span class="hljs-comment">//返回文件和错误信息，如果没发生错误，err=nil</span><br>   file, err := os.Create(<span class="hljs-string">&quot;a.txt&quot;</span>)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err)<br>   &#125; <span class="hljs-keyword">else</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, file.Name())<br>   &#125;<br>&#125;<br><br><span class="hljs-comment">// 创建目录</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">makeDir</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//创建目录，第一个是目录名，第二个是权限，ModePerm表示最高权限</span><br>   err := os.Mkdir(<span class="hljs-string">&quot;a&quot;</span>, os.ModePerm)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err)<br>   &#125;<br>   <span class="hljs-comment">//MkdirAll 创建多级目录</span><br>   err1 := os.MkdirAll(<span class="hljs-string">&quot;b/c/d&quot;</span>, os.ModePerm)<br>   <span class="hljs-keyword">if</span> err1 != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err1)<br>   &#125;<br>&#125;<br><br><span class="hljs-comment">// 删除文件</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">remove</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//删除单个文件，可以是文件也可以是目录</span><br>   err := os.Remove(<span class="hljs-string">&quot;a.txt&quot;</span>)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err)<br>   &#125;<br><br>   err1 := os.RemoveAll(<span class="hljs-string">&quot;b&quot;</span>)<br>   <span class="hljs-keyword">if</span> err1 != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err1)<br>   &#125;<br>&#125;<br><br><span class="hljs-comment">// 工作目录</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">wd</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//获取当前工作目录</span><br>   dir, err := os.Getwd()<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err)<br>   &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-comment">//打印当前目录</span><br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, dir)<br>   &#125;<br>   <span class="hljs-comment">//修改当前工作目录</span><br>   os.Chdir(<span class="hljs-string">&quot;Users/didi/&quot;</span>)<br>   dir, _ = os.Getwd()<br>   <span class="hljs-comment">//打印当前目录</span><br>   fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, dir)<br>   <span class="hljs-comment">//临时目录</span><br>   tempDir := os.TempDir()<br>   fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, tempDir)<br>&#125;<br><br><span class="hljs-comment">//重命名</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rename</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//重命名，1.旧文件名 2.新文件名</span><br>   err := os.Rename(<span class="hljs-string">&quot;a.txt&quot;</span>, <span class="hljs-string">&quot;b.txt&quot;</span>)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Printf(<span class="hljs-string">&quot;%v&quot;</span>, err)<br>   &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">readFile</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//使用ioutil.ReadFile读取，直接输入文件名</span><br>   file, _ := ioutil.ReadFile(<span class="hljs-string">&quot;a.txt&quot;</span>)<br>   fmt.Printf(<span class="hljs-string">&quot;%v\n&quot;</span>, <span class="hljs-keyword">string</span>(file[:]))<br><br>   <span class="hljs-comment">//先创建句柄再读取</span><br>   open, _ := os.Open(<span class="hljs-string">&quot;a.txt&quot;</span>)<br>   bytes, _ := ioutil.ReadAll(open)<br>   <span class="hljs-built_in">println</span>(<span class="hljs-keyword">string</span>(bytes[:]))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">writeFile</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//ioutil.WriteFile 写入：文件名、字节数组、权限</span><br>   <span class="hljs-comment">//会覆盖之前的内容</span><br>   ioutil.WriteFile(<span class="hljs-string">&quot;a.txt&quot;</span>, []<span class="hljs-keyword">byte</span>(<span class="hljs-string">&quot;hello&quot;</span>), os.ModePerm)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   createFile()<br>   makeDir()<br>   remove()<br>   wd()<br>   readFile()<br>   writeFile()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="File文件读操作"><a href="#File文件读操作" class="headerlink" title="File文件读操作"></a>File文件读操作</h3><figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;io&quot;</span><br>   <span class="hljs-string">&quot;os&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">openclose</span><span class="hljs-params">()</span></span> &#123;<br><br>   <span class="hljs-comment">//打开文件，使用open方法文件只读，如果文件不存在则报错</span><br>   <span class="hljs-comment">//底层还是调用OpenFile方法</span><br>   file, _ := os.Open(<span class="hljs-string">&quot;a.txt&quot;</span>)<br>   <span class="hljs-built_in">println</span>(file.Name())<br><br>   <span class="hljs-comment">//O_RDWR：读写权限，O_CREATE：如果文件不存在则创建一个</span><br>   file, _ = os.OpenFile(<span class="hljs-string">&quot;a.txt&quot;</span>, os.O_RDWR|os.O_CREATE, <span class="hljs-number">0755</span>)<br>   <span class="hljs-built_in">println</span>(file.Name())<br><br>   <span class="hljs-comment">//关闭文件</span><br>   file.Close()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">create</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//等价于OpenFile(name, O_RDWR|O_CREATE|O_TRUNC, 0666)</span><br>   file, _ := os.Create(<span class="hljs-string">&quot;a1.txt&quot;</span>)<br>   <span class="hljs-built_in">println</span>(file.Name())<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">readFile</span><span class="hljs-params">()</span></span> &#123;<br>   file, _ := os.Open(<span class="hljs-string">&quot;a.txt&quot;</span>)<br><br>   <span class="hljs-comment">//循环读取</span><br>   <span class="hljs-keyword">for</span> &#123;<br>      <span class="hljs-comment">//创建一个字符数组</span><br>      bufer := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">byte</span>, <span class="hljs-number">10</span>)<br>      <span class="hljs-comment">//将文件的数据读取到字符数组</span><br>      read, err := file.Read(bufer)<br>      <span class="hljs-comment">//如果读到文件末尾，退出循环</span><br>      <span class="hljs-keyword">if</span> err == io.EOF &#123;<br>         <span class="hljs-keyword">break</span><br>      &#125;<br>      <span class="hljs-built_in">println</span>(read)<br>      <span class="hljs-built_in">println</span>(<span class="hljs-keyword">string</span>(bufer[:]))<br>   &#125;<br><br>   <span class="hljs-comment">//从某个地方开始读取</span><br>   bufer := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">byte</span>, <span class="hljs-number">5</span>)<br>   <span class="hljs-comment">//从第二个字节开始读取5个字节</span><br>   n, _ := file.ReadAt(bufer, <span class="hljs-number">2</span>)<br>   <span class="hljs-built_in">println</span>(n)<br>   <span class="hljs-built_in">println</span>(<span class="hljs-keyword">string</span>(bufer))<br><br>   <span class="hljs-comment">//定位</span><br>   <span class="hljs-comment">//相对于文件头偏移2个单位</span><br>   file.Seek(<span class="hljs-number">2</span>, <span class="hljs-number">0</span>)<br>   n, _ = file.Read(bufer)<br>   <span class="hljs-built_in">println</span>(n)<br>   <span class="hljs-built_in">println</span>(<span class="hljs-keyword">string</span>(bufer))<br><br>   file.Close()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   readFile()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="File写操作"><a href="#File写操作" class="headerlink" title="File写操作"></a>File写操作</h3><figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;os&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">write</span><span class="hljs-params">()</span></span> &#123;<br>   <span class="hljs-comment">//打开文件，O_APPEND 追加到文件末尾 O_TRUNC:清空</span><br>   file, _ := os.OpenFile(<span class="hljs-string">&quot;a.txt&quot;</span>, os.O_RDWR|os.O_APPEND, <span class="hljs-number">0777</span>)<br>   file.Write([]<span class="hljs-keyword">byte</span>(<span class="hljs-string">&quot;hello golang!&quot;</span>))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">writeString</span><span class="hljs-params">()</span></span> &#123;<br>   file, _ := os.OpenFile(<span class="hljs-string">&quot;a.txt&quot;</span>, os.O_RDWR|os.O_TRUNC, <span class="hljs-number">0777</span>)<br>   <span class="hljs-comment">//直接写字符串</span><br>   file.WriteString(<span class="hljs-string">&quot;hello&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">writeAt</span><span class="hljs-params">()</span></span> &#123;<br>   file, _ := os.OpenFile(<span class="hljs-string">&quot;a.txt&quot;</span>, os.O_RDWR, <span class="hljs-number">0777</span>)<br>   <span class="hljs-comment">//在指定位置开始写入</span><br>   file.WriteAt([]<span class="hljs-keyword">byte</span>(<span class="hljs-string">&quot;hha&quot;</span>), <span class="hljs-number">4</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   write()<br>   writeString()<br>   writeAt()<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+  </entry>
 </search>
