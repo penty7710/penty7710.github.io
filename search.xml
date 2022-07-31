@@ -9925,10 +9925,9 @@ public static void main(String args[])&#123;
 ]]></content>
   </entry>
   <entry>
-    <title></title>
+    <title>Php语言基础</title>
     <url>/2022/07/31/php/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Php语言基础"><a href="#title-Php语言基础" class="headerlink" title="title:Php语言基础"></a>title:Php语言基础</h2><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><blockquote>
+    <content><![CDATA[<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><blockquote>
 <ul>
 <li>定义在函数外部的就是全局变量，它的作用域从定义处一直到文件结尾。</li>
 <li>函数内定义的变量就是局部变量，它的作用域为函数定义范围内。</li>
