@@ -14,29 +14,13 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="docker启动mysql">
+  <meta name="description" content="努力最坏的结果不过是大器晚成">
   <meta name="author" content="pty">
   <meta name="keywords" content="">
   
-  <title>docker启动mysql - Pety&#39;s blog</title>
+  <title>Archives - Pety&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-  
 
 
 
@@ -65,7 +49,7 @@
 
 
 <body>
-  <header style="height: 70vh;">
+  <header style="height: 60vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -159,59 +143,14 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/message.png') no-repeat center center;
+         style="background: url('/img/archives.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="docker启动mysql">
+            <span class="h2" id="subtitle" title="Archive">
               
             </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-05-29 21:59" pubdate>
-        May 29, 2022 pm
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      420 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      5
-       分钟
-    </span>
-  
-
-  
-  
-    
-      <!-- 不蒜子统计文章PV -->
-      <span id="busuanzi_container_page_pv" style="display: none">
-        <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="busuanzi_value_page_pv"></span> 次
-      </span>
-    
-  
-</div>
 
             
           </div>
@@ -224,98 +163,40 @@
 
   <main>
     
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<div class="list-group">
+  <p class="h4">47 posts in total.</p>
+  <hr>
+  
+  
+    
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">docker启动mysql</h1>
-            
-            <div class="markdown-body">
-              <h1 id="docker启动mysql"><a href="#docker启动mysql" class="headerlink" title="docker启动mysql"></a>docker启动mysql</h1><a id="more"></a>
-
-
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><br>docker run -d mysql:latest             以后台的方式运行 mysql 版本的镜像，生成一个容器。<br>    --name mysql                           容器名为 mysql<br>    -e MYSQL_ROOT_PASSWORD=123456          设置登陆密码为 123456，登陆用户为 root<br>    -p 3306:3306                           将容器内部 3306 端口映射到 主机的 3306 端口，即通过 主机的 3306 可以访问容器的 3306 端口<br>    -v /usr/mydata/mysql/log:/var/log/mysql    将容器的 日志文件夹 挂载到 主机的相应位置<br>    -v /usr/mydata/mysql/data:/var/lib/mysql   将容器的 数据文件夹 挂载到 主机的相应位置<br>    -v /usr/mydata/mysql/conf:/etc/mysql/conf.d   将容器的 自定义配置文件夹 挂载到主机的相应位置<br>    <br>【查看容器是否启动：】<br>docker ps -a<br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v /usr/mydata/mysql/log:/var/log/mysql -v /usr/mydata/mysql/data:/var/lib/mysql -v /usr/mydata/mysql/conf:/etc/mysql/conf.d mysql:8.0.2<br></code></pre></td></tr></table></figure>
+      <p class="h5">2022</p>
+    
+    <a href="/2022/08/12/Netty/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Netty</span>
+      <time style="float: right;">08-12</time>
+    </a>
+  
+</div>
 
 
 
 
 
-<p><strong>在启动mysql的时候需要挂载数据卷，否则如果容器被删除，那么数据库中的数据将全部丢失，这是一个很严重的问题，可以使用 -v 挂载数据卷到宿主机。其次由于没有配置数据库，因此数据库的默认编码是<code>latin1</code>，这时如果插入中文数据会报错，因此我们需要修改配置。使用<code> SHOW VARIABLES LIKE &#39;character%&#39;</code>可以查看编码设置。</strong></p>
-<p><strong>上面的命令已经挂载了数据卷，-v  ：前面的是宿主机的路径，后面是容器的路径。我们在宿主机的conf目录下创建my.cnf文件，然后将下面代码复制到my.cnf文件即可</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[client]<br>default_character_set=utf8<br>[mysqld]<br>collation_server = utf8_general_ci<br>character_set_server = utf8<br></code></pre></td></tr></table></figure>
-
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
               </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/05/29/docker%E5%AE%89%E8%A3%85elasticsearch/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">docker安装elasticsearch</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/05/29/docker%E5%AE%89%E8%A3%85redis/">
-                        <span class="hidden-mobile">docker安装redis</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
             </div>
-
-            
-          </article>
+          </div>
         </div>
       </div>
-    </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
-  </div>
-</div>
-
-<!-- Custom -->
-
-
     
 
     
@@ -420,15 +301,9 @@
 
 
 
-  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
 
 
 
-  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-
-
-
-  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
 
 
 
