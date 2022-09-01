@@ -181,25 +181,32 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/07/13/RPC/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="RPC">
+        <a href="/2022/09/01/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" target="_self">
+          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/13/RPC/">RPC</a>
+        <a href="/2022/09/01/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/07/13/RPC/">
+        <a href="/2022/09/01/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">
           
           
             
           
-          01 什么是 RPC？原理是什么？1. 什么是 RPC？RPC（Remote Procedure Call） 即远程过程调用，通过名字我们就能看出 RPC 关注的是远程调用而非本地调用。
-为什么要 RPC ？ 因为，两个不同的服务器上的服务提供的方法不在一个内存空间，所以，需要通过网络编程才能传递方法调用所需要的参数。并且，方法调用的结果也需要通过网络编程来接收。但是，如果我们自己手动网络编程来实
+          定时任务
+定时任务：在固定的时候自动执行任务，不需要人为操纵
+spring task：spring task是spring3以上版本自带的定时任务，实现定时任务的功能时，需要引入spring-context包
+
+
+在项目的启动类上添加@EnableScheduling注解
+
+创建定时任务类，使用@Scheduled(cron =&quot;xxx&quot;)注解编写定时规则
+1234567891
         </a>
       </p>
 
@@ -207,8 +214,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-13 16:16" pubdate>
-              2022-07-13
+            <time datetime="2022-09-01 23:54" pubdate>
+              2022-09-01
             </time>
           </div>
         
@@ -222,34 +229,28 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/07/07/springcloud/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="springcloud">
+        <a href="/2022/09/01/%E5%9F%BA%E4%BA%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8/" target="_self">
+          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="基于自定义注解实现拦截器">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/07/springcloud/">springcloud</a>
+        <a href="/2022/09/01/%E5%9F%BA%E4%BA%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8/">基于自定义注解实现拦截器</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/07/07/springcloud/">
+        <a href="/2022/09/01/%E5%9F%BA%E4%BA%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8/">
           
           
             
           
-          认识微服务单体架构单体架构：将业务的所有功能集中在一个项目中开发，打成一个包部署。
+          创建注解123456789/** * 自定义注解 * @Target 标识该注解可以使用的位置 * @Retention 标识该注解的作用域 */@Target(ElementType.METHOD)@Retention(RetentionPolicy.RUNTIME)public @interface LoginRequired &#123;&#125;
 
-优点：架构简单，部署成本低
-缺点：耦合度高（维护困难、升级困难）
-分布式架构分布式架构：根据业务功能对系统做拆分，每个业务功能模块作为独立项目开发，称为一个服务。
+元注解：
 
-优点：降低服务耦合，有利于服务升级和拓展
-缺点：服务调用关系错综复杂
-分布式架构虽然降低了服务耦合，但是服务拆分时也有很多问题需要思考：
-
-服务拆分
+@Target：**用来限
         </a>
       </p>
 
@@ -257,8 +258,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-07 01:52" pubdate>
-              2022-07-07
+            <time datetime="2022-09-01 23:54" pubdate>
+              2022-09-01
             </time>
           </div>
         
@@ -272,24 +273,43 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/05/29/Jemeter/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="JMeter压力测试">
+        <a href="/2022/09/01/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/" target="_self">
+          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/05/29/Jemeter/">JMeter压力测试</a>
+        <a href="/2022/09/01/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/05/29/Jemeter/">
+        <a href="/2022/09/01/%E7%A7%92%E6%9D%80%E9%A1%B9%E7%9B%AE/">
           
           
             
           
-          安装启动
+          
+title:秒杀项目秒杀项目Redis前置知识
+缓存是护具交换的缓冲区，存储数据的临时地方，一般读写性能较高
+
+
+
+
+缓存穿透的解决方法
+缓存null值
+布隆过滤器
+增强id的复杂度，避免被猜测id规律
+做好数据的基础格式校验
+加强用户权限校验
+做好热点参数的限流
+
+缓存雪崩
+缓存击穿
+
+全局唯一ID生成策略
+1234567891011121314//1.生成时间戳   LocalDateTim
         </a>
       </p>
 
@@ -297,8 +317,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-05-29 22:06" pubdate>
-              2022-05-29
+            <time datetime="2022-09-01 23:53" pubdate>
+              2022-09-01
             </time>
           </div>
         
@@ -312,29 +332,27 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/05/29/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%AF%B9hashmap%E7%9A%84%E6%8E%92%E5%BA%8F/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="使用优先队列实现对hashmap的排序">
+        <a href="/2022/08/12/Netty/" target="_self">
+          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="Netty">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/05/29/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%AF%B9hashmap%E7%9A%84%E6%8E%92%E5%BA%8F/">使用优先队列实现对hashmap的排序</a>
+        <a href="/2022/08/12/Netty/">Netty</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/05/29/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%AF%B9hashmap%E7%9A%84%E6%8E%92%E5%BA%8F/">
+        <a href="/2022/08/12/Netty/">
           
           
             
           
-          
+          Netty一、概述1、什么是Netty
+Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers &amp; clients.
 
-根据hashmap的value值进行排序
-在一些场景下，我们使用hashmap进行统计，然后根据hashmap中value的值进行排序
-
-12345678910111213141516171819202122232425262728public class Main &#123;    public static void main(String[] args) throws IOExcept
+Netty 是一个异步的、基于事件驱动的网络应用
         </a>
       </p>
 
@@ -342,8 +360,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-05-29 22:05" pubdate>
-              2022-05-29
+            <time datetime="2022-08-12 22:48" pubdate>
+              2022-08-12
             </time>
           </div>
         
@@ -357,7 +375,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#board">12</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

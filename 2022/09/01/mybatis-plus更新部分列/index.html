@@ -18,9 +18,25 @@
   <meta name="author" content="pty">
   <meta name="keywords" content="">
   
-  <title>Pety&#39;s blog</title>
+  <title>mybatis-plus更新部分列 - Pety&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
 
 
 
@@ -49,7 +65,7 @@
 
 
 <body>
-  <header style="height: 100vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -143,22 +159,63 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/index.png') no-repeat center center;
+         style="background: url('/img/message.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="出走半生，归来仍是少年">
+            <span class="h2" id="subtitle" title="mybatis-plus更新部分列">
               
             </span>
 
             
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-01 23:54" pubdate>
+        September 1, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      89 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      1
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
           </div>
 
-          
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
           
         </div>
       </div>
@@ -167,222 +224,81 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="Java基础">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/">Java基础</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/12/07/java%E5%9F%BA%E7%A1%80%E9%A2%98/">
-          
-          
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">mybatis-plus更新部分列</h1>
             
-          
-          题目：1、列举出四种及以上Java的容器类（即集合类）？Set、List、Queue、Map、ArrayList、HashSet、HashMap
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-07 22:37" pubdate>
-              2021-12-07
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="fastapi多文件">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/">fastapi多文件</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/22/fastapi%E5%A4%9A%E6%96%87%E4%BB%B6/">
-          
-          
-            
-          
-          文件结构
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-22 12:04" pubdate>
-              2021-07-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="python连接mysql">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/">python连接mysql</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/22/python%20%E8%BF%9E%E6%8E%A5mysql/">
-          
-          
-            
-          
-          在看fastapi的官方文档，然后感觉sql部分挺难的，于是写下一篇博客来记录下。
-安装工具首先要安装两个东西
-pip install sqlalchemy
-pip install pymysql
-前者是一个ORM框架，在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会转成表中的字段。
-后者是用来连接数据库的
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-22 12:04" pubdate>
-              2021-07-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/mysql/">mysql</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/07/22/springboot%E6%95%B4%E5%90%88mybatis%20generator%20/" target="_self">
-          <img src="/img/page.png" srcset="/img/loading.gif" lazyload alt="Springboot 整合 mybatis generator 逆向生成工程">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/22/springboot%E6%95%B4%E5%90%88mybatis%20generator%20/">Springboot 整合 mybatis generator 逆向生成工程</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/22/springboot%E6%95%B4%E5%90%88mybatis%20generator%20/">
-          
-          
-            
-          
-          Springboot 整合 mybatis generator 逆向生成工程1.先新创建一个springboot项目，引入相关的骨架2.在pom.xml文件中引入相关依赖
-引入sqlserver的依赖
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-22 11:53" pubdate>
-              2021-07-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/springboot/">springboot</a>
-            
-              <a href="/tags/java/">java</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-              </div>
+            <div class="markdown-body">
+              <h3 id="方法一：先查询后更新"><a href="#方法一：先查询后更新" class="headerlink" title="方法一：先查询后更新"></a>方法一：先查询后更新</h3><p>先查询到实体，然后使用修改属性，在执行一次update操作</p>
+<h3 id="方法二：使用UpdateWrapper"><a href="#方法二：使用UpdateWrapper" class="headerlink" title="方法二：使用UpdateWrapper"></a>方法二：使用UpdateWrapper</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">UpdateWrapper&lt;User&gt; wrapper = <span class="hljs-keyword">new</span> UpdateWrapper&lt;&gt;();<br><span class="hljs-comment">//设置where条件</span><br>wrapper.eq(<span class="hljs-string">&quot;id&quot;</span>,id);<br><span class="hljs-comment">//修改值，注意前面的是字段的名称，不是实体类</span><br>wrapper.set(<span class="hljs-string">&quot;header_url&quot;</span>,headerUrl);<br><span class="hljs-comment">//实体类传入null</span><br>userMapper.update(<span class="hljs-keyword">null</span>,wrapper);<br></code></pre></td></tr></table></figure>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/01/mbg%E6%95%99%E7%A8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Mybatis generator</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/01/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -487,9 +403,15 @@ pip install pymysql
 
 
 
+  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
 
 
 
@@ -508,34 +430,7 @@ pip install pymysql
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      $.ajax({
-        type: 'GET',
-        url: 'https://v1.hitokoto.cn/',
-        headers: {},
-        dataType: 'json',
-        success: function (result) {
-          var text;
-          if (result) {
-            var keys = 'hitokoto'.split('.')
-            if (result instanceof Array) {
-              result = result[0]
-            }
-            for (const k of keys) {
-              var value = result[k]
-              if (typeof value === 'string') {
-                text = value
-                break
-              } else if (value instanceof Object) {
-                result = value
-              }
-            }
-          }
-          text ? typing(text) : typing(title);
-        },
-        error: function () {
-          typing(title)
-        }
-      })
+      typing(title)
       
     })(window, document);
   </script>

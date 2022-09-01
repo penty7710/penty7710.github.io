@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="努力最坏的结果不过是大器晚成">
+  <meta name="author" content="pty">
+  <meta name="keywords" content="">
+  
+  <title>Pety&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"follow_dnt":true}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Pety's blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Pety</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/message.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-01 23:53" pubdate>
+        September 1, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <hr>
+<h2 id="title-秒杀项目"><a href="#title-秒杀项目" class="headerlink" title="title:秒杀项目"></a>title:秒杀项目</h2><h1 id="秒杀项目"><a href="#秒杀项目" class="headerlink" title="秒杀项目"></a>秒杀项目</h1><h2 id="Redis前置知识"><a href="#Redis前置知识" class="headerlink" title="Redis前置知识"></a>Redis前置知识</h2><blockquote>
+<p>缓存是护具交换的缓冲区，存储数据的临时地方，一般读写性能较高</p>
+</blockquote>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220505192541978.png" srcset="/img/loading.gif" lazyload alt="image-20220505192541978"></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220505195649566.png" srcset="/img/loading.gif" lazyload alt="image-20220505195649566"></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220505201135930.png" srcset="/img/loading.gif" lazyload alt="image-20220505201135930"></p>
+<h3 id="缓存穿透的解决方法"><a href="#缓存穿透的解决方法" class="headerlink" title="缓存穿透的解决方法"></a>缓存穿透的解决方法</h3><ul>
+<li>缓存null值</li>
+<li>布隆过滤器</li>
+<li>增强id的复杂度，避免被猜测id规律</li>
+<li>做好数据的基础格式校验</li>
+<li>加强用户权限校验</li>
+<li>做好热点参数的限流</li>
+</ul>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220505202606835.png" srcset="/img/loading.gif" lazyload alt="image-20220505202606835"></p>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220505203604211.png" srcset="/img/loading.gif" lazyload alt="image-20220505203604211"></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220505203633467.png" srcset="/img/loading.gif" lazyload alt="image-20220505203633467"></p>
+<h2 id="全局唯一ID生成策略"><a href="#全局唯一ID生成策略" class="headerlink" title="全局唯一ID生成策略"></a>全局唯一ID生成策略</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506102712210.png" srcset="/img/loading.gif" lazyload alt="image-20220506102712210"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">//1.生成时间戳</span><br>   LocalDateTime now = LocalDateTime.now();<br>   <span class="hljs-keyword">long</span> nowSecond = now.toEpochSecond(ZoneOffset.UTC);<br>   <span class="hljs-keyword">long</span> timestamp = nowSecond - BEGIN_TIMESTART;<br><br>   <span class="hljs-comment">//2.生成序列号</span><br>   <span class="hljs-comment">//2.1获取当前日期，精确到天</span><br>   String date = now.format(DateTimeFormatter.ofPattern(<span class="hljs-string">&quot;yyyy:MM:dd&quot;</span>));<br><br>   <span class="hljs-comment">//2.2自增长，如果没有会自动生成</span><br>   <span class="hljs-keyword">long</span> count = redisUtil.incr(<span class="hljs-string">&quot;icr:&quot;</span> + keyPrefix + <span class="hljs-string">&quot;:&quot;</span> + date, <span class="hljs-number">1L</span>);<br><br>   <span class="hljs-comment">//时间戳左移32位与序列号做或运算</span><br>  <span class="hljs-keyword">return</span> timestamp&lt;&lt;<span class="hljs-number">32</span> | count;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="秒杀基本步骤"><a href="#秒杀基本步骤" class="headerlink" title="秒杀基本步骤"></a>秒杀基本步骤</h2><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506121646213.png" srcset="/img/loading.gif" lazyload alt="image-20220506121646213"></p>
+<h3 id="超卖"><a href="#超卖" class="headerlink" title="超卖"></a>超卖</h3><h4 id="为什么会出现超卖"><a href="#为什么会出现超卖" class="headerlink" title="为什么会出现超卖"></a>为什么会出现超卖</h4><p>在高并发的情况下，可能多个请求同时来查询数据库，此时查询到数据库的库存均为1，这时大家都认为库存充足，会进行下单操作。</p>
+<p>在高并发的场景下，如果只是使用上面的步骤，那么出现超卖的问题，即商品的数量会成为负数，因此需要解决超卖问题。</p>
+<p>可以使用悲观锁和乐观锁进行解决，悲观锁锁的粒度太大，降低程序并发性，因此我们选择乐观锁。</p>
+<h4 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h4><p>认为线程安全问题一定会发生，因此在操作数据之前先获取锁，确保线程串行执行。如：Synchronized、Lock都属于悲观锁</p>
+<h4 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h4><p>认为线程安全问题不一定会发生，因此不加锁，只是在更新数据的时候去判断有没有其他线程对数据做了修改。</p>
+<ul>
+<li>如果没有修改则认为是安全的，自己才更新数据。</li>
+<li>如果已经被其他数据修改说明发生了安全问题，此时可以重试或异常。</li>
+<li><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506121928226.png" srcset="/img/loading.gif" lazyload alt="image-20220506121928226"></li>
+</ul>
+<p>在扣减库存的时候，判断数据库中的库存数量是否大于0。如果大于0，则进行修改并生成订单，如果小于等于0，直接返回失败。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//扣减库存</span><br><span class="hljs-comment">//修改数据的时候判断库存是否大于0</span><br><span class="hljs-keyword">boolean</span> success = seckillService.update().setSql(<span class="hljs-string">&quot;stock=stock-1&quot;</span>)<br>    									 .eq(<span class="hljs-string">&quot;voucher_id&quot;</span>,voucherId)<br>    									 .gt(<span class="hljs-string">&quot;stock&quot;</span>,<span class="hljs-number">0</span>)<br>    									 .update();<br><span class="hljs-keyword">if</span>(!success)&#123;<br>    <span class="hljs-comment">//扣减失败</span><br>    <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;库存不足&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220513160417865.png" srcset="/img/loading.gif" lazyload alt="image-20220513160417865"></p>
+<h3 id="一人一单"><a href="#一人一单" class="headerlink" title="一人一单"></a>一人一单</h3><blockquote>
+<p>修改秒杀业务，要求同一个优惠券，一个用户只能下一单</p>
+</blockquote>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506122931656.png" srcset="/img/loading.gif" lazyload alt="image-20220506122931656"></p>
+<p>==根据优惠券id和用户id查询订单来判断该用户是否已经购买过此商品==</p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220513161324381.png" srcset="/img/loading.gif" lazyload alt="image-20220513161324381"></p>
+<p>先判断用户是否已经购买，然后再进行扣减库存操作。<strong>但是可能存在一个用户在一开始多次请求，导致多个请求都查询到没有订单，多个请求都进行扣减库存</strong></p>
+<p>单体系统可以使用加Synchronized锁来解决该问题，保证在同一时刻只会有一个用户能够去查询数据库。<strong>使用用户的id号作为锁对象，将id号转为String类型，然后调用intern()方法，将String放到字符串常量池，能够保证多个相同用户进来，锁的是同一个对象。jdk1.8后，使用intern()方法，如果字符串常量池没有该字符串，将这个字符串的引用保存到字符串常量池，如果有，直接返回值</strong></p>
+<p>但是在分布式系统下，由于部署到多个服务器上，每个服务器上有一个锁监视器，锁监视器不共享，导致仍然可能出现同一个用户会购买到多个商品。==多个服务器锁住的不是同一个对象==，因此需要使用分布式锁来解决。 </p>
+<p>上面的流程图是针对于加锁来实现的，其实可以给用户id和商品id加一个唯一的联合索引，创建订单时，如果用户id和商品id的组合在数据库中已经存在，则创建失败。成功之后再扣减库存。</p>
+<h2 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h2><blockquote>
+<p>满足分布式系统或集群模式下多进程可见并且互斥的锁</p>
+</blockquote>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506180248864.png" srcset="/img/loading.gif" lazyload alt="image-20220506180248864"></p>
+<p><strong>由于set 和 expire 是两条语句，不具有原子性，因此使用set nx ex 同时设置值和过期时间，保证原子性</strong></p>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506180327623.png" srcset="/img/loading.gif" lazyload alt="image-20220506180327623"></p>
+<h3 id="获取锁"><a href="#获取锁" class="headerlink" title="获取锁"></a>获取锁</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> String name;<br><span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String KEY_PREFIX = <span class="hljs-string">&quot;lock:&quot;</span>;<br><span class="hljs-comment">//uuid</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String ID_PREFIX = UUID.randomUUID().toString(<span class="hljs-keyword">true</span>) + <span class="hljs-string">&quot;-&quot;</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">tryLock</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeoutSec)</span> </span>&#123;<br>        <span class="hljs-comment">// 获取线程标示</span><br>        String threadId = ID_PREFIX + Thread.currentThread().getId();<br>        <span class="hljs-comment">// 获取锁</span><br>        Boolean success = stringRedisTemplate.opsForValue()<br>                .setIfAbsent(KEY_PREFIX + name, threadId, timeoutSec, TimeUnit.SECONDS);<br>        <span class="hljs-keyword">return</span> Boolean.TRUE.equals(success);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="防止误删"><a href="#防止误删" class="headerlink" title="防止误删"></a>防止误删</h3><p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220506183318766.png" srcset="/img/loading.gif" lazyload alt="image-20220506183318766"></p>
+<h3 id="释放锁"><a href="#释放锁" class="headerlink" title="释放锁"></a>释放锁</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 获取线程标示</span><br>        String threadId = ID_PREFIX + Thread.currentThread().getId();<br>        <span class="hljs-comment">// 获取锁中的标示</span><br>        String id = stringRedisTemplate.opsForValue().get(KEY_PREFIX + name);<br>        <span class="hljs-comment">// 判断标示是否一致</span><br>        <span class="hljs-keyword">if</span>(threadId.equals(id)) &#123;<br>            <span class="hljs-comment">// 释放锁</span><br>            stringRedisTemplate.delete(KEY_PREFIX + name);<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面这个释放锁的代码有问题，因为获取锁标识和删除不是原子操作，可能会出现线程安全问题。</p>
+<h3 id="Redis的Lua脚本"><a href="#Redis的Lua脚本" class="headerlink" title="Redis的Lua脚本"></a>Redis的Lua脚本</h3><blockquote>
+<p>Lua脚本功能，在一个脚本中编写多条Redis命令，确保多条命令执行时的原子性</p>
+</blockquote>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- 执行redis命令，redis.call(&#x27;命令名称&#x27;，&#x27;key&#x27;,&#x27;其他参数&#x27;)</span><br>redis.call(<span class="hljs-string">&#x27;set&#x27;</span>,<span class="hljs-string">&#x27;name&#x27;</span>,<span class="hljs-string">&#x27;jack&#x27;</span>)<br><br><span class="hljs-comment">-- 先执行set name jack</span><br>redis.call(<span class="hljs-string">&#x27;set&#x27;</span>,<span class="hljs-string">&#x27;name&#x27;</span>,<span class="hljs-string">&#x27;jack&#x27;</span>)<br><span class="hljs-comment">-- 再执行get name</span><br><span class="hljs-keyword">local</span> name = redis.call(<span class="hljs-string">&#x27;get&#x27;</span>,<span class="hljs-string">&#x27;name&#x27;</span>)<br><span class="hljs-comment">-- 返回</span><br><span class="hljs-keyword">return</span> name<br><br><span class="hljs-comment">-- 可以传参，key类型参数放入KEYS数组，其他参数放入ARGV数组，下标从1开始</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用lua脚本改造分布式锁"><a href="#使用lua脚本改造分布式锁" class="headerlink" title="使用lua脚本改造分布式锁"></a>使用lua脚本改造分布式锁</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootTest</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SeckillApplicationTests</span> </span>&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    RedisTemplate redisTemplate;<br><br>    <span class="hljs-meta">@Autowired</span><br>    DefaultRedisScript  script;<br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">contextLoads</span><span class="hljs-params">()</span> </span>&#123;<br>        ValueOperations valueOperations = redisTemplate.opsForValue();<br>        String s = UUID.randomUUID().toString();<br>        <span class="hljs-comment">//设置锁，相当于setnx指令。值不存在则设置成功，否则失败。并给锁设置一个值，用来检验当前锁是否是自己的锁</span><br>        <span class="hljs-comment">// 设置过期时间，防止程序出现异常时锁无法释放导致整个程序阻塞</span><br>        Boolean isLock = valueOperations.setIfAbsent(<span class="hljs-string">&quot;k1&quot;</span>, s, <span class="hljs-number">120</span>, TimeUnit.SECONDS);<br>        <span class="hljs-comment">//如果获取锁成功</span><br>        <span class="hljs-keyword">if</span>(isLock)&#123;<br>            valueOperations.set(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;xxxx&quot;</span>);<br>            String name = (String) valueOperations.get(<span class="hljs-string">&quot;name&quot;</span>);<br>            System.out.println(<span class="hljs-string">&quot;name:&quot;</span>+name);<br>            System.out.println(valueOperations.get(<span class="hljs-string">&quot;k1&quot;</span>));<br>            <span class="hljs-comment">//判断目前锁是否是自己的锁。可能存在线程执行时间长，当锁已经过期自动释放后才执行完，</span><br>            <span class="hljs-comment">//这个时候需要判断锁是否为自己锁，直接删除锁可能会删掉其他线程的锁。</span><br>            <span class="hljs-comment">//由于获取锁，判断锁，删除锁三个语句不是原子性操作，因此使用lua脚本，保证三个语句的原子性</span><br>            Boolean result = (Boolean) redisTemplate.execute(script, Collections.singletonList(<span class="hljs-string">&quot;k1&quot;</span>), s);<br>            System.out.println(result);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;有线程在使用，请稍后&quot;</span>);<br>        &#125;<br><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>lua脚本</strong></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">if</span> redis.call(<span class="hljs-string">&quot;get&quot;</span>,KEYS[<span class="hljs-number">1</span>]) == ARGV[<span class="hljs-number">1</span>] <span class="hljs-keyword">then</span>   <span class="hljs-comment">--从redis中查询 key为keys[1]的值是否和ARGV[1]相等，相等就删除keys[1]</span><br>    <span class="hljs-keyword">return</span> redis.call(<span class="hljs-string">&quot;del&quot;</span>,KEYS[<span class="hljs-number">1</span>])			<span class="hljs-comment">--keys[1]和ARGV[1]是从后端传过来的值</span><br><span class="hljs-keyword">else</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>配置<code>DefaultRedisScript</code></strong></p>
+<p>在<code>RedisConfig</code>中配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DefaultRedisScript&lt;Boolean&gt; <span class="hljs-title">script</span><span class="hljs-params">()</span></span>&#123;<br>    DefaultRedisScript&lt;Boolean&gt; script = <span class="hljs-keyword">new</span> DefaultRedisScript&lt;&gt;();<br>    <span class="hljs-comment">//lock.lua脚本位置和application.yml同级目录</span><br>    script.setLocation(<span class="hljs-keyword">new</span> ClassPathResource(<span class="hljs-string">&quot;lock.lua&quot;</span>));<br>    script.setResultType(Boolean.class);<br>    <span class="hljs-keyword">return</span> script;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Redisson"><a href="#Redisson" class="headerlink" title="Redisson"></a>Redisson</h2><blockquote>
+<p>Redisson是在Redis基础上实现的Java驻内存数据网格，不仅提供了一系列的分布式的java常用对象，还提供了许多分布式服务，其中包含了各种分布式锁的实现</p>
+</blockquote>
+<h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.redisson<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>redisson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.13.6<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>配置Redisson客户端，写一个配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RedissonConfig</span> </span>&#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> RedissonClient <span class="hljs-title">redissonClient</span><span class="hljs-params">()</span></span>&#123;<br>        Config config = <span class="hljs-keyword">new</span> Config();<br>        <span class="hljs-comment">//useSingleServer表示目前是单节点的redis，然后设置地址和密码</span><br>        config.useSingleServer().setAddress(<span class="hljs-string">&quot;redis://192.168.217.4:6379&quot;</span>).setPassword(<span class="hljs-string">&quot;asd789142&quot;</span>);<br>        <span class="hljs-comment">//创建RedissonClient对象</span><br>        <span class="hljs-keyword">return</span> Redisson.create(config);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>使用Redisson</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br>  <span class="hljs-keyword">private</span> RedissonClient redissonClient;<br><br><br>  <span class="hljs-meta">@Test</span><br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testRedisson</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>      <span class="hljs-comment">//获取锁，指定锁名称</span><br>      RLock lock = redissonClient.getLock(<span class="hljs-string">&quot;anyLock&quot;</span>);<br>      <span class="hljs-comment">//尝试获取锁，第一个参数是重试时间，在设置时间内获取失败会重试，如果超过设置时间则直接返回，不设置为-1，不重试</span><br>      <span class="hljs-comment">//第二个参数是锁自动释放时间，不释放默认是30秒</span><br>      <span class="hljs-comment">//第三个参数是是简单</span><br>      <span class="hljs-keyword">boolean</span> isLock = lock.tryLock(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, TimeUnit.SECONDS);<br>      <span class="hljs-comment">//判断锁是否获取成功</span><br>      <span class="hljs-keyword">if</span>(isLock)&#123;<br>          <span class="hljs-keyword">try</span> &#123;<br>              System.out.println(<span class="hljs-string">&quot;执行业务&quot;</span>);<br>          &#125;<span class="hljs-keyword">finally</span> &#123;<br>              <span class="hljs-comment">//释放锁</span><br>              lock.unlock();<br>          &#125;<br>      &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="秒杀优化"><a href="#秒杀优化" class="headerlink" title="秒杀优化"></a>秒杀优化</h2><blockquote>
+<p>将数据放到redis中，提高系统的并发能力，在redis中进行判断，如果不符合购买资格==库存不足或已经购买过==，则直接返回。如果有购买资格，则返回给用户订单编号，使用消息队列进行异步下单处理。</p>
+</blockquote>
+<p><img src="https://pety.oss-cn-shenzhen.aliyuncs.com/img/image-20220516170336478.png" srcset="/img/loading.gif" lazyload alt="image-20220516170336478"></p>
+<h2 id="Redis预减库存"><a href="#Redis预减库存" class="headerlink" title="Redis预减库存"></a>Redis预减库存</h2><h3 id="数据预热"><a href="#数据预热" class="headerlink" title="数据预热"></a>数据预热</h3><p>在controlle层实现<code>InitializingBean</code>接口，接着实现<code>afterPropertiesSet</code>方法。</p>
+<blockquote>
+<p>sping启动后，初始化Bean时，若该bean实现InitializingBean接口，会自动调用afterPropertiesSet()方法，完成用户自定义的初始化操作</p>
+</blockquote>
+<p>在<code>afterPropertiesSet</code>方法中，查询数据库，将商品的信息保存到redis中，并且设置一个map保存每个商品的状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java">  <span class="hljs-comment">//初始化容器的时候执行的方法</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterPropertiesSet</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        List&lt;GoodsVo&gt; list = service.findGoodsVo();<br>        <span class="hljs-keyword">if</span>(list.isEmpty())&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">//在初始化容器的时候，将数据放到redis里面，直接在redis进行数量的增减</span><br>        <span class="hljs-comment">//数据预热</span><br>        list.forEach(goodsVo -&gt;&#123;<br>            redisUtil.set(<span class="hljs-string">&quot;seckillGoods:&quot;</span>+goodsVo.getId(),goodsVo.getStockCount());<br>            EmptyStockMap.put(goodsVo.getId(), <span class="hljs-keyword">false</span>);<br>        &#125;);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="商品抢购"><a href="#商品抢购" class="headerlink" title="商品抢购"></a>商品抢购</h3><p>在下单的时候，不需要直接访问数据库，而是访问redis。通过内存标记，减少redis的访问。每次抢购成功，将商品数量减1，然后使用rabbitmq进行异步操作，发布消息去操作数据库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//判断是否重复抢购</span><br>     SeckillOrder seckillOrder = (SeckillOrder) redisUtil.get(<span class="hljs-string">&quot;user:&quot;</span> + user.getId() + <span class="hljs-string">&quot;:&quot;</span> + goodsId);<br>     <span class="hljs-keyword">if</span>(seckillOrder != <span class="hljs-keyword">null</span>)&#123;<br>         <span class="hljs-keyword">return</span> RespBean.error(RespBeanEnum.REPATE_ERROR);<br>     &#125;<br><br>     <span class="hljs-comment">//通过内存标记，减少redis的访问，在初始化容器的时候，将商品数量存入redis，并设置一个map来保存每个商品的状态</span><br>     <span class="hljs-comment">//当商品库存为0时，将状态设置为true，之后每次进来判断状态，如果</span><br>     <span class="hljs-keyword">if</span> (EmptyStockMap.get(goodsId))&#123;<br>         <span class="hljs-keyword">return</span>  RespBean.error(RespBeanEnum.EMPTY_STOCK);<br>     &#125;<br><br>     <span class="hljs-comment">//预减库存</span><br>     <span class="hljs-keyword">long</span> stock = redisUtil.decr(<span class="hljs-string">&quot;seckillGoods&quot;</span> + goodsId, <span class="hljs-number">1</span>);<br>     <span class="hljs-keyword">if</span>(stock &lt; <span class="hljs-number">0</span>)&#123;<br>         EmptyStockMap.put(goodsId,<span class="hljs-keyword">true</span>);<br>         redisUtil.incr(<span class="hljs-string">&quot;seckillGoods&quot;</span>+goodsId,<span class="hljs-number">1</span>);<br>         <span class="hljs-keyword">return</span> RespBean.error(RespBeanEnum.EMPTY_STOCK);<br>     &#125;<br><br>     SeckillMessage seckillMessage = <span class="hljs-keyword">new</span> SeckillMessage(user, goodsId);<br><br>     mqSender.sendSeckillMessage(JSON.toJSONString(seckillMessage));<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="RabbitMQ秒杀操作"><a href="#RabbitMQ秒杀操作" class="headerlink" title="RabbitMQ秒杀操作"></a>RabbitMQ秒杀操作</h2><blockquote>
+<p>Rabbitmq主要是用来实现异步和流量消峰</p>
+</blockquote>
+<p>消费者用来接收消息，然后去操作数据库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RabbitListener(queues = &quot;seckillqueue&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">receive</span><span class="hljs-params">(String message)</span></span>&#123;<br>        <span class="hljs-comment">//将消息转成原来的对象</span><br>        SeckillMessage seckillMessage = JSON.parseObject(message, SeckillMessage.class);<br><br>        Long goodsId = seckillMessage.getGoodsId();<br><br>        User user = seckillMessage.getUser();<br>        <span class="hljs-comment">//判断数据库中商品的库存， 如果商品数量小于1，直接返回</span><br>        GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);<br>        <span class="hljs-keyword">if</span>(goodsVo.getStockCount()&lt;<span class="hljs-number">1</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-comment">//判断是否重复抢购</span><br>        SeckillOrder seckillOrder = (SeckillOrder) redisUtil.get(<span class="hljs-string">&quot;user:&quot;</span> + user.getId() + <span class="hljs-string">&quot;:&quot;</span> + goodsId);<br>        <span class="hljs-keyword">if</span>(seckillOrder != <span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-comment">//下单操作</span><br>        iOrderService.seckill(user,goodsVo);<br><br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/01/%E5%9F%BA%E4%BA%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于自定义注解实现拦截器</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/12/Netty/">
+                        <span class="hidden-mobile">Netty</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
